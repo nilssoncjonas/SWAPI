@@ -7,7 +7,7 @@ const NotFound = () => {
 		<>
 			<h1>404 | NotFound</h1>
 			<div>
-				<p>I Find Your Lack Of Navigation Disturbing</p>
+				<h2>I Find Your Lack Of Navigation Disturbing</h2>
 				<Link to="/" >
 					<Button variant="secondary">Help me, Obi-Wan Kenobi. You're my only hope.</Button>
 				</Link>
