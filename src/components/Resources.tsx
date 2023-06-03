@@ -13,7 +13,7 @@ const Resources: React.FC<IProp> = ({data}) => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
 
-	const getReource = async (req: string) => {
+	const getResource = async (req: string) => {
 
 		setError(null)
 		try {
@@ -28,7 +28,7 @@ const Resources: React.FC<IProp> = ({data}) => {
 
 	useEffect(() => {
 		setLoading(true)
-		getReource(data)
+		getResource(data)
 	}, [data])
 
 	return (
