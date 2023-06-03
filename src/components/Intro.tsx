@@ -11,12 +11,8 @@ const Intro = () => {
 					BB-8 has assigned you the task of creating a Star Wars encyclopedia so that he can avoid being a rolling
 					reference book and focus on more important things, like rolling around and not constantly answering silly
 					questions.
-					<p>
-						He wants his team to easily find information about everything in the Star Wars universe.
-					</p>
-					<p>
-						Your important mission is to create this encyclopedia and help bring peace to the galaxy!
-					</p>
+					He wants his team to easily find information about everything in the Star Wars universe.
+					Your important mission is to create this encyclopedia and help bring peace to the galaxy!
 				</p>
 			</Container>
 		</>

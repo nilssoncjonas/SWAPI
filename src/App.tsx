@@ -21,7 +21,7 @@ const App = () => {
 	return (
 		<>
 			<Navigation/>
-			<Container py-3>
+			<Container>
 
 				<Routes>
 					<Route path='/' element={<Index/>}/>

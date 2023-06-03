@@ -26,7 +26,7 @@ const InputForm = () => {
 						required
 						onChange={e => setSearchInput(e.target.value)}
 						value={searchInput}
-
+						// TODO add useRef to focus input on page load
 					/>
 				</Form.Group>
 
