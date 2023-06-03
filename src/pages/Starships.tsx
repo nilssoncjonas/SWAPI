@@ -1,6 +1,6 @@
 import Resources from "../components/Resources.tsx";
 
-const starships = () => {
+const Starships = () => {
 	return (
 		<>
 			<h1>Starships</h1>
@@ -8,4 +8,4 @@ const starships = () => {
 		</>
 	)
 }
-export default starships
+export default Starships

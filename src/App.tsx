@@ -1,14 +1,14 @@
 import {Routes, Route} from 'react-router-dom'
 // Pages
 import Index from './pages/Index.tsx'
-import Movies from './pages/Movies.tsx'
+import Films from "./pages/Films.tsx";
 import NotFound from './pages/NotFound.tsx'
 import People from "./pages/People.tsx";
 import Planets from "./pages/Planets.tsx";
 import Search from './pages/Search.tsx'
 import Species from "./pages/Species.tsx";
 import Starships from "./pages/Starships.tsx";
-import Vehicles from "./pages/vehicles.tsx";
+import Vehicles from "./pages/Vehicles.tsx";
 // Components
 import Navigation from "./components/Navigation.tsx";
 // Style
@@ -25,7 +25,7 @@ const App = () => {
 
 				<Routes>
 					<Route path='/' element={<Index/>}/>
-					<Route path='/movies' element={<Movies/>}/>
+					<Route path='/films' element={<Films/>}/>
 					<Route path='/people' element={<People/>}/>
 					<Route path='/planets' element={<Planets/>}/>
 					<Route path='/species' element={<Species/>}/>

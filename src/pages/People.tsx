@@ -1,6 +1,6 @@
 import Resources from "../components/Resources.tsx";
 
-const people = () => {
+const People = () => {
 	return (
 		<>
 			<h1>People</h1>
@@ -8,4 +8,4 @@ const people = () => {
 		</>
 	)
 }
-export default people
+export default People

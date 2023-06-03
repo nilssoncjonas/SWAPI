@@ -1,6 +1,6 @@
 import Resources from "../components/Resources.tsx";
 
-const vehicles = () => {
+const Vehicles = () => {
 	return (
 		<>
 			<h1>Vehicles</h1>
@@ -8,4 +8,4 @@ const vehicles = () => {
 		</>
 	)
 }
-export default vehicles
+export default Vehicles

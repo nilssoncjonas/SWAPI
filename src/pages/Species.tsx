@@ -1,6 +1,6 @@
 import Resources from "../components/Resources.tsx";
 
-const species = () => {
+const Species = () => {
 	return (
 		<>
 			<h1>Species</h1>
@@ -8,4 +8,4 @@ const species = () => {
 		</>
 	)
 }
-export default species
+export default Species
