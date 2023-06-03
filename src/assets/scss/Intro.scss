@@ -1,0 +1,37 @@
+
+@keyframes crawl {
+	0% {
+		transform: perspective(500px) rotateX(20deg) translateZ(0);
+		opacity: 0;
+	}	5% {
+		opacity: 1;
+	}	75% {
+		transform: perspective(500px) rotateX(20deg) translateZ(0) translateY(-400px);
+		opacity: 1;
+	}
+	100% {
+		transform: perspective(500px) rotateX(20deg) translateZ(0px) translateY(-600px);
+		opacity: 0;
+	}
+}
+
+.intro-container {
+	width: 100%;
+	max-height: 600px;
+	justify-content: center;
+	align-items: center;
+	perspective: 500px;
+	overflow: hidden;
+}
+
+.intro-text {
+	font-family: 'Arial', sans-serif;
+	font-size: 2rem;
+	color: #ffc107;
+	text-align: center;
+	animation: crawl 20s linear infinite;
+	width: 100%;
+	max-width: 600px;
+	margin: 0 auto;
+	line-height: 1.2em;
+}

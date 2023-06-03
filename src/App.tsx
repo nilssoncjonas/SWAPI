@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation.tsx";
 // Style
 import Container from "react-bootstrap/Container";
 import './assets/scss/App.scss'
+import './assets/scss/Intro.scss'
 
 const App = () => {
 

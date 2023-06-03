@@ -3,13 +3,17 @@ import { NavLink, Link } from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
+import {Image} from "react-bootstrap";
+import swapi from '../../public/swapi100.png'
 
 const Navigation = () => {
 	return (
 		<>
 			<Navbar bg="dark" variant="dark" expand="md">
 				<Container>
-					<Navbar.Brand as={Link} to="/">The Superior SWAPI</Navbar.Brand>
+					<Navbar.Brand as={Link} to="/">
+						<Image src={swapi} fluid width='50%'/>
+					</Navbar.Brand>
 
 					<Navbar.Toggle aria-controls="basic-navbar-nav"/>
 					<Navbar.Collapse id="basic-navbar-nav">

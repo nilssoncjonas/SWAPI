@@ -1,7 +1,9 @@
+import Intro from "../components/Intro.tsx";
+
 const Index = () => {
 	return (
 		<>
-			<h1>Index</h1>
+			<Intro />
 		</>
 	)
 }
