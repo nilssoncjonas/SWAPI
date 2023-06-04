@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-const BASE_URL = 'https://swapi.thehiveresistance.com/api/'
+const BASE_URL = 'https://swapi.thehiveresistance.com/api'
 
 /**
  * Execute an HTTP GET request to an endpoint.
