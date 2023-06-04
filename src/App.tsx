@@ -2,6 +2,7 @@ import {Routes, Route} from 'react-router-dom'
 // Pages
 import Index from './pages/Index.tsx'
 import Films from "./pages/Films.tsx";
+import SingleFilm from "./pages/Film.tsx";
 import NotFound from './pages/NotFound.tsx'
 import People from "./pages/People.tsx";
 import Planets from "./pages/Planets.tsx";
@@ -16,6 +17,7 @@ import Container from "react-bootstrap/Container";
 import './assets/scss/App.scss'
 import './assets/scss/Intro.scss'
 
+
 const App = () => {
 
 	return (
@@ -26,6 +28,7 @@ const App = () => {
 				<Routes>
 					<Route path='/' element={<Index/>}/>
 					<Route path='/films' element={<Films/>}/>
+					<Route path='/films/:id' element={<SingleFilm/>}/>
 					<Route path='/people' element={<People/>}/>
 					<Route path='/planets' element={<Planets/>}/>
 					<Route path='/species' element={<Species/>}/>
