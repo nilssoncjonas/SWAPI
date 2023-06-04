@@ -6,14 +6,20 @@ import AutoAlert from "../components/AutoAlert.tsx";
 import {Film,} from "../types/films";
 import {useParams} from "react-router-dom";
 import InputForm from "../components/InputForm.tsx";
+import Characters from "../components/Characters.tsx";
+import ListGroup from "react-bootstrap/ListGroup";
+import Planets from "../components/Planets.tsx";
+import Starships from "../components/Starships.tsx";
+import Vehicles from "../components/Vehicles.tsx";
+import Species from "../components/Species.tsx";
 
 const SingleFilm = () => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
 	const [filmData, setFilmData] = useState<Film>([])
 	const {id} = useParams()
-
-	const get = async (id) => {
+	const filmId = Number(id)
+	const get = async (id: number) => {
 		setLoading(true)
 		setError(null)
 		try {
@@ -29,9 +35,9 @@ const SingleFilm = () => {
 	}
 
 	useEffect(() => {
-		get(id)
+		get(filmId)
 
-	}, [id])
+	}, [filmId])
 	return (
 		<>
 			<InputForm/>
@@ -41,20 +47,39 @@ const SingleFilm = () => {
 			{error && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
 
 			{filmData && (
-				<div>
+				<div className='mb-4'>
 					<h1>{filmData.title}</h1>
 					<h2 className='h3'>Episode {filmData.episode_id}</h2>
 					<p>
 						{filmData.opening_crawl}
 					</p>
 					<p>
-					<span className='h6 d-block'>Released: {filmData.release_date}</span>
-					<span className='h6 d-block'>Directed by: {filmData.director}</span>
-					<span className='h6 d-block'>Produced by: {filmData.producer}</span>
+						<span className='h6 d-block'>Released: {filmData.release_date}</span>
+						<span className='h6 d-block'>Directed by: {filmData.director}</span>
+						<span className='h6 d-block'>Produced by: {filmData.producer}</span>
 					</p>
 				</div>
 			)}
-
+			<h3 className='mx-auto text-center'>Characters</h3>
+			<ListGroup className='mb-3 w-75 mx-auto'>
+				<Characters people={filmData.characters}/>
+			</ListGroup>
+			<h3 className='mx-auto text-center'>Planets</h3>
+			<ListGroup className='mb-3 w-75 mx-auto'>
+				<Planets planets={filmData.planets}/>
+			</ListGroup>
+			<h3 className='mx-auto text-center'>Starships</h3>
+			<ListGroup className='mb-3 w-75 mx-auto'>
+				<Starships starships={filmData.starships}/>
+			</ListGroup>
+			<h3 className='mx-auto text-center'>Vehicles</h3>
+			<ListGroup className='mb-3 w-75 mx-auto'>
+				<Vehicles vehicles={filmData.vehicles}/>
+			</ListGroup>
+			<h3 className='mx-auto text-center'>Species</h3>
+			<ListGroup className='mb-3 w-75 mx-auto'>
+				<Species species={filmData.species}/>
+			</ListGroup>
 		</>
 	)
 }
