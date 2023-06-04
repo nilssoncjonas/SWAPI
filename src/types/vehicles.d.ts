@@ -18,10 +18,10 @@ export type Vehicle = {
 	consumables: string
 	created: string
 	edited: string
-	pilots: any[] // TODO Update to type pilots
+	// TODO Update to type pilots
+	pilots: any[]
 	films: VehicleFilm[]
 }
 
-export type VehiclesData = {
-	data: Vehicle[]
-}
+export type VehiclesData = Vehicle[]
+

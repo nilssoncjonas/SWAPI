@@ -28,12 +28,15 @@ export type People = {
 		id: number
 		name: string
 	}
+	// TODO
 	films: PeopleFilm[]
-	species: any[] // TODO Update to type species
+	// TODO Update to type species
+	species?: any[]
+	// TODO
 	starships: PeopleStarship[]
+	// TODO
 	vehicles: PeopleVehicle[]
 }
 
-export type PeoplesData = {
-	data: People[]
-}
+export type PeoplesData = People[]
+

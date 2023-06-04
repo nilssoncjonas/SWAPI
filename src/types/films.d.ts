@@ -40,6 +40,4 @@ export type Film = {
 	species: Species[]
 }
 
-export type FilmData = {
-	data: Film[]
-}
+export type FilmData = Film[]

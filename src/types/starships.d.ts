@@ -20,10 +20,10 @@ export type Starship = {
 	consumables: string
 	created: string
 	edited: string
-	pilots: any[] // TODO Update to type pilots
+	// TODO Update to type pilots
+	pilots: any[]
 	films: StarshipFilm[]
 }
 
-export type StarshipsData = {
-	data: Starship[]
-}
+export type StarshipsData = Starship[]
+

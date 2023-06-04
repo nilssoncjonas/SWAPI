@@ -16,10 +16,10 @@ export type Planet = {
 	population: string
 	created: string
 	edited: string
-	residents: any[] // TODO Update to type residents
+	// TODO Update to type residents
+	residents: any[]
 	films: PlanetFilm[]
 }
 
-export type PlanetsData = {
-	data: Planet[]
-}
+export type PlanetsData = Planet[]
+
