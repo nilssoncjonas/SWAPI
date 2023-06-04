@@ -2,13 +2,12 @@ import React, {useEffect, useState} from "react";
 import Alert from 'react-bootstrap/Alert'
 
 interface Props {
-	children: React.ReactNode
 	hideAfter: number
 	msg: string
 	variant: string
 }
 
-const AutoAlert: React.FC<Props> = ({children, hideAfter, msg, variant}) => {
+const AutoAlert: React.FC<Props> = ({hideAfter, msg, variant}) => {
 	const [hide, setHide] = useState(false)
 
 	useEffect(() => {
@@ -21,7 +20,8 @@ const AutoAlert: React.FC<Props> = ({children, hideAfter, msg, variant}) => {
 		<>
 			<Alert show={!hide} variant={variant}>
 				<p className='text-center text-uppercase'>{msg}</p>
-				{children}
+				<p className='text-center fs-4'> Your request has encountered a disturbance in the Force. Kindly wait a few
+					moments and attempt again, as the galaxy aligns to fulfill your inquiry.</p>
 			</Alert>
 		</>
 	)
