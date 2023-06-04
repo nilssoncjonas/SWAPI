@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {FilmPaginationData} from "../types/films";
+import {Film, FilmPaginationData} from "../types/films";
 
 
 
@@ -9,6 +9,14 @@ export const getFilms = async () => {
 	try {
 		const response = await axios.get(`${BASE_URL}/films`)
 		return response.data as FilmPaginationData
+	} catch (err: any) {
+		throw new Error(err)
+	}
+}
+export const getFilm = async (id: number) => {
+	try {
+		const response = await axios.get(`${BASE_URL}/films/${id}`)
+		return response.data as Film
 	} catch (err: any) {
 		throw new Error(err)
 	}
