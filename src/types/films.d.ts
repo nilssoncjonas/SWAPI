@@ -41,3 +41,25 @@ export type Film = {
 }
 
 export type FilmData = Film[]
+
+export type PageLink = {
+	url: string | null
+	label: string
+	active: boolean
+}
+
+export type FilmPaginationData = {
+	current_page: number
+	data: FilmData
+	first_page_url: string
+	from: number
+	last_page: number
+	last_page_url: string
+	links: PageLink[]
+	next_page_url: string | null
+	path: string
+	per_page: number
+	prev_page_url: string | null
+	to: number
+	total: number
+}
