@@ -12,11 +12,12 @@ import Planets from "../components/Planets.tsx";
 import Starships from "../components/Starships.tsx";
 import Vehicles from "../components/Vehicles.tsx";
 import Species from "../components/Species.tsx";
+import Container from "react-bootstrap/Container";
 
 const SingleFilm = () => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
-	const [filmData, setFilmData] = useState<Film>([])
+	const [filmData, setFilmData] = useState<Film | null>(null)
 	const {id} = useParams()
 	const filmId = Number(id)
 	const get = async (id: number) => {
@@ -24,7 +25,6 @@ const SingleFilm = () => {
 		setError(null)
 		try {
 			const res: Film = await SWAPI.getFilm(id)
-			console.log(res)
 			setFilmData(res)
 		} catch (err: any) {
 			console.error(err)
@@ -58,28 +58,41 @@ const SingleFilm = () => {
 						<span className='h6 d-block'>Directed by: {filmData.director}</span>
 						<span className='h6 d-block'>Produced by: {filmData.producer}</span>
 					</p>
+					<Container>
+						<div>
+							<h3 className='mx-auto text-center'>Characters</h3>
+							<ListGroup className='mb-3 mx-auto'>
+								<Characters people={filmData.characters}/>
+							</ListGroup>
+						</div>
+						<div>
+							<h3 className='mx-auto text-center'>Planets</h3>
+							<ListGroup className='mb-3 mx-auto'>
+								<Planets planets={filmData.planets}/>
+							</ListGroup>
+						</div>
+						<div>
+							<h3 className='mx-auto text-center'>Starships</h3>
+							<ListGroup className='mb-3 mx-auto'>
+								<Starships starships={filmData.starships}/>
+							</ListGroup>
+						</div>
+						<div>
+							<h3 className='mx-auto text-center'>Vehicles</h3>
+							<ListGroup className='mb-3 mx-auto'>
+								<Vehicles vehicles={filmData.vehicles}/>
+							</ListGroup>
+						</div>
+						<div>
+							<h3 className='mx-auto text-center'>Species</h3>
+							<ListGroup className='mb-3 mx-auto'>
+								<Species species={filmData.species}/>
+							</ListGroup>
+						</div>
+
+					</Container>
 				</div>
 			)}
-			<h3 className='mx-auto text-center'>Characters</h3>
-			<ListGroup className='mb-3 w-75 mx-auto'>
-				<Characters people={filmData.characters}/>
-			</ListGroup>
-			<h3 className='mx-auto text-center'>Planets</h3>
-			<ListGroup className='mb-3 w-75 mx-auto'>
-				<Planets planets={filmData.planets}/>
-			</ListGroup>
-			<h3 className='mx-auto text-center'>Starships</h3>
-			<ListGroup className='mb-3 w-75 mx-auto'>
-				<Starships starships={filmData.starships}/>
-			</ListGroup>
-			<h3 className='mx-auto text-center'>Vehicles</h3>
-			<ListGroup className='mb-3 w-75 mx-auto'>
-				<Vehicles vehicles={filmData.vehicles}/>
-			</ListGroup>
-			<h3 className='mx-auto text-center'>Species</h3>
-			<ListGroup className='mb-3 w-75 mx-auto'>
-				<Species species={filmData.species}/>
-			</ListGroup>
 		</>
 	)
 }

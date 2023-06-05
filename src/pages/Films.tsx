@@ -1,7 +1,7 @@
 import * as SWAPI from "../services/SWAPI-client.ts";
 import {useEffect, useState} from "react";
 // Types
-import {FilmData, FilmPaginationData} from "../types/films";
+import {FilmPaginationData, FilmsData} from "../types";
 // Components
 import AutoAlert from "../components/AutoAlert.tsx";
 import InputForm from "../components/InputForm.tsx";
@@ -9,26 +9,25 @@ import FilmsList from "../components/FilmsList.tsx";
 // Style
 import spinner from "../../public/rebel.svg";
 import ListGroup from "react-bootstrap/ListGroup";
-import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
 
+import Image from "react-bootstrap/Image";
+import Pagination from "../components/Pagination.tsx";
 
 const Films = () => {
 
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
 
-	const [resData, setResData] = useState<FilmPaginationData>([])
-	const [filmData, setFilmData] = useState<FilmData>([])
+	const [resData, setResData] = useState<FilmPaginationData>({} as FilmPaginationData)
+	const [filmData, setFilmData] = useState<FilmsData>([])
+	const [page, setPage] = useState(1)
 
 	const get = async () => {
 		setLoading(true)
 		setError(null)
 		try {
 			const res: FilmPaginationData = await SWAPI.getFilms()
-			const data: FilmData = res.data
-			console.log(res)
-			console.log(res.data)
+			const data: FilmsData = res.data
 			setResData(res)
 			setFilmData(data)
 		} catch (err: any) {
@@ -38,11 +37,16 @@ const Films = () => {
 			setLoading(false)
 		}
 	}
+	const handlePrevPage = () => {
+		setPage(prevValue => prevValue - 1)
+	}
+	const handleNextPage = () => {
+		setPage(prevValue => prevValue + 1)
+	}
 
 	useEffect(() => {
 		get()
 	}, [])
-
 	return (
 		<>
 			<h1>Films</h1>
@@ -52,25 +56,17 @@ const Films = () => {
 
 			{error && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
 
-			<div id="data__result">
-				<p>Showing {resData.total} results for Films</p>
+			{resData && filmData && (
+				<>
+					<p>Showing {resData.from} to {resData.to} of {resData.total} from the Films Resource</p>
 
-				<ListGroup className='mb-3'>
-					<FilmsList data={filmData}/>
-				</ListGroup>
+					<ListGroup className='mb-3'>
+						<FilmsList data={filmData}/>
+					</ListGroup>
 
-				<div className="d-flex justify-content-between align-items-center">
-
-					<div className="prev">
-						<Button variant='primary' disabled={!resData.links[0].active} >{resData.links[0].label}</Button>
-					</div>
-					<div className="page">{resData.links[1].label}
-					</div>
-					<div className="next"><
-						Button variant='primary' disabled={!resData.links[2].active}>{resData.links[2].label}</Button>
-					</div>
-				</div>
-			</div>
+					<Pagination resData={resData} onPrevPage={handlePrevPage} onNextPage={handleNextPage}/>
+				</>
+			)}
 
 		</>
 	)
