@@ -1,17 +1,15 @@
 import React from "react"
-import {FilmPaginationData, PageLink} from "../types";
+import {FilmPaginationData} from "../types";
 import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
 
 interface IProp {
 	resData: FilmPaginationData
-	url: PageLink[]
 	onPrevPage: () => void
 	onNextPage: () => void
 }
 
-const Pagination: React.FC<IProp> = ({resData, url, onNextPage, onPrevPage}) => {
-	console.log('url i component', url)
+const Pagination: React.FC<IProp> = ({resData, onNextPage, onPrevPage}) => {
 	return (
 		<>
 			<div className="d-flex justify-content-between align-items-center">
@@ -22,13 +20,13 @@ const Pagination: React.FC<IProp> = ({resData, url, onNextPage, onPrevPage}) => 
 						variant="primary">First Page</Button>
 				</div>
 				{resData.links && (
-					<>
+					<div>
 						{resData.links.map((l, index) => (
 							<Link to={!l.url ? '#' : l.url}>
-							<Button variant="warning" key={index} disabled={!l.active}>{l.label} </Button>
+							<Button variant="warning" key={index} disabled={!l.active} className='mx-1'>{l.label}</Button>
 							</Link>
 						))}
-					</>
+					</div>
 
 				)}
 				<div className="next">
