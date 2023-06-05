@@ -1,12 +1,13 @@
 import React from "react"
-import {Planet} from "../types/films";
+import {Planet} from "../types";
 import ListGroup from "react-bootstrap/ListGroup";
+import {Button} from "react-bootstrap";
 
 interface IProp {
-planets: Planet[]
+	planets: Planet[]
 }
 
-const Planets:React.FC<IProp> = ({ planets }) => {
+const Planets: React.FC<IProp> = ({planets}) => {
 	return (
 		<>
 			{planets.map((p, index) => (
@@ -15,6 +16,7 @@ const Planets:React.FC<IProp> = ({ planets }) => {
 					href={''}
 					key={index}>
 					{p.name}
+					<Button className='float-end'>read more</Button>
 				</ListGroup.Item>
 			))}
 		</>

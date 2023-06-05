@@ -1,25 +1,25 @@
 import React from "react"
-import {Vehicle} from "../types";
+import {Film} from "../types";
 import ListGroup from "react-bootstrap/ListGroup";
 import {Button} from "react-bootstrap";
 
 interface IProp {
-	vehicles: Vehicle[]
+	films: Film[]
 }
 
-const Planets: React.FC<IProp> = ({vehicles}) => {
+const Films:React.FC<IProp> = ({ films }) => {
 	return (
 		<>
-			{vehicles.map((v, index) => (
+			{films.map((f, index) => (
 				<ListGroup.Item
 					action
 					href={''}
 					key={index}>
-					{v.name}
+					{f.name}
 					<Button className='float-end'>read more</Button>
 				</ListGroup.Item>
 			))}
 		</>
 	)
 }
-export default Planets
+export default Films

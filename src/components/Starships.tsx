@@ -1,20 +1,22 @@
 import React from "react"
-import {Starship} from "../types/films";
+import {Starship} from "../types";
 import ListGroup from "react-bootstrap/ListGroup";
+import {Button} from "react-bootstrap";
 
 interface IProp {
-starships: Starship[]
+	starships: Starship[]
 }
 
-const Planets:React.FC<IProp> = ({ starships }) => {
+const Planets: React.FC<IProp> = ({starships}) => {
 	return (
 		<>
-			{starships.map((p, index) => (
+			{starships.map((s, index) => (
 				<ListGroup.Item
 					action
 					href={''}
 					key={index}>
-					{p.name}
+					{s.name}
+					<Button className='float-end'>read more</Button>
 				</ListGroup.Item>
 			))}
 		</>
