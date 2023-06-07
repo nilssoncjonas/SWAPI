@@ -1,9 +1,9 @@
 import React from "react"
-import {SpeciesData} from "../types"
+import {Meta, SpeciesData} from "../types"
 import ListGroup from "react-bootstrap/ListGroup"
 
 interface IProp {
-	species: SpeciesData
+	species: SpeciesData | Meta[]
 }
 
 const C_Species: React.FC<IProp> = ({species}) => {

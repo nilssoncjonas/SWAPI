@@ -1,9 +1,9 @@
 import React from "react"
-import {TPeople} from "../types"
+import {Meta, TPeople} from "../types"
 import ListGroup from "react-bootstrap/ListGroup"
 
 interface IProp {
-	people: TPeople[]
+	people: TPeople[] | Meta[]
 }
 
 const C_Characters: React.FC<IProp> = ({people}) => {

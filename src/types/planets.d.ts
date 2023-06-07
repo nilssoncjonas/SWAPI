@@ -1,4 +1,4 @@
-import {Meta, PaginationData} from "./index"
+import {FilmsMeta, PaginationData} from "./index"
 
 
 export type TPlanetResidents = {
@@ -28,7 +28,7 @@ export type TSinglePlanet = {
 	created: string
 	edited: string
 	residents: TPlanetResidents[]
-	films: Meta[]
+	films: FilmsMeta[]
 }
 
 export type TPlanets = {

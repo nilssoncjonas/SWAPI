@@ -1,9 +1,9 @@
 import React from "react"
-import {VehiclesData} from "../types"
+import {Meta, VehiclesData} from "../types"
 import ListGroup from "react-bootstrap/ListGroup"
 
 interface IProp {
-	vehicles: VehiclesData
+	vehicles: VehiclesData | Meta[]
 }
 
 const C_Vehicles: React.FC<IProp> = ({vehicles}) => {

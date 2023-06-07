@@ -39,3 +39,8 @@ export type FilmsData = TFilms[]
 export type FilmPaginationData = PaginationData & {
 	data: FilmsData
 }
+
+export type FilmsMeta = {
+	id: number
+	title: string
+}

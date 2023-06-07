@@ -1,9 +1,9 @@
 import React from "react"
-import {PlanetsData} from "../types"
+import {Meta, PlanetsData} from "../types"
 import ListGroup from "react-bootstrap/ListGroup"
 
 interface IProp {
-	planets: PlanetsData
+	planets: PlanetsData | Meta[]
 }
 
 const C_Planets: React.FC<IProp> = ({planets}) => {

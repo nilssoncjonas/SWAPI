@@ -1,9 +1,9 @@
 import React from "react"
-import {FilmsData} from "../types"
+import {FilmsData, FilmsMeta} from "../types"
 import ListGroup from "react-bootstrap/ListGroup"
 
 interface IProp {
-	films: FilmsData
+	films: FilmsData | FilmsMeta[]
 }
 
 const C_Films:React.FC<IProp> = ({ films }) => {

@@ -1,4 +1,4 @@
-import {Meta, PaginationData} from "./index"
+import {FilmsMeta, Meta, PaginationData} from "./index"
 
 export type TSingleSpecies = {
 	id: number
@@ -15,7 +15,7 @@ export type TSingleSpecies = {
 	edited: string
 	people: Meta[]
 	homeworld: Meta | null
-	films: Meta[]
+	films: FilmsMeta[]
 }
 export type TSpecies = {
 	id: number
