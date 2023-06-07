@@ -18,7 +18,7 @@ export type PlanetResidents = {
 	edited: string
 }
 
-export type Planets = {
+export type Planet = {
 	id: number
 	name: string
 	rotation_period: string
@@ -35,7 +35,7 @@ export type Planets = {
 	films: PlanetFilm[]
 }
 
-export type Planet = {
+export type Planets = {
 	id: number
 	name: string
 	rotation_period: string
@@ -52,7 +52,7 @@ export type Planet = {
 	films_count: number
 }
 
-export type PlanetsData = Planet[]
+export type PlanetsData = Planets[]
 
 export type PlanetsPaginationData = {
 	current_page: number

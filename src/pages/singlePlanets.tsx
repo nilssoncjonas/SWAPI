@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react"
 import {useParams} from "react-router-dom"
-import {Planets} from "../types/planets"
+import {Planet} from "../types/planets"
 import * as SWAPI from "../services/SWAPI-client.ts"
 import Image from "react-bootstrap/Image"
 import spinner from "../../public/rebel.svg"
@@ -12,10 +12,10 @@ import Films from "../components/Films.tsx"
 import Characters from "../components/Characters.tsx";
 
 
-const Planet = () => {
+const SinglePlanets = () => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
-	const [planetData, setPlanetData] = useState<Planets | null>(null)
+	const [planetData, setPlanetData] = useState<Planet | null>(null)
 	const {id} = useParams()
 	const planetId = Number(id)
 
@@ -23,7 +23,7 @@ const Planet = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: Planets = await SWAPI.getPlanet(id)
+			const res: Planet = await SWAPI.getPlanet(id)
 			setPlanetData(res)
 		} catch (err: any) {
 			console.error(err)
@@ -81,4 +81,4 @@ const Planet = () => {
 		</>
 	)
 }
-export default Planet
+export default SinglePlanets

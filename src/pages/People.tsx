@@ -65,7 +65,6 @@ const People = () => {
 					<Pagination resData={resData} onPrevPage={handlePrevPage} onNextPage={handleNextPage}/>
 				</>
 			)}
-
 		</>
 	)
 }
