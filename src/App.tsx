@@ -17,6 +17,8 @@ import Species from "./pages/Species.tsx";
 import SingleSpecies from "./pages/SingleSpecies.tsx";
 
 import Starships from "./pages/Starships.tsx";
+import SingleStarships from "./pages/SingleStarships.tsx";
+
 import Vehicles from "./pages/Vehicles.tsx";
 // Components
 import Navigation from "./components/Navigation.tsx";
@@ -49,6 +51,7 @@ const App = () => {
 					<Route path='/species/:id' element={<SingleSpecies/>}/>
 
 					<Route path='/starships' element={<Starships/>}/>
+					<Route path='/starships/:id' element={<SingleStarships/>}/>
 
 					<Route path='/vehicles' element={<Vehicles/>}/>
 

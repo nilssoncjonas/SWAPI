@@ -1,7 +1,15 @@
 import axios from 'axios'
 import {
-	TSingleFilm,	TSinglePeople, TSinglePlanet, TSingleSpecies,
-	FilmPaginationData,	PeoplePaginationData, PlanetsPaginationData, SpeciesPaginationData
+	TSingleFilm,
+	TSinglePeople,
+	TSinglePlanet,
+	TSingleSpecies,
+	FilmPaginationData,
+	PeoplePaginationData,
+	PlanetsPaginationData,
+	SpeciesPaginationData,
+	StarshipsPaginationData,
+	TSingleStarships
 } from "../types";
 
 
@@ -75,6 +83,25 @@ export const getSingleSpecies = async (id: number) => {
 		throw new Error(err)
 	}
 }
+
+export const getStarships = async () => {
+	try {
+		const response = await axios.get(`${BASE_URL}/starships`)
+		return response.data as StarshipsPaginationData
+	} catch (err: any) {
+		throw new Error(err)
+	}
+}
+export const getSingleStarships = async (id: number) => {
+	try {
+		const response = await axios.get(`${BASE_URL}/starships/${id}`)
+		return response.data as TSingleStarships
+
+	} catch (err: any) {
+		throw new Error(err)
+	}
+}
+
 
 /**
  * TODO Replace 'any' with correct type definition 😱!

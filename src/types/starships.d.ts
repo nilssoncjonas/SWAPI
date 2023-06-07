@@ -1,6 +1,6 @@
-import {Meta, PaginationData} from "./index"
+import {FilmsMeta, Meta, PaginationData} from "./index"
 
-export type TSingletarships = {
+export type TSingleStarships = {
 	id: number
 	name: string
 	model: string
@@ -18,7 +18,7 @@ export type TSingletarships = {
 	created: string
 	edited: string
 	pilots: Meta[]
-	films: Meta[]
+	films: FilmsMeta[]
 }
 export type TStarships = {
 	id: number

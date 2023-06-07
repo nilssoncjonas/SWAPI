@@ -1,10 +1,16 @@
 import React from "react"
-import {FilmPaginationData, SpeciesPaginationData, PlanetsPaginationData, PeoplePaginationData} from "../types"
+import {
+	FilmPaginationData,
+	SpeciesPaginationData,
+	PlanetsPaginationData,
+	PeoplePaginationData,
+	StarshipsPaginationData
+} from "../types"
 import {Button} from "react-bootstrap"
 import {Link} from "react-router-dom"
 
 interface IProp {
-	resData: FilmPaginationData | PeoplePaginationData | PlanetsPaginationData | SpeciesPaginationData
+	resData: FilmPaginationData | PeoplePaginationData | PlanetsPaginationData | SpeciesPaginationData | StarshipsPaginationData
 	onPrevPage: () => void
 	onNextPage: () => void
 }
