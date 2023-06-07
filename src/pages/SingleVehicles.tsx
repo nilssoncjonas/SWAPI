@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import * as SWAPI from "../services/SWAPI-client.ts";
 // types
 import {TSingleVehicles} from "../types";
@@ -21,6 +21,10 @@ const SingleVehicles = () => {
 	const {id} = useParams()
 	const vehiclesId = Number(id)
 
+	const navigate = useNavigate()
+	const [page, setPage] = useState(1)
+	const [searchParams, setSearchParams] = useSearchParams();
+
 	const get = async (id: number) => {
 		setLoading(true)
 		setError(null)
@@ -34,14 +38,18 @@ const SingleVehicles = () => {
 			setLoading(false)
 		}
 	}
-
+	const searchReq = async (query: string) => {
+		setPage(1)
+		setSearchParams( {search: query, page: page.toString()})
+		navigate(`/vehicles/?search=${query}&page=1`)
+	}
 	useEffect(() => {
 		get(vehiclesId)
 	}, [vehiclesId])
 
 	return (
 		<>
-			<InputForm/>
+			<InputForm onSearch={searchReq}/>
 
 			{loading && <Image src={spinner} className='loading'/>}
 

@@ -1,6 +1,6 @@
-import * as SWAPI from "../services/SWAPI-client.ts"
 import {useEffect, useState} from "react"
-import {useParams} from "react-router-dom"
+import {useNavigate, useParams, useSearchParams} from "react-router-dom"
+import * as SWAPI from "../services/SWAPI-client.ts"
 // types
 import {TSingleFilm} from "../types"
 // components
@@ -23,6 +23,10 @@ const SingleFilm = () => {
 	const [filmData, setFilmData] = useState<TSingleFilm | null>(null)
 	const {id} = useParams()
 	const filmId = Number(id)
+
+	const navigate = useNavigate()
+	const [page, setPage] = useState(1)
+	const [searchParams, setSearchParams] = useSearchParams();
 	const get = async (id: number) => {
 		setLoading(true)
 		setError(null)
@@ -36,6 +40,11 @@ const SingleFilm = () => {
 			setLoading(false)
 		}
 	}
+	const searchReq = async (query: string) => {
+		setPage(1)
+		setSearchParams( {search: query, page: page.toString()})
+		navigate(`/films/?search=${query}&page=1`)
+	}
 
 	useEffect(() => {
 		get(filmId)
@@ -43,7 +52,7 @@ const SingleFilm = () => {
 	}, [filmId])
 	return (
 		<>
-			<InputForm/>
+			<InputForm onSearch={searchReq}/>
 
 			{loading && <Image src={spinner} className='loading'/>}
 

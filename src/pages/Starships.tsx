@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import {useSearchParams} from "react-router-dom";
 import * as SWAPI from "../services/SWAPI-client.ts";
 // types
 import {StarshipsPaginationData, StarshipsData, } from "../types";
@@ -20,6 +21,9 @@ const Starships = () => {
 	const [starshipData, setStarshipData] = useState<StarshipsData>([])
 	const [page, setPage] = useState(1)
 
+
+	const [searchParams, setSearchParams] = useSearchParams();
+	const query = searchParams.get('search')
 	const get = async () => {
 		setLoading(true)
 		setError(null)
@@ -41,15 +45,25 @@ const Starships = () => {
 	const handleNextPage = () => {
 		setPage(prevValue => prevValue + 1)
 	}
-
+	const searchReq = async (query: string) => {
+		const res = await SWAPI.searchStarships(query)
+		setPage(1)
+		setSearchParams({search: query, page: page.toString()})
+		setResData(res)
+		setStarshipData(res.data)
+	}
 	useEffect(() => {
-		get()
-	}, [])
+		if (query) {
+			searchReq(query)
+		} else {
+			get()
+		}
+	}, [query])
 
 	return (
 		<>
 			<h1>Starships</h1>
-			<InputForm />
+			<InputForm onSearch={searchReq}/>
 
 			{loading && <Image src={spinner} className='loading'/>}
 

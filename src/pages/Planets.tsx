@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react"
+import {useSearchParams} from "react-router-dom";
 import * as SWAPI from "../services/SWAPI-client.ts"
 // types
 import {PlanetsPaginationData, PlanetsData} from "../types"
@@ -18,8 +19,11 @@ const Planets = () => {
 	const [error, setError] = useState<string | null>(null)
 
 	const [resData, setResData] = useState<PlanetsPaginationData>({} as PlanetsPaginationData)
-	const [planetsData, setPeopleData] = useState<PlanetsData>([])
+	const [planetsData, setPlanetsData] = useState<PlanetsData>([])
 	const [page, setPage] = useState(1)
+
+	const [searchParams, setSearchParams] = useSearchParams();
+	const query = searchParams.get('search')
 	const get = async () => {
 		setLoading(true)
 		setError(null)
@@ -27,7 +31,7 @@ const Planets = () => {
 			const res: PlanetsPaginationData = await SWAPI.getPlanets()
 			const data: PlanetsData = res.data
 			setResData(res)
-			setPeopleData(data)
+			setPlanetsData(data)
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)
@@ -35,7 +39,13 @@ const Planets = () => {
 			setLoading(false)
 		}
 	}
-
+	const searchReq = async (query: string) => {
+		const res = await SWAPI.searchPlanets(query)
+		setPage(1)
+		setSearchParams({search: query, page: page.toString()})
+		setResData(res)
+		setPlanetsData(res.data)
+	}
 	const handlePrevPage = () => {
 		setPage(prevValue => prevValue - 1)
 	}
@@ -44,14 +54,18 @@ const Planets = () => {
 	}
 
 	useEffect(() => {
-		get()
-	}, [])
+		if (query) {
+			searchReq(query)
+		} else {
+			get()
+		}
+	}, [query])
 
 
 	return (
 		<>
 			<h1>Planets</h1>
-			<InputForm/>
+			<InputForm onSearch={searchReq}/>
 			{loading && <Image src={spinner} className='loading'/>}
 
 			{error && <AutoAlert hideAfter={7} variant='danger' msg={error}/>}

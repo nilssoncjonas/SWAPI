@@ -15,8 +15,6 @@ import {
 } from "../types";
 
 
-
-
 const BASE_URL = 'https://swapi.thehiveresistance.com/api'
 
 export const getFilms = async () => {
@@ -119,15 +117,56 @@ export const getSingleVehicles = async (id: number) => {
 		throw new Error(err)
 	}
 }
+export const searchFilms = async (query: string) => {
+	try {
+		const response = await axios.get(`${BASE_URL}/films/?search=${query}`)
+		return response.data as FilmPaginationData
+	} catch (err: any) {
+		throw new Error(err)
+	}
+}
 
+export const searchPeople = async (query: string) => {
+	try {
+		const response = await axios.get(`${BASE_URL}/people/?search=${query}`)
+		return response.data as PeoplePaginationData
+	} catch (err: any) {
+		throw new Error(err)
+	}
+}
 
-/**
- * TODO Replace 'any' with correct type definition 😱!
- *
- * @param {string} query Search query to search for
- * @param {number} page Page of search results to get
- * @returns Promise
- */
-export const search = async (query: string, page: number) => {
-	return get<any>(`/search?query=${query}&tags=story&page=${page}`)
+export const searchPlanets = async (query: string) => {
+	try {
+		const response = await axios.get(`${BASE_URL}/planets/?search=${query}`)
+		return response.data as PlanetsPaginationData
+	} catch (err: any) {
+		throw new Error(err)
+	}
+}
+
+export const searchSpecies = async (query: string) => {
+	try {
+		const response = await axios.get(`${BASE_URL}/species/?search=${query}`)
+		return response.data as SpeciesPaginationData
+	} catch (err: any) {
+		throw new Error(err)
+	}
+}
+
+export const searchStarships = async (query: string) => {
+	try {
+		const response = await axios.get(`${BASE_URL}/starships/?search=${query}`)
+		return response.data as StarshipsPaginationData
+	} catch (err: any) {
+		throw new Error(err)
+	}
+}
+
+export const searchVehicles = async (query: string) => {
+	try {
+		const response = await axios.get(`${BASE_URL}/vehicles/?search=${query}`)
+		return response.data as VehiclePaginationData
+	} catch (err: any) {
+		throw new Error(err)
+	}
 }

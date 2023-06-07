@@ -30,3 +30,4 @@ export type Meta = {
 	id: number
 	name: string
 }
+

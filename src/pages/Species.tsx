@@ -11,6 +11,7 @@ import Pagination from "../components/Pagination.tsx"
 import spinner from "../../public/rebel.svg"
 import Image from "react-bootstrap/Image"
 import ListGroup from "react-bootstrap/ListGroup"
+import {useSearchParams} from "react-router-dom";
 
 const Species = () => {
 
@@ -20,6 +21,9 @@ const Species = () => {
 	const [resData, setResData] = useState<SpeciesPaginationData>({} as SpeciesPaginationData)
 	const [speciesData, setSpeciesData] = useState<SpeciesData>([])
 	const [page, setPage] = useState(1)
+
+	const [searchParams, setSearchParams] = useSearchParams();
+	const query = searchParams.get('search')
 	const get = async () => {
 		setLoading(true)
 		setError(null)
@@ -35,7 +39,13 @@ const Species = () => {
 			setLoading(false)
 		}
 	}
-
+	const searchReq = async (query: string) => {
+		const res = await SWAPI.searchSpecies(query)
+		setPage(1)
+		setSearchParams({search: query, page: page.toString()})
+		setResData(res)
+		setSpeciesData(res.data)
+	}
 	const handlePrevPage = () => {
 		setPage(prevValue => prevValue - 1)
 	}
@@ -44,14 +54,18 @@ const Species = () => {
 	}
 
 	useEffect(() => {
-		get()
-	}, [])
+		if (query) {
+			searchReq(query)
+		} else {
+			get()
+		}
+	}, [query])
 
 
 	return (
 		<>
 			<h1>Species</h1>
-			<InputForm/>
+			<InputForm onSearch={searchReq}/>
 			{loading && <Image src={spinner} className='loading'/>}
 
 			{error && <AutoAlert hideAfter={7} variant='danger' msg={error}/>}

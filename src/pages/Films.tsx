@@ -1,5 +1,6 @@
-import * as SWAPI from "../services/SWAPI-client.ts"
 import {useEffect, useState} from "react"
+import {useSearchParams} from "react-router-dom"
+import * as SWAPI from "../services/SWAPI-client.ts"
 // Types
 import {FilmPaginationData, FilmsData} from "../types"
 // Components
@@ -12,6 +13,7 @@ import spinner from "../../public/rebel.svg"
 import ListGroup from "react-bootstrap/ListGroup"
 import Image from "react-bootstrap/Image"
 
+
 const Films = () => {
 
 	const [loading, setLoading] = useState(false)
@@ -21,6 +23,8 @@ const Films = () => {
 	const [filmData, setFilmData] = useState<FilmsData>([])
 	const [page, setPage] = useState(1)
 
+	const [searchParams, setSearchParams] = useSearchParams();
+	const query = searchParams.get('search')
 	const get = async () => {
 		setLoading(true)
 		setError(null)
@@ -36,6 +40,17 @@ const Films = () => {
 			setLoading(false)
 		}
 	}
+
+	const searchReq = async (query: string) => {
+
+		const res = await SWAPI.searchFilms(query)
+		setPage(1)
+		setSearchParams({search: query, page: page.toString()})
+		setResData(res)
+		setFilmData(res.data)
+	}
+
+
 	const handlePrevPage = () => {
 		setPage(prevValue => prevValue - 1)
 	}
@@ -44,12 +59,16 @@ const Films = () => {
 	}
 
 	useEffect(() => {
-		get()
-	}, [])
+		if (query) {
+			searchReq(query)
+		} else {
+			get()
+		}
+	}, [query])
 	return (
 		<>
 			<h1>Films</h1>
-			<InputForm/>
+			<InputForm onSearch={searchReq}/>
 
 			{loading && <Image src={spinner} className='loading'/>}
 

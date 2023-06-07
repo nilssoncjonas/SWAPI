@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react"
+import {useSearchParams} from "react-router-dom"
 import * as SWAPI from "../services/SWAPI-client.ts"
 // types
 import {PeoplePaginationData, PeoplesData} from "../types/"
@@ -19,6 +20,9 @@ const People = () => {
 	const [resData, setResData] = useState<PeoplePaginationData>({} as PeoplePaginationData)
 	const [peopleData, setPeopleData] = useState<PeoplesData>([])
 	const [page, setPage] = useState(1)
+
+	const [searchParams, setSearchParams] = useSearchParams();
+	const query = searchParams.get('search')
 	const get = async () => {
 		setLoading(true)
 		setError(null)
@@ -35,6 +39,13 @@ const People = () => {
 		}
 	}
 
+	const searchReq = async (query: string) => {
+		const res = await SWAPI.searchPeople(query)
+		setPage(1)
+		setSearchParams({search: query, page: page.toString()})
+		setResData(res)
+		setPeopleData(res.data)
+	}
 	const handlePrevPage = () => {
 		setPage(prevValue => prevValue - 1)
 	}
@@ -43,13 +54,17 @@ const People = () => {
 	}
 
 	useEffect(() => {
-		get()
-	}, [])
+		if (query) {
+			searchReq(query)
+		} else {
+			get()
+		}
+	}, [query])
 
 	return (
 		<>
 			<h1>People</h1>
-			<InputForm/>
+			<InputForm onSearch={searchReq}/>
 
 			{loading && <Image src={spinner} className='loading'/>}
 

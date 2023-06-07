@@ -3,7 +3,12 @@ import {useEffect, useRef, useState} from "react";
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
-const InputForm = () => {
+
+interface IProp {
+	onSearch: (query: string) => void
+}
+
+const InputForm:React.FC<IProp>= ({onSearch}) => {
 
 	const [searchInput, setSearchInput] = useState('')
 	const searchInputRef = useRef<HTMLInputElement>(null)
@@ -13,9 +18,7 @@ const InputForm = () => {
 			//TODO add error management
 			return console.error('WHY YOU DO THAT!?')
 		}
-		console.log(searchInput)
-		// TODO call APIClient with search req
-
+		onSearch(searchInput)
 	}
 	useEffect(() => {
 		searchInputRef.current?.focus()

@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react"
-import {useParams} from "react-router-dom"
+import {useNavigate, useParams, useSearchParams} from "react-router-dom"
 import * as SWAPI from "../services/SWAPI-client.ts"
 // types
 import {TSinglePlanet} from "../types/"
@@ -22,6 +22,9 @@ const SinglePlanets = () => {
 	const {id} = useParams()
 	const planetId = Number(id)
 
+	const navigate = useNavigate()
+	const [page, setPage] = useState(1)
+	const [searchParams, setSearchParams] = useSearchParams();
 	const get = async (id: number) => {
 		setLoading(true)
 		setError(null)
@@ -35,6 +38,11 @@ const SinglePlanets = () => {
 			setLoading(false)
 		}
 	}
+	const searchReq = async (query: string) => {
+		setPage(1)
+		setSearchParams( {search: query, page: page.toString()})
+		navigate(`/planets/?search=${query}&page=1`)
+	}
 
 
 	useEffect(() => {
@@ -43,7 +51,7 @@ const SinglePlanets = () => {
 	}, [planetId])
 	return (
 		<>
-			<InputForm/>
+			<InputForm onSearch={searchReq}/>
 
 			{loading && <Image src={spinner} className='loading'/>}
 

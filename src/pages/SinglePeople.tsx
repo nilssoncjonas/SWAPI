@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react"
-import {useParams} from "react-router-dom"
+import {useNavigate, useParams, useSearchParams} from "react-router-dom"
 import * as SWAPI from "../services/SWAPI-client.ts"
 // types
 import {TSinglePeople} from "../types/"
@@ -24,6 +24,10 @@ const SinglePeople = () => {
 	const {id} = useParams()
 	const personId = Number(id)
 
+	const navigate = useNavigate()
+	const [page, setPage] = useState(1)
+	const [searchParams, setSearchParams] = useSearchParams();
+
 	const get = async (id: number) => {
 		setLoading(true)
 		setError(null)
@@ -37,7 +41,11 @@ const SinglePeople = () => {
 			setLoading(false)
 		}
 	}
-
+	const searchReq = async (query: string) => {
+		setPage(1)
+		setSearchParams( {search: query, page: page.toString()})
+		navigate(`/people/?search=${query}&page=1`)
+	}
 
 	useEffect(() => {
 		get(personId)
@@ -45,7 +53,7 @@ const SinglePeople = () => {
 	}, [personId])
 	return (
 		<>
-			<InputForm/>
+			<InputForm onSearch={searchReq}/>
 
 			{loading && <Image src={spinner} className='loading'/>}
 
