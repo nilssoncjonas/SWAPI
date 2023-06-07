@@ -1,11 +1,7 @@
-import {PageLink} from "./index";
+import {Meta, PaginationData} from "./index"
 
-export type PlanetFilm = {
-	id: number
-	title: string
-}
 
-export type PlanetResidents = {
+export type TPlanetResidents = {
 	id: number
 	name: string
 	birth_year: string
@@ -18,7 +14,7 @@ export type PlanetResidents = {
 	edited: string
 }
 
-export type Planet = {
+export type TSinglePlanet = {
 	id: number
 	name: string
 	rotation_period: string
@@ -31,11 +27,11 @@ export type Planet = {
 	population: string
 	created: string
 	edited: string
-	residents: PlanetResidents[]
-	films: PlanetFilm[]
+	residents: TPlanetResidents[]
+	films: Meta[]
 }
 
-export type Planets = {
+export type TPlanets = {
 	id: number
 	name: string
 	rotation_period: string
@@ -52,20 +48,8 @@ export type Planets = {
 	films_count: number
 }
 
-export type PlanetsData = Planets[]
+export type PlanetsData = TPlanets[]
 
-export type PlanetsPaginationData = {
-	current_page: number
+export type PlanetsPaginationData = PaginationData & {
 	data: PlanetsData
-	first_page_url: string
-	from: number
-	last_page: number
-	last_page_url: string
-	links: PageLink[]
-	next_page_url: string | null
-	path: string
-	per_page: number
-	prev_page_url: string | null
-	to: number
-	total: number
 }

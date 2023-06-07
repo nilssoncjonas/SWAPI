@@ -1,6 +1,6 @@
-import {Link} from "react-router-dom";
+import {Link} from "react-router-dom"
 // Style
-import {Button} from "react-bootstrap";
+import {Button} from "react-bootstrap"
 
 const NotFound = () => {
 	return (

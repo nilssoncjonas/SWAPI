@@ -1,23 +1,23 @@
 import React from "react"
-import {SpeciesData} from "../types"
+import {TPeople} from "../types"
 import ListGroup from "react-bootstrap/ListGroup"
 
 interface IProp {
-	species: SpeciesData
+	people: TPeople[]
 }
 
-const C_Species: React.FC<IProp> = ({species}) => {
+const C_Characters: React.FC<IProp> = ({people}) => {
 	return (
 		<>
-			{species.map((s, index) => (
+			{people.map((p, index) => (
 				<ListGroup.Item
 					action
 					href={''}
 					key={index}>
-					{s.name}
+					{p.name}
 				</ListGroup.Item>
 			))}
 		</>
 	)
 }
-export default C_Species
+export default C_Characters

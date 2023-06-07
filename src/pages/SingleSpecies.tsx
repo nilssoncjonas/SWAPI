@@ -1,18 +1,18 @@
 import {useEffect, useState} from "react"
-import {useParams} from "react-router-dom";
-import * as SWAPI from "../services/SWAPI-client.ts";
+import {useParams} from "react-router-dom"
+import * as SWAPI from "../services/SWAPI-client.ts"
 // types
-import {TSingleSpecies} from "../types/species";
+import {TSingleSpecies} from "../types/"
 // components
-import AutoAlert from "../components/AutoAlert.tsx";
-import Characters from "../components/Characters.tsx";
-import Films from "../components/Films.tsx";
-import InputForm from "../components/InputForm.tsx";
+import AutoAlert from "../components/AutoAlert.tsx"
+import C_Characters from "../components/C_Characters.tsx"
+import C_Films from "../components/C_Films.tsx"
+import InputForm from "../components/InputForm.tsx"
 // style
-import spinner from "../../public/rebel.svg";
-import Image from "react-bootstrap/Image";
-import Container from "react-bootstrap/Container";
-import ListGroup from "react-bootstrap/ListGroup";
+import spinner from "../../public/rebel.svg"
+import Image from "react-bootstrap/Image"
+import Container from "react-bootstrap/Container"
+import ListGroup from "react-bootstrap/ListGroup"
 
 
 const SingleSpecies = () => {
@@ -70,7 +70,7 @@ const SingleSpecies = () => {
 						<div>
 							<h3 className='mx-auto text-center'>People</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<Characters people={speciesData.people}/>
+								<C_Characters people={speciesData.people}/>
 							</ListGroup>
 						</div>
 
@@ -89,7 +89,7 @@ const SingleSpecies = () => {
 						<div>
 							<h3 className='mx-auto text-center'>Films</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<Films films={speciesData.films}/>
+								<C_Films films={speciesData.films}/>
 							</ListGroup>
 						</div>
 					</Container>

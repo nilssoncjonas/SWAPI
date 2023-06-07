@@ -1,23 +1,23 @@
 import React from "react"
-import {SpeciesData} from "../types"
+import {VehiclesData} from "../types"
 import ListGroup from "react-bootstrap/ListGroup"
 
 interface IProp {
-	species: SpeciesData
+	vehicles: VehiclesData
 }
 
-const C_Species: React.FC<IProp> = ({species}) => {
+const C_Vehicles: React.FC<IProp> = ({vehicles}) => {
 	return (
 		<>
-			{species.map((s, index) => (
+			{vehicles.map((v, index) => (
 				<ListGroup.Item
 					action
 					href={''}
 					key={index}>
-					{s.name}
+					{v.name}
 				</ListGroup.Item>
 			))}
 		</>
 	)
 }
-export default C_Species
+export default C_Vehicles

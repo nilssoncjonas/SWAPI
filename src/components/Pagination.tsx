@@ -1,10 +1,7 @@
 import React from "react"
-import {FilmPaginationData} from "../types";
-import {Link} from "react-router-dom";
-import {Button} from "react-bootstrap";
-import {PeoplePaginationData} from "../types/peoples";
-import {PlanetsPaginationData} from "../types/planets";
-import {SpeciesPaginationData} from "../types/species";
+import {FilmPaginationData, SpeciesPaginationData, PlanetsPaginationData, PeoplePaginationData} from "../types"
+import {Button} from "react-bootstrap"
+import {Link} from "react-router-dom"
 
 interface IProp {
 	resData: FilmPaginationData | PeoplePaginationData | PlanetsPaginationData | SpeciesPaginationData

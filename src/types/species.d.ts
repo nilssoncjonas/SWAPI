@@ -1,19 +1,4 @@
-import {PageLink} from "./index";
-
-export type SpeciesPerson = {
-	id: number
-	name: string
-}
-
-export type SpeciesHomeworld = {
-	id: number
-	name: string
-}
-
-export type SpeciesFilm = {
-	id: number
-	title: string
-}
+import {Meta, PaginationData} from "./index"
 
 export type TSingleSpecies = {
 	id: number
@@ -28,9 +13,9 @@ export type TSingleSpecies = {
 	language: string
 	created: string
 	edited: string
-	people: SpeciesPerson[]
-	homeworld: SpeciesHomeworld | null
-	films: SpeciesFilm[]
+	people: Meta[]
+	homeworld: Meta | null
+	films: Meta[]
 }
 export type TSpecies = {
 	id: number
@@ -47,23 +32,12 @@ export type TSpecies = {
 	edited: string
 	people_count: number
 	films_count: number
-	homeworld: SpeciesHomeworld
+	homeworld: Meta
 }
 
 export type SpeciesData = TSpecies[]
 
-export type SpeciesPaginationData = {
-	current_page: number
+export type SpeciesPaginationData = PaginationData & {
 	data: SpeciesData
-	first_page_url: string
-	from: number
-	last_page: number
-	last_page_url: string
-	links: PageLink[]
-	next_page_url: string | null
-	path: string
-	per_page: number
-	prev_page_url: string | null
-	to: number
-	total: number
+
 }

@@ -1,14 +1,16 @@
-import InputForm from "../components/InputForm.tsx";
-import {useEffect, useState} from "react";
-import {PaginationData} from "../types";
-import * as SWAPI from "../services/SWAPI-client.ts";
-import {PlanetsData, PlanetsPaginationData} from "../types/planets";
-import {Image} from "react-bootstrap";
-import spinner from "../../public/rebel.svg";
-import AutoAlert from "../components/AutoAlert.tsx";
-import ListGroup from "react-bootstrap/ListGroup";
-import Pagination from "../components/Pagination.tsx";
-import PlanetsList from "../components/PlanetsList.tsx";
+import {useEffect, useState} from "react"
+import * as SWAPI from "../services/SWAPI-client.ts"
+// types
+import {PlanetsPaginationData, PlanetsData} from "../types"
+// components
+import AutoAlert from "../components/AutoAlert.tsx"
+import InputForm from "../components/InputForm.tsx"
+import Pagination from "../components/Pagination.tsx"
+import C_PlanetsList from "../components/C_PlanetsList.tsx"
+// style
+import spinner from "../../public/rebel.svg"
+import Image from "react-bootstrap/Image"
+import ListGroup from "react-bootstrap/ListGroup"
 
 
 const Planets = () => {
@@ -22,7 +24,7 @@ const Planets = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: PaginationData = await SWAPI.getPlanets()
+			const res: PlanetsPaginationData = await SWAPI.getPlanets()
 			const data: PlanetsData = res.data
 			setResData(res)
 			setPeopleData(data)
@@ -59,7 +61,7 @@ const Planets = () => {
 					<p>Showing {resData.from} to {resData.to} of {resData.total} from the People Resource</p>
 
 					<ListGroup className='mb-3'>
-						<PlanetsList data={planetsData}/>
+						<C_PlanetsList data={planetsData}/>
 					</ListGroup>
 
 					<Pagination resData={resData} onPrevPage={handlePrevPage} onNextPage={handleNextPage}/>

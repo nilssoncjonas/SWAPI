@@ -1,6 +1,6 @@
 import starWars from '../../public/star-wars-intro.svg'
-import Container from "react-bootstrap/Container";
-import {Image} from "react-bootstrap";
+import Container from "react-bootstrap/Container"
+import Image from "react-bootstrap/Image"
 
 const Intro = () => {
 	return (

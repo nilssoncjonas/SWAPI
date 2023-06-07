@@ -1,8 +1,6 @@
 import React from "react"
-// types
-import {SpeciesData} from "../types/species";
-// style
-import ListGroup from "react-bootstrap/ListGroup";
+import {SpeciesData} from "../types/"
+import ListGroup from "react-bootstrap/ListGroup"
 
 interface IProp {
 	data: SpeciesData

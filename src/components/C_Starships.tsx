@@ -1,15 +1,15 @@
 import React from "react"
-import {SpeciesData} from "../types"
+import {StarshipsData} from "../types"
 import ListGroup from "react-bootstrap/ListGroup"
 
 interface IProp {
-	species: SpeciesData
+	starships: StarshipsData
 }
 
-const C_Species: React.FC<IProp> = ({species}) => {
+const C_Starships: React.FC<IProp> = ({starships}) => {
 	return (
 		<>
-			{species.map((s, index) => (
+			{starships.map((s, index) => (
 				<ListGroup.Item
 					action
 					href={''}
@@ -20,4 +20,4 @@ const C_Species: React.FC<IProp> = ({species}) => {
 		</>
 	)
 }
-export default C_Species
+export default C_Starships

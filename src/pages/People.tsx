@@ -1,15 +1,16 @@
-import {useEffect, useState} from "react";
-import {PaginationData} from "../types"
+import {useEffect, useState} from "react"
 import * as SWAPI from "../services/SWAPI-client.ts"
-
-import {Image} from "react-bootstrap"
-import spinner from "../../public/rebel.svg"
+// types
+import {PeoplePaginationData, PeoplesData} from "../types/"
+// components
 import AutoAlert from "../components/AutoAlert.tsx"
 import InputForm from "../components/InputForm.tsx"
-import {PeoplePaginationData, PeoplesData} from "../types/peoples";
-import ListGroup from "react-bootstrap/ListGroup";
-import Pagination from "../components/Pagination.tsx";
-import PeopleList from "../components/PeopleList.tsx";
+import Pagination from "../components/Pagination.tsx"
+import C_PeopleList from "../components/C_PeopleList.tsx"
+// style
+import spinner from "../../public/rebel.svg"
+import {Image} from "react-bootstrap"
+import ListGroup from "react-bootstrap/ListGroup"
 
 const People = () => {
 	const [loading, setLoading] = useState(false)
@@ -22,7 +23,7 @@ const People = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: PaginationData = await SWAPI.getPeople()
+			const res: PeoplePaginationData = await SWAPI.getPeople()
 			const data: PeoplesData = res.data
 			setResData(res)
 			setPeopleData(data)
@@ -59,7 +60,7 @@ const People = () => {
 					<p>Showing {resData.from} to {resData.to} of {resData.total} from the People Resource</p>
 
 					<ListGroup className='mb-3'>
-						<PeopleList data={peopleData}/>
+						<C_PeopleList data={peopleData}/>
 					</ListGroup>
 
 					<Pagination resData={resData} onPrevPage={handlePrevPage} onNextPage={handleNextPage}/>

@@ -1,29 +1,6 @@
-export type Character = {
-	id: number
-	name: string
-}
+import {Meta, PaginationData} from "./index"
 
-export type Planet = {
-	id: number
-	name: string
-}
-
-export type Starship = {
-	id: number
-	name: string
-}
-
-export type Vehicle = {
-	id: number
-	name: string
-}
-
-export type Species = {
-	id: number
-	name: string
-}
-
-export type Films = {
+export type TFilms = {
 	id: number
 	title: string
 	episode_id: string
@@ -40,7 +17,7 @@ export type Films = {
 	species_count: number | null
 }
 
-export type Film = {
+export type TSingleFilm = {
 	id: number
 	title: string
 	episode_id: string
@@ -50,33 +27,15 @@ export type Film = {
 	release_date: string
 	created: string
 	edited: string
-	characters: Character[]
-	planets: Planet[]
-	starships: Starship[]
-	vehicles: Vehicle[]
-	species: Species[]
+	characters: Meta[]
+	planets: Meta[]
+	starships: Meta[]
+	vehicles: Meta[]
+	species: Meta[]
 }
 
-export type FilmsData = Films[]
+export type FilmsData = TFilms[]
 
-export type PageLink = {
-	url: string | null
-	label: string
-	active: boolean
-}
-
-export type FilmPaginationData = {
-	current_page: number
+export type FilmPaginationData = PaginationData & {
 	data: FilmsData
-	first_page_url: string
-	from: number
-	last_page: number
-	last_page_url: string
-	links: PageLink[]
-	next_page_url: string | null
-	path: string
-	per_page: number
-	prev_page_url: string | null
-	to: number
-	total: number
 }

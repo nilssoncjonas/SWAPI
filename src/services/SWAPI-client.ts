@@ -1,8 +1,9 @@
 import axios from 'axios'
-import {Film, FilmPaginationData} from "../types";
-import {PeoplePaginationData, Person} from "../types/peoples";
-import {Planet, PlanetsPaginationData} from "../types/planets";
-import {SpeciesPaginationData, TSingleSpecies} from "../types/species";
+import {
+	TSingleFilm,	TSinglePeople, TSinglePlanet, TSingleSpecies,
+	FilmPaginationData,	PeoplePaginationData, PlanetsPaginationData, SpeciesPaginationData
+} from "../types";
+
 
 
 
@@ -16,10 +17,10 @@ export const getFilms = async () => {
 		throw new Error(err)
 	}
 }
-export const getFilm = async (id: number) => {
+export const getSingleFilm = async (id: number) => {
 	try {
 		const response = await axios.get(`${BASE_URL}/films/${id}`)
-		return response.data as Film
+		return response.data as TSingleFilm
 	} catch (err: any) {
 		throw new Error(err)
 	}
@@ -32,10 +33,10 @@ export const getPeople = async () => {
 		throw new Error(err)
 	}
 }
-export const getPerson = async (id: number) => {
+export const getSinglePeople = async (id: number) => {
 	try {
 		const response = await axios.get(`${BASE_URL}/people/${id}`)
-		return response.data as Person
+		return response.data as TSinglePeople
 	} catch (err: any) {
 		throw new Error(err)
 	}
@@ -48,10 +49,10 @@ export const getPlanets = async () => {
 		throw new Error(err)
 	}
 }
-export const getPlanet = async (id: number) => {
+export const getSinglePlanets = async (id: number) => {
 	try {
 		const response = await axios.get(`${BASE_URL}/planets/${id}`)
-		return response.data as Planet
+		return response.data as TSinglePlanet
 
 	} catch (err: any) {
 		throw new Error(err)

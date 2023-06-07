@@ -1,12 +1,12 @@
 import React from "react"
-import {PlanetsData} from "../types/planets";
-import ListGroup from "react-bootstrap/ListGroup";
+import {PlanetsData} from "../types/"
+import ListGroup from "react-bootstrap/ListGroup"
 
 interface IProp {
 	data: PlanetsData
 }
 
-const PlanetsList: React.FC<IProp> = ({data}) => {
+const C_PlanetsList: React.FC<IProp> = ({data}) => {
 	return (
 		<>
 			{data.map((data, index) => (
@@ -24,4 +24,4 @@ const PlanetsList: React.FC<IProp> = ({data}) => {
 		</>
 	)
 }
-export default PlanetsList
+export default C_PlanetsList

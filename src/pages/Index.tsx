@@ -1,4 +1,4 @@
-import Intro from "../components/Intro.tsx";
+import Intro from "../components/Intro.tsx"
 
 const Index = () => {
 	return (

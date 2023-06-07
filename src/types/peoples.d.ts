@@ -1,21 +1,6 @@
-import {PageLink} from "./index";
+import {Meta, PaginationData} from "./index"
 
-export type PeopleFilm = {
-	id: number
-	title: string
-}
-
-export type PeopleStarship = {
-	id: number
-	name: string
-}
-
-export type PeopleVehicle = {
-	id: number
-	name: string
-}
-
-export type Person = {
+export type TSinglePeople = {
 	id: number
 	name: string
 	birth_year: string
@@ -30,13 +15,13 @@ export type Person = {
 		id: number
 		name: string
 	}
-	films: PeopleFilm[]
+	films: Meta[]
 	species: [] | null
-	starships: PeopleStarship[]
-	vehicles: PeopleVehicle[]
+	starships: Meta[]
+	vehicles: Meta[]
 }
 
-export type People = {
+export type TPeople = {
 	id: number
 	name: string
 	birth_year: string
@@ -57,20 +42,8 @@ export type People = {
 	vehicles_count: number
 }
 
-export type PeoplesData = People[]
+export type PeoplesData = TPeople[]
 
-export type PeoplePaginationData = {
-	current_page: number
+export type PeoplePaginationData = PaginationData & {
 	data: PeoplesData
-	first_page_url: string
-	from: number
-	last_page: number
-	last_page_url: string
-	links: PageLink[]
-	next_page_url: string | null
-	path: string
-	per_page: number
-	prev_page_url: string | null
-	to: number
-	total: number
 }

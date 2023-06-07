@@ -1,4 +1,4 @@
-import InputForm from "../components/InputForm.tsx";
+import InputForm from "../components/InputForm.tsx"
 
 const Search = () => {
 	return (

@@ -1,4 +1,10 @@
-export * from "./films";
+export * from "./films"
+export * from "./peoples"
+export * from "./planets"
+export * from "./species"
+export * from "./starships"
+export * from "./vehicles"
+
 export type PageLink = {
 	url: string | null
 	label: string
@@ -7,7 +13,6 @@ export type PageLink = {
 
 export type PaginationData = {
 	current_page: number
-	data: any[]
 	first_page_url: string
 	from: number
 	last_page: number
@@ -21,3 +26,7 @@ export type PaginationData = {
 	total: number
 }
 
+export type Meta = {
+	id: number
+	name: string
+}

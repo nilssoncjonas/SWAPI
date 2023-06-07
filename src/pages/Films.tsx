@@ -1,17 +1,16 @@
-import * as SWAPI from "../services/SWAPI-client.ts";
-import {useEffect, useState} from "react";
+import * as SWAPI from "../services/SWAPI-client.ts"
+import {useEffect, useState} from "react"
 // Types
-import {FilmPaginationData, FilmsData} from "../types";
+import {FilmPaginationData, FilmsData} from "../types"
 // Components
-import AutoAlert from "../components/AutoAlert.tsx";
-import InputForm from "../components/InputForm.tsx";
-import FilmsList from "../components/FilmsList.tsx";
+import AutoAlert from "../components/AutoAlert.tsx"
+import InputForm from "../components/InputForm.tsx"
+import C_FilmsList from "../components/C_FilmsList.tsx"
+import Pagination from "../components/Pagination.tsx"
 // Style
-import spinner from "../../public/rebel.svg";
-import ListGroup from "react-bootstrap/ListGroup";
-
-import Image from "react-bootstrap/Image";
-import Pagination from "../components/Pagination.tsx";
+import spinner from "../../public/rebel.svg"
+import ListGroup from "react-bootstrap/ListGroup"
+import Image from "react-bootstrap/Image"
 
 const Films = () => {
 
@@ -61,7 +60,7 @@ const Films = () => {
 					<p>Showing {resData.from} to {resData.to} of {resData.total} from the Films Resource</p>
 
 					<ListGroup className='mb-3'>
-						<FilmsList data={filmData}/>
+						<C_FilmsList data={filmData}/>
 					</ListGroup>
 
 					<Pagination resData={resData} onPrevPage={handlePrevPage} onNextPage={handleNextPage}/>

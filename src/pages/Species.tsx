@@ -1,16 +1,16 @@
-import InputForm from "../components/InputForm.tsx";
-import {useEffect, useState} from "react";
-import * as SWAPI from "../services/SWAPI-client.ts";
+import InputForm from "../components/InputForm.tsx"
+import {useEffect, useState} from "react"
+import * as SWAPI from "../services/SWAPI-client.ts"
 // types
-import {SpeciesData, SpeciesPaginationData} from "../types/species";
+import {SpeciesData, SpeciesPaginationData} from "../types/"
 // components
-import AutoAlert from "../components/AutoAlert.tsx";
-import Pagination from "../components/Pagination.tsx";
-import C_SpeciesList from "../components/C_SpeciesList.tsx";
+import AutoAlert from "../components/AutoAlert.tsx"
+import C_SpeciesList from "../components/C_SpeciesList.tsx"
+import Pagination from "../components/Pagination.tsx"
 // style
-import spinner from "../../public/rebel.svg";
-import {Image} from "react-bootstrap";
-import ListGroup from "react-bootstrap/ListGroup";
+import spinner from "../../public/rebel.svg"
+import Image from "react-bootstrap/Image"
+import ListGroup from "react-bootstrap/ListGroup"
 
 const Species = () => {
 

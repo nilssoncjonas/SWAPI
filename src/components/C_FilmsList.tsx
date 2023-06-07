@@ -1,12 +1,12 @@
 import React from "react"
-import {FilmsData} from "../types";
-import ListGroup from "react-bootstrap/ListGroup";
+import {FilmsData} from "../types"
+import ListGroup from "react-bootstrap/ListGroup"
 
 interface IProp {
 data: FilmsData
 }
 
-const FilmsList:React.FC<IProp> = ({ data }) => {
+const C_FilmsList:React.FC<IProp> = ({ data }) => {
 	return (
 		<>
 			{data.map((data, index) => (
@@ -28,4 +28,4 @@ const FilmsList:React.FC<IProp> = ({ data }) => {
 		</>
 	)
 }
-export default FilmsList
+export default C_FilmsList

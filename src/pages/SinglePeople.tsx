@@ -1,23 +1,26 @@
 import {useEffect, useState} from "react"
 import {useParams} from "react-router-dom"
-import {Person} from "../types/peoples"
 import * as SWAPI from "../services/SWAPI-client.ts"
-import Image from "react-bootstrap/Image"
-import spinner from "../../public/rebel.svg"
+// types
+import {TSinglePeople} from "../types/"
+// components
 import AutoAlert from "../components/AutoAlert.tsx"
+import C_Films from "../components/C_Films.tsx"
+import C_Species from "../components/C_Species.tsx"
+import C_Starships from "../components/C_Starships.tsx"
+import C_Vehicles from "../components/C_Vehicles.tsx"
 import InputForm from "../components/InputForm.tsx"
+// style
+import spinner from "../../public/rebel.svg"
 import Container from "react-bootstrap/Container"
+import Image from "react-bootstrap/Image"
 import ListGroup from "react-bootstrap/ListGroup"
-import Starships from "../components/Starships.tsx"
-import Vehicles from "../components/Vehicles.tsx"
-import Films from "../components/Films.tsx"
-import Species from "../components/Species.tsx"
 
 
-const SinglePerson = () => {
+const SinglePeople = () => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
-	const [personData, setPersonData] = useState<Person | null>(null)
+	const [personData, setPersonData] = useState<TSinglePeople | null>(null)
 	const {id} = useParams()
 	const personId = Number(id)
 
@@ -25,7 +28,7 @@ const SinglePerson = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: Person = await SWAPI.getPerson(id)
+			const res: TSinglePeople = await SWAPI.getSinglePeople(id)
 			setPersonData(res)
 		} catch (err: any) {
 			console.error(err)
@@ -66,27 +69,27 @@ const SinglePerson = () => {
 						<div>
 							<h3 className='mx-auto text-center'>Films</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<Films films={personData.films}/>
+								<C_Films films={personData.films}/>
 							</ListGroup>
 						</div>
 						{personData.species && (
 							<div>
 								<h3 className='mx-auto text-center'>Species</h3>
 								<ListGroup className='mb-3 mx-auto'>
-									<Species species={personData.species}/>
+									<C_Species species={personData.species}/>
 								</ListGroup>
 							</div>
 						)}
 						<div>
 							<h3 className='mx-auto text-center'>Starships</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<Starships starships={personData.starships}/>
+								<C_Starships starships={personData.starships}/>
 							</ListGroup>
 						</div>
 						<div>
 							<h3 className='mx-auto text-center'>Vehicles</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<Vehicles vehicles={personData.vehicles}/>
+								<C_Vehicles vehicles={personData.vehicles}/>
 							</ListGroup>
 						</div>
 					</Container>
@@ -96,4 +99,4 @@ const SinglePerson = () => {
 		</>
 	)
 }
-export default SinglePerson
+export default SinglePeople

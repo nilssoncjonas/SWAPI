@@ -1,21 +1,24 @@
 import {useEffect, useState} from "react"
 import {useParams} from "react-router-dom"
-import {Planet} from "../types/planets"
 import * as SWAPI from "../services/SWAPI-client.ts"
-import Image from "react-bootstrap/Image"
-import spinner from "../../public/rebel.svg"
+// types
+import {TSinglePlanet} from "../types/"
+// components
 import AutoAlert from "../components/AutoAlert.tsx"
+import C_Characters from "../components/C_Characters.tsx"
+import Films from "../components/C_Films.tsx"
 import InputForm from "../components/InputForm.tsx"
+// style
+import spinner from "../../public/rebel.svg"
+import Image from "react-bootstrap/Image"
 import Container from "react-bootstrap/Container"
 import ListGroup from "react-bootstrap/ListGroup"
-import Films from "../components/Films.tsx"
-import Characters from "../components/Characters.tsx";
 
 
 const SinglePlanets = () => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
-	const [planetData, setPlanetData] = useState<Planet | null>(null)
+	const [planetData, setPlanetData] = useState<TSinglePlanet | null>(null)
 	const {id} = useParams()
 	const planetId = Number(id)
 
@@ -23,7 +26,7 @@ const SinglePlanets = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: Planet = await SWAPI.getPlanet(id)
+			const res: TSinglePlanet = await SWAPI.getSinglePlanets(id)
 			setPlanetData(res)
 		} catch (err: any) {
 			console.error(err)
@@ -65,7 +68,7 @@ const SinglePlanets = () => {
 						<div>
 							<h3 className='mx-auto text-center'>Residents</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<Characters people={planetData.residents}/>
+								<C_Characters people={planetData.residents}/>
 							</ListGroup>
 						</div>
 						<div>

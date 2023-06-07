@@ -1,30 +1,33 @@
-import * as SWAPI from "../services/SWAPI-client.ts";
-import {useEffect, useState} from "react";
-import Image from "react-bootstrap/Image";
-import spinner from "../../public/rebel.svg";
-import AutoAlert from "../components/AutoAlert.tsx";
-import {Film,} from "../types/films";
-import {useParams} from "react-router-dom";
-import InputForm from "../components/InputForm.tsx";
-import Characters from "../components/Characters.tsx";
-import ListGroup from "react-bootstrap/ListGroup";
-import Planets from "../components/Planets.tsx";
-import Starships from "../components/Starships.tsx";
-import Vehicles from "../components/Vehicles.tsx";
-import Species from "../components/Species.tsx";
-import Container from "react-bootstrap/Container";
+import * as SWAPI from "../services/SWAPI-client.ts"
+import {useEffect, useState} from "react"
+import {useParams} from "react-router-dom"
+// types
+import {TSingleFilm} from "../types"
+// components
+import AutoAlert from "../components/AutoAlert.tsx"
+import C_Characters from "../components/C_Characters.tsx"
+import C_Planets from "../components/C_Planets.tsx"
+import C_Species from "../components/C_Species.tsx"
+import C_Starships from "../components/C_Starships.tsx"
+import C_Vehicles from "../components/C_Vehicles.tsx"
+import InputForm from "../components/InputForm.tsx"
+// style
+import spinner from "../../public/rebel.svg"
+import Image from "react-bootstrap/Image"
+import ListGroup from "react-bootstrap/ListGroup"
+import Container from "react-bootstrap/Container"
 
 const SingleFilm = () => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
-	const [filmData, setFilmData] = useState<Film | null>(null)
+	const [filmData, setFilmData] = useState<TSingleFilm | null>(null)
 	const {id} = useParams()
 	const filmId = Number(id)
 	const get = async (id: number) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: Film = await SWAPI.getFilm(id)
+			const res: TSingleFilm = await SWAPI.getSingleFilm(id)
 			setFilmData(res)
 		} catch (err: any) {
 			console.error(err)
@@ -62,31 +65,31 @@ const SingleFilm = () => {
 						<div>
 							<h3 className='mx-auto text-center'>Characters</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<Characters people={filmData.characters}/>
+								<C_Characters people={filmData.characters}/>
 							</ListGroup>
 						</div>
 						<div>
 							<h3 className='mx-auto text-center'>Planets</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<Planets planets={filmData.planets}/>
+								<C_Planets planets={filmData.planets}/>
 							</ListGroup>
 						</div>
 						<div>
 							<h3 className='mx-auto text-center'>Starships</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<Starships starships={filmData.starships}/>
+								<C_Starships starships={filmData.starships}/>
 							</ListGroup>
 						</div>
 						<div>
 							<h3 className='mx-auto text-center'>Vehicles</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<Vehicles vehicles={filmData.vehicles}/>
+								<C_Vehicles vehicles={filmData.vehicles}/>
 							</ListGroup>
 						</div>
 						<div>
 							<h3 className='mx-auto text-center'>Species</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<Species species={filmData.species}/>
+								<C_Species species={filmData.species}/>
 							</ListGroup>
 						</div>
 

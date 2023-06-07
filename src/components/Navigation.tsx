@@ -1,10 +1,10 @@
 import { NavLink, Link } from 'react-router-dom'
 // Style
+import swapi from '../../public/swapi100.png'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-import {Image} from "react-bootstrap";
-import swapi from '../../public/swapi100.png'
+import Image from "react-bootstrap/Image"
 
 const Navigation = () => {
 	return (
