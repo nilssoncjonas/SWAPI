@@ -5,9 +5,9 @@ import * as SWAPI from "../services/SWAPI-client.ts";
 import {VehiclesData, VehiclePaginationData} from "../types";
 // components
 import AutoAlert from "../components/AutoAlert.tsx";
+import C_VehiclesList from "../components/C_VehiclesList.tsx";
 import InputForm from "../components/InputForm.tsx";
 import Pagination from "../components/Pagination.tsx";
-import C_VehiclesList from "../components/C_VehiclesList.tsx";
 // style
 import spinner from "../../public/rebel.svg";
 import Image from "react-bootstrap/Image";
@@ -19,18 +19,19 @@ const Vehicles = () => {
 
 	const [resData, setResData] = useState<VehiclePaginationData>({} as VehiclePaginationData)
 	const [vehiclesData, setVehiclesData] = useState<VehiclesData>([])
-	const [page, setPage] = useState(1)
 
 	const [searchParams, setSearchParams] = useSearchParams();
 	const query = searchParams.get('search')
-	const get = async () => {
+	const page = searchParams.get('page')
+	const get = async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: VehiclePaginationData = await SWAPI.getVehicles()
+			const res: VehiclePaginationData = await SWAPI.getVehicles(page)
 			const data: VehiclesData = res.data
 			setResData(res)
 			setVehiclesData(data)
+			setSearchParams({page: page.toString()})
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)
@@ -40,25 +41,20 @@ const Vehicles = () => {
 	}
 	const searchReq = async (query: string) => {
 		const res = await SWAPI.searchVehicles(query)
-		setPage(1)
-		setSearchParams({search: query, page: page.toString()})
+		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setVehiclesData(res.data)
-	}
-	const handlePrevPage = () => {
-		setPage(prevValue => prevValue - 1)
-	}
-	const handleNextPage = () => {
-		setPage(prevValue => prevValue + 1)
 	}
 
 	useEffect(() => {
 		if (query) {
 			searchReq(query)
-		} else {
+		} else if (page) {
+			get(Number(page))
+		} else
 			get()
-		}
-	}, [query])
+	}, [query, page])
+
 	return (
 		<>
 			<h1>Vehicles</h1>
@@ -70,13 +66,13 @@ const Vehicles = () => {
 
 			{resData && vehiclesData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of {resData.total} from the Films Resource</p>
+					<p>Showing {resData.from} to {resData.to} of total {resData.total} results from the Vehicles Resource</p>
 
 					<ListGroup className='mb-3'>
 						<C_VehiclesList data={vehiclesData}/>
 					</ListGroup>
 
-					<Pagination resData={resData} onPrevPage={handlePrevPage} onNextPage={handleNextPage}/>
+					<Pagination resData={resData}/>
 				</>
 			)}
 		</>

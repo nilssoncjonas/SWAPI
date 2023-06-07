@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import * as SWAPI from "../services/SWAPI-client.ts";
 // types
-import {StarshipsPaginationData, StarshipsData, } from "../types";
+import {StarshipsPaginationData, StarshipsData,} from "../types";
 // components
 import AutoAlert from "../components/AutoAlert.tsx";
 import C_StarshipsList from "../components/C_StarshipsList.tsx";
@@ -19,19 +19,19 @@ const Starships = () => {
 
 	const [resData, setResData] = useState<StarshipsPaginationData>({} as StarshipsPaginationData)
 	const [starshipData, setStarshipData] = useState<StarshipsData>([])
-	const [page, setPage] = useState(1)
-
 
 	const [searchParams, setSearchParams] = useSearchParams();
 	const query = searchParams.get('search')
-	const get = async () => {
+	const page = searchParams.get('page')
+	const get = async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: StarshipsPaginationData = await SWAPI.getStarships()
+			const res: StarshipsPaginationData = await SWAPI.getStarships(page)
 			const data: StarshipsData = res.data
 			setResData(res)
 			setStarshipData(data)
+			setSearchParams({page: page.toString()})
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)
@@ -39,26 +39,21 @@ const Starships = () => {
 			setLoading(false)
 		}
 	}
-	const handlePrevPage = () => {
-		setPage(prevValue => prevValue - 1)
-	}
-	const handleNextPage = () => {
-		setPage(prevValue => prevValue + 1)
-	}
+
 	const searchReq = async (query: string) => {
 		const res = await SWAPI.searchStarships(query)
-		setPage(1)
-		setSearchParams({search: query, page: page.toString()})
+		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setStarshipData(res.data)
 	}
 	useEffect(() => {
 		if (query) {
 			searchReq(query)
-		} else {
+		} else if (page) {
+			get(Number(page))
+		} else
 			get()
-		}
-	}, [query])
+	}, [query, page])
 
 	return (
 		<>
@@ -71,13 +66,13 @@ const Starships = () => {
 
 			{resData && starshipData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of {resData.total} from the Films Resource</p>
+					<p>Showing {resData.from} to {resData.to} of total {resData.total} results from the Starships Resource</p>
 
 					<ListGroup className='mb-3'>
 						<C_StarshipsList data={starshipData}/>
 					</ListGroup>
 
-					<Pagination resData={resData} onPrevPage={handlePrevPage} onNextPage={handleNextPage}/>
+					<Pagination resData={resData}/>
 				</>
 			)}
 		</>

@@ -5,12 +5,12 @@ import * as SWAPI from "../services/SWAPI-client.ts"
 import {PeoplePaginationData, PeoplesData} from "../types/"
 // components
 import AutoAlert from "../components/AutoAlert.tsx"
+import C_PeopleList from "../components/C_PeopleList.tsx"
 import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
-import C_PeopleList from "../components/C_PeopleList.tsx"
 // style
 import spinner from "../../public/rebel.svg"
-import {Image} from "react-bootstrap"
+import Image from "react-bootstrap/Image"
 import ListGroup from "react-bootstrap/ListGroup"
 
 const People = () => {
@@ -19,18 +19,19 @@ const People = () => {
 
 	const [resData, setResData] = useState<PeoplePaginationData>({} as PeoplePaginationData)
 	const [peopleData, setPeopleData] = useState<PeoplesData>([])
-	const [page, setPage] = useState(1)
 
 	const [searchParams, setSearchParams] = useSearchParams();
 	const query = searchParams.get('search')
-	const get = async () => {
+	const page = searchParams.get('page')
+	const get = async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: PeoplePaginationData = await SWAPI.getPeople()
+			const res: PeoplePaginationData = await SWAPI.getPeople(page)
 			const data: PeoplesData = res.data
 			setResData(res)
 			setPeopleData(data)
+			setSearchParams({page: page.toString()})
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)
@@ -41,25 +42,19 @@ const People = () => {
 
 	const searchReq = async (query: string) => {
 		const res = await SWAPI.searchPeople(query)
-		setPage(1)
-		setSearchParams({search: query, page: page.toString()})
+		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setPeopleData(res.data)
-	}
-	const handlePrevPage = () => {
-		setPage(prevValue => prevValue - 1)
-	}
-	const handleNextPage = () => {
-		setPage(prevValue => prevValue + 1)
 	}
 
 	useEffect(() => {
 		if (query) {
 			searchReq(query)
-		} else {
+		} else if (page) {
+			get(Number(page))
+		} else
 			get()
-		}
-	}, [query])
+	}, [query, page])
 
 	return (
 		<>
@@ -72,13 +67,13 @@ const People = () => {
 
 			{resData && peopleData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of {resData.total} from the People Resource</p>
+					<p>Showing {resData.from} to {resData.to} of total {resData.total} results from the People Resource</p>
 
 					<ListGroup className='mb-3'>
 						<C_PeopleList data={peopleData}/>
 					</ListGroup>
 
-					<Pagination resData={resData} onPrevPage={handlePrevPage} onNextPage={handleNextPage}/>
+					<Pagination resData={resData}/>
 				</>
 			)}
 		</>

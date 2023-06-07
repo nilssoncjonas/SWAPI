@@ -5,8 +5,8 @@ import * as SWAPI from "../services/SWAPI-client.ts"
 import {FilmPaginationData, FilmsData} from "../types"
 // Components
 import AutoAlert from "../components/AutoAlert.tsx"
-import InputForm from "../components/InputForm.tsx"
 import C_FilmsList from "../components/C_FilmsList.tsx"
+import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
 // Style
 import spinner from "../../public/rebel.svg"
@@ -21,18 +21,19 @@ const Films = () => {
 
 	const [resData, setResData] = useState<FilmPaginationData>({} as FilmPaginationData)
 	const [filmData, setFilmData] = useState<FilmsData>([])
-	const [page, setPage] = useState(1)
 
 	const [searchParams, setSearchParams] = useSearchParams();
 	const query = searchParams.get('search')
-	const get = async () => {
+	const page = searchParams.get('page')
+	const get = async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: FilmPaginationData = await SWAPI.getFilms()
+			const res: FilmPaginationData = await SWAPI.getFilms(page)
 			const data: FilmsData = res.data
 			setResData(res)
 			setFilmData(data)
+			setSearchParams({page: page.toString()})
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)
@@ -44,27 +45,20 @@ const Films = () => {
 	const searchReq = async (query: string) => {
 
 		const res = await SWAPI.searchFilms(query)
-		setPage(1)
-		setSearchParams({search: query, page: page.toString()})
+		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setFilmData(res.data)
-	}
-
-
-	const handlePrevPage = () => {
-		setPage(prevValue => prevValue - 1)
-	}
-	const handleNextPage = () => {
-		setPage(prevValue => prevValue + 1)
 	}
 
 	useEffect(() => {
 		if (query) {
 			searchReq(query)
-		} else {
+		} else if (page) {
+			get(Number(page))
+		} else
 			get()
-		}
-	}, [query])
+	}, [query, page])
+
 	return (
 		<>
 			<h1>Films</h1>
@@ -76,13 +70,13 @@ const Films = () => {
 
 			{resData && filmData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of {resData.total} from the Films Resource</p>
+					<p>Showing {resData.from} to {resData.to} of total {resData.total} results from the Films resource</p>
 
 					<ListGroup className='mb-3'>
 						<C_FilmsList data={filmData}/>
 					</ListGroup>
 
-					<Pagination resData={resData} onPrevPage={handlePrevPage} onNextPage={handleNextPage}/>
+					<Pagination resData={resData}/>
 				</>
 			)}
 

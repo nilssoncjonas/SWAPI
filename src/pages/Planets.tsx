@@ -5,9 +5,9 @@ import * as SWAPI from "../services/SWAPI-client.ts"
 import {PlanetsPaginationData, PlanetsData} from "../types"
 // components
 import AutoAlert from "../components/AutoAlert.tsx"
+import C_PlanetsList from "../components/C_PlanetsList.tsx"
 import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
-import C_PlanetsList from "../components/C_PlanetsList.tsx"
 // style
 import spinner from "../../public/rebel.svg"
 import Image from "react-bootstrap/Image"
@@ -20,18 +20,19 @@ const Planets = () => {
 
 	const [resData, setResData] = useState<PlanetsPaginationData>({} as PlanetsPaginationData)
 	const [planetsData, setPlanetsData] = useState<PlanetsData>([])
-	const [page, setPage] = useState(1)
 
 	const [searchParams, setSearchParams] = useSearchParams();
 	const query = searchParams.get('search')
-	const get = async () => {
+	const page = searchParams.get('page')
+	const get = async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: PlanetsPaginationData = await SWAPI.getPlanets()
+			const res: PlanetsPaginationData = await SWAPI.getPlanets(page)
 			const data: PlanetsData = res.data
 			setResData(res)
 			setPlanetsData(data)
+			setSearchParams({page: page.toString()})
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)
@@ -41,25 +42,19 @@ const Planets = () => {
 	}
 	const searchReq = async (query: string) => {
 		const res = await SWAPI.searchPlanets(query)
-		setPage(1)
-		setSearchParams({search: query, page: page.toString()})
+		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setPlanetsData(res.data)
-	}
-	const handlePrevPage = () => {
-		setPage(prevValue => prevValue - 1)
-	}
-	const handleNextPage = () => {
-		setPage(prevValue => prevValue + 1)
 	}
 
 	useEffect(() => {
 		if (query) {
 			searchReq(query)
-		} else {
+		} else if (page) {
+			get(Number(page))
+		} else
 			get()
-		}
-	}, [query])
+	}, [query, page])
 
 
 	return (
@@ -72,13 +67,13 @@ const Planets = () => {
 
 			{resData && planetsData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of {resData.total} from the People Resource</p>
+					<p>Showing {resData.from} to {resData.to} of total {resData.total} results from the Planets Resource</p>
 
 					<ListGroup className='mb-3'>
 						<C_PlanetsList data={planetsData}/>
 					</ListGroup>
 
-					<Pagination resData={resData} onPrevPage={handlePrevPage} onNextPage={handleNextPage}/>
+					<Pagination resData={resData}/>
 				</>
 			)}
 		</>

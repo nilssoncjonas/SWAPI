@@ -17,9 +17,9 @@ import {
 
 const BASE_URL = 'https://swapi.thehiveresistance.com/api'
 
-export const getFilms = async () => {
+export const getFilms = async (page: number) => {
 	try {
-		const response = await axios.get(`${BASE_URL}/films`)
+		const response = await axios.get(`${BASE_URL}/films?page=${page}`)
 		return response.data as FilmPaginationData
 	} catch (err: any) {
 		throw new Error(err)
@@ -33,9 +33,9 @@ export const getSingleFilm = async (id: number) => {
 		throw new Error(err)
 	}
 }
-export const getPeople = async () => {
+export const getPeople = async (page: number) => {
 	try {
-		const response = await axios.get(`${BASE_URL}/people`)
+		const response = await axios.get(`${BASE_URL}/people?page=${page}`)
 		return response.data as PeoplePaginationData
 	} catch (err: any) {
 		throw new Error(err)
@@ -49,9 +49,9 @@ export const getSinglePeople = async (id: number) => {
 		throw new Error(err)
 	}
 }
-export const getPlanets = async () => {
+export const getPlanets = async (page: number) => {
 	try {
-		const response = await axios.get(`${BASE_URL}/planets`)
+		const response = await axios.get(`${BASE_URL}/planets?page=${page}`)
 		return response.data as PlanetsPaginationData
 	} catch (err: any) {
 		throw new Error(err)
@@ -66,9 +66,9 @@ export const getSinglePlanets = async (id: number) => {
 		throw new Error(err)
 	}
 }
-export const getSpecies = async () => {
+export const getSpecies = async (page: number) => {
 	try {
-		const response = await axios.get(`${BASE_URL}/species`)
+		const response = await axios.get(`${BASE_URL}/species?page=${page}`)
 		return response.data as SpeciesPaginationData
 	} catch (err: any) {
 		throw new Error(err)
@@ -84,9 +84,9 @@ export const getSingleSpecies = async (id: number) => {
 	}
 }
 
-export const getStarships = async () => {
+export const getStarships = async (page: number) => {
 	try {
-		const response = await axios.get(`${BASE_URL}/starships`)
+		const response = await axios.get(`${BASE_URL}/starships?page=${page}`)
 		return response.data as StarshipsPaginationData
 	} catch (err: any) {
 		throw new Error(err)
@@ -101,9 +101,9 @@ export const getSingleStarships = async (id: number) => {
 		throw new Error(err)
 	}
 }
-export const getVehicles = async () => {
+export const getVehicles = async (page: number) => {
 	try {
-		const response = await axios.get(`${BASE_URL}/vehicles`)
+		const response = await axios.get(`${BASE_URL}/vehicles?page=${page}`)
 		return response.data as VehiclePaginationData
 	} catch (err: any) {
 		throw new Error(err)

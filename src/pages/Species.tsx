@@ -1,17 +1,17 @@
-import InputForm from "../components/InputForm.tsx"
 import {useEffect, useState} from "react"
+import {useSearchParams} from "react-router-dom";
 import * as SWAPI from "../services/SWAPI-client.ts"
 // types
 import {SpeciesData, SpeciesPaginationData} from "../types/"
 // components
 import AutoAlert from "../components/AutoAlert.tsx"
 import C_SpeciesList from "../components/C_SpeciesList.tsx"
+import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
 // style
 import spinner from "../../public/rebel.svg"
 import Image from "react-bootstrap/Image"
 import ListGroup from "react-bootstrap/ListGroup"
-import {useSearchParams} from "react-router-dom";
 
 const Species = () => {
 
@@ -20,18 +20,19 @@ const Species = () => {
 
 	const [resData, setResData] = useState<SpeciesPaginationData>({} as SpeciesPaginationData)
 	const [speciesData, setSpeciesData] = useState<SpeciesData>([])
-	const [page, setPage] = useState(1)
 
 	const [searchParams, setSearchParams] = useSearchParams();
 	const query = searchParams.get('search')
-	const get = async () => {
+	const page = searchParams.get('page')
+	const get = async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: SpeciesPaginationData = await SWAPI.getSpecies()
+			const res: SpeciesPaginationData = await SWAPI.getSpecies(page)
 			const data: SpeciesData = res.data
 			setResData(res)
 			setSpeciesData(data)
+			setSearchParams({page: page.toString()})
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)
@@ -41,25 +42,19 @@ const Species = () => {
 	}
 	const searchReq = async (query: string) => {
 		const res = await SWAPI.searchSpecies(query)
-		setPage(1)
-		setSearchParams({search: query, page: page.toString()})
+		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setSpeciesData(res.data)
-	}
-	const handlePrevPage = () => {
-		setPage(prevValue => prevValue - 1)
-	}
-	const handleNextPage = () => {
-		setPage(prevValue => prevValue + 1)
 	}
 
 	useEffect(() => {
 		if (query) {
 			searchReq(query)
-		} else {
+		} else if (page) {
+			get(Number(page))
+		} else
 			get()
-		}
-	}, [query])
+	}, [query, page])
 
 
 	return (
@@ -78,7 +73,7 @@ const Species = () => {
 						<C_SpeciesList data={speciesData}/>
 					</ListGroup>
 
-					<Pagination resData={resData} onPrevPage={handlePrevPage} onNextPage={handleNextPage}/>
+					<Pagination resData={resData}/>
 				</>
 			)}
 		</>
