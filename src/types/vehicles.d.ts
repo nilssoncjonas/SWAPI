@@ -1,6 +1,6 @@
-import {Meta, PaginationData} from "./index"
+import {FilmsMeta, Meta, PaginationData} from "./index"
 
-export type TVehicle = {
+export type TVehicles = {
 	id: number
 	name: string
 	model: string
@@ -18,7 +18,7 @@ export type TVehicle = {
 	pilots_count: number
 	films_count: number
 }
-export type TSingleVehicle = {
+export type TSingleVehicles = {
 	id: number
 	name: string
 	model: string
@@ -33,11 +33,11 @@ export type TSingleVehicle = {
 	consumables: string
 	created: string
 	edited: string
-	pilots_count: Meta[]
-	films_count: Meta[]
+	pilots: Meta[]
+	films: FilmsMeta[]
 }
 
-export type VehiclesData = TVehicle[]
+export type VehiclesData = TVehicles[]
 
 export type VehiclePaginationData = PaginationData & {
 	data: VehiclesData

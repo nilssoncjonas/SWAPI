@@ -4,12 +4,14 @@ import {
 	TSinglePeople,
 	TSinglePlanet,
 	TSingleSpecies,
+	TSingleStarships,
+	TSingleVehicles,
 	FilmPaginationData,
 	PeoplePaginationData,
 	PlanetsPaginationData,
 	SpeciesPaginationData,
 	StarshipsPaginationData,
-	TSingleStarships
+	VehiclePaginationData,
 } from "../types";
 
 
@@ -97,6 +99,22 @@ export const getSingleStarships = async (id: number) => {
 		const response = await axios.get(`${BASE_URL}/starships/${id}`)
 		return response.data as TSingleStarships
 
+	} catch (err: any) {
+		throw new Error(err)
+	}
+}
+export const getVehicles = async () => {
+	try {
+		const response = await axios.get(`${BASE_URL}/vehicles`)
+		return response.data as VehiclePaginationData
+	} catch (err: any) {
+		throw new Error(err)
+	}
+}
+export const getSingleVehicles = async (id: number) => {
+	try {
+		const response = await axios.get(`${BASE_URL}/vehicles/${id}`)
+		return response.data as TSingleVehicles
 	} catch (err: any) {
 		throw new Error(err)
 	}

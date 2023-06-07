@@ -20,6 +20,7 @@ import Starships from "./pages/Starships.tsx";
 import SingleStarships from "./pages/SingleStarships.tsx";
 
 import Vehicles from "./pages/Vehicles.tsx";
+import SingleVehicles from "./pages/SingleVehicles.tsx";
 // Components
 import Navigation from "./components/Navigation.tsx";
 // Style
@@ -54,6 +55,7 @@ const App = () => {
 					<Route path='/starships/:id' element={<SingleStarships/>}/>
 
 					<Route path='/vehicles' element={<Vehicles/>}/>
+					<Route path='/vehicles/:id' element={<SingleVehicles/>}/>
 
 					<Route path='/search' element={<Search/>}/>
 
