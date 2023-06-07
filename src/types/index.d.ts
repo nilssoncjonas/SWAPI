@@ -1,10 +1,4 @@
-import {FilmData} from "./films";
-import {PeoplesData} from "./peoples";
-import {PlanetsData} from "./planets";
-import {SpeciesData} from "./species";
-import {StarshipsData} from "./starships";
-import {VehiclesData} from "./vehicles";
-
+export * from "./films";
 export type PageLink = {
 	url: string | null
 	label: string
@@ -13,7 +7,7 @@ export type PageLink = {
 
 export type PaginationData = {
 	current_page: number
-	data: FilmData | PeoplesData | PlanetsData | SpeciesData | StarshipsData | VehiclesData
+	data: any[]
 	first_page_url: string
 	from: number
 	last_page: number
@@ -26,3 +20,4 @@ export type PaginationData = {
 	to: number
 	total: number
 }
+

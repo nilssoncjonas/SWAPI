@@ -1,10 +1,10 @@
 import React from "react"
 import {Film} from "../types";
 import ListGroup from "react-bootstrap/ListGroup";
-import {Button} from "react-bootstrap";
+import {PeopleFilm} from "../types/peoples";
 
 interface IProp {
-	films: Film[]
+	films: Film[] | PeopleFilm[]
 }
 
 const Films:React.FC<IProp> = ({ films }) => {
@@ -15,8 +15,7 @@ const Films:React.FC<IProp> = ({ films }) => {
 					action
 					href={''}
 					key={index}>
-					{f.name}
-					<Button className='float-end'>read more</Button>
+					{f.title}
 				</ListGroup.Item>
 			))}
 		</>
