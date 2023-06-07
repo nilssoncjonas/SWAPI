@@ -2,9 +2,11 @@ import React from "react"
 import {FilmPaginationData} from "../types";
 import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
+import {PeoplePaginationData} from "../types/peoples";
+import {PlanetsPaginationData} from "../types/planets";
 
 interface IProp {
-	resData: FilmPaginationData
+	resData: FilmPaginationData | PeoplePaginationData | PlanetsPaginationData
 	onPrevPage: () => void
 	onNextPage: () => void
 }
@@ -22,8 +24,8 @@ const Pagination: React.FC<IProp> = ({resData, onNextPage, onPrevPage}) => {
 				{resData.links && (
 					<div>
 						{resData.links.map((l, index) => (
-							<Link to={!l.url ? '#' : l.url}>
-							<Button variant="warning" key={index} disabled={!l.active} className='mx-1'>{l.label}</Button>
+							<Link key={index} to={!l.url ? '#' : l.url}>
+							<Button variant="warning" key={index} disabled={l.active} className='mx-1'>{l.label}</Button>
 							</Link>
 						))}
 					</div>
