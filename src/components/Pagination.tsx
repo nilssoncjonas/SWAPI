@@ -4,9 +4,10 @@ import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import {PeoplePaginationData} from "../types/peoples";
 import {PlanetsPaginationData} from "../types/planets";
+import {SpeciesPaginationData} from "../types/species";
 
 interface IProp {
-	resData: FilmPaginationData | PeoplePaginationData | PlanetsPaginationData
+	resData: FilmPaginationData | PeoplePaginationData | PlanetsPaginationData | SpeciesPaginationData
 	onPrevPage: () => void
 	onNextPage: () => void
 }

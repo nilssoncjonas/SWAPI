@@ -2,6 +2,7 @@ import axios from 'axios'
 import {Film, FilmPaginationData} from "../types";
 import {PeoplePaginationData, Person} from "../types/peoples";
 import {Planet, PlanetsPaginationData} from "../types/planets";
+import {SpeciesPaginationData, TSingleSpecies} from "../types/species";
 
 
 
@@ -51,6 +52,23 @@ export const getPlanet = async (id: number) => {
 	try {
 		const response = await axios.get(`${BASE_URL}/planets/${id}`)
 		return response.data as Planet
+
+	} catch (err: any) {
+		throw new Error(err)
+	}
+}
+export const getSpecies = async () => {
+	try {
+		const response = await axios.get(`${BASE_URL}/species`)
+		return response.data as SpeciesPaginationData
+	} catch (err: any) {
+		throw new Error(err)
+	}
+}
+export const getSingleSpecies = async (id: number) => {
+	try {
+		const response = await axios.get(`${BASE_URL}/species/${id}`)
+		return response.data as TSingleSpecies
 
 	} catch (err: any) {
 		throw new Error(err)
