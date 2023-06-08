@@ -5,12 +5,11 @@ import * as SWAPI from "../services/SWAPI-client.ts";
 import {VehiclesData, VehiclePaginationData} from "../types";
 // components
 import AutoAlert from "../components/AutoAlert.tsx";
+import C_Loading from "../components/C_Loading.tsx";
 import C_VehiclesList from "../components/C_VehiclesList.tsx";
 import InputForm from "../components/InputForm.tsx";
 import Pagination from "../components/Pagination.tsx";
 // style
-import spinner from "../../public/rebel.svg";
-import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
 
 const Vehicles = () => {
@@ -60,7 +59,7 @@ const Vehicles = () => {
 			<h1>Vehicles</h1>
 			<InputForm onSearch={searchReq}/>
 
-			{loading && <Image src={spinner} className='loading'/>}
+			{loading && <C_Loading/>}
 
 			{error && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
 

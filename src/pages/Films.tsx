@@ -5,13 +5,12 @@ import * as SWAPI from "../services/SWAPI-client.ts"
 import {FilmPaginationData, FilmsData} from "../types"
 // Components
 import AutoAlert from "../components/AutoAlert.tsx"
+import C_Loading from "../components/C_Loading.tsx";
 import C_FilmsList from "../components/C_FilmsList.tsx"
 import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
 // Style
-import spinner from "../../public/rebel.svg"
 import ListGroup from "react-bootstrap/ListGroup"
-import Image from "react-bootstrap/Image"
 
 
 const Films = () => {
@@ -64,7 +63,7 @@ const Films = () => {
 			<h1>Films</h1>
 			<InputForm onSearch={searchReq}/>
 
-			{loading && <Image src={spinner} className='loading'/>}
+			{loading && <C_Loading/>}
 
 			{error && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
 

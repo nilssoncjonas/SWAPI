@@ -5,12 +5,11 @@ import * as SWAPI from "../services/SWAPI-client.ts";
 import {StarshipsPaginationData, StarshipsData,} from "../types";
 // components
 import AutoAlert from "../components/AutoAlert.tsx";
+import C_Loading from "../components/C_Loading.tsx";
 import C_StarshipsList from "../components/C_StarshipsList.tsx";
 import InputForm from "../components/InputForm.tsx";
 import Pagination from "../components/Pagination.tsx";
 // style
-import spinner from "../../public/rebel.svg";
-import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
 
 const Starships = () => {
@@ -60,7 +59,7 @@ const Starships = () => {
 			<h1>Starships</h1>
 			<InputForm onSearch={searchReq}/>
 
-			{loading && <Image src={spinner} className='loading'/>}
+			{loading && <C_Loading/>}
 
 			{error && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
 

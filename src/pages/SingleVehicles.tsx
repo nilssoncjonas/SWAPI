@@ -5,12 +5,11 @@ import * as SWAPI from "../services/SWAPI-client.ts";
 import {TSingleVehicles} from "../types";
 // components
 import AutoAlert from "../components/AutoAlert.tsx";
-import InputForm from "../components/InputForm.tsx";
 import C_Characters from "../components/C_Characters.tsx";
 import C_Films from "../components/C_Films.tsx";
+import C_Loading from "../components/C_Loading.tsx";
+import InputForm from "../components/InputForm.tsx";
 // style
-import spinner from "../../public/rebel.svg";
-import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import {ListGroupItem} from "react-bootstrap";
@@ -52,7 +51,7 @@ const SingleVehicles = () => {
 		<>
 			<InputForm onSearch={searchReq}/>
 
-			{loading && <Image src={spinner} className='loading'/>}
+			{loading && <C_Loading/>}
 
 			{error && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
 

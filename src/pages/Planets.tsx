@@ -5,12 +5,11 @@ import * as SWAPI from "../services/SWAPI-client.ts"
 import {PlanetsPaginationData, PlanetsData} from "../types"
 // components
 import AutoAlert from "../components/AutoAlert.tsx"
+import C_Loading from "../components/C_Loading.tsx";
 import C_PlanetsList from "../components/C_PlanetsList.tsx"
 import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
 // style
-import spinner from "../../public/rebel.svg"
-import Image from "react-bootstrap/Image"
 import ListGroup from "react-bootstrap/ListGroup"
 
 
@@ -61,7 +60,7 @@ const Planets = () => {
 		<>
 			<h1>Planets</h1>
 			<InputForm onSearch={searchReq}/>
-			{loading && <Image src={spinner} className='loading'/>}
+			{loading && <C_Loading/>}
 
 			{error && <AutoAlert hideAfter={7} variant='danger' msg={error}/>}
 
