@@ -15,6 +15,7 @@ import spinner from "../../public/rebel.svg"
 import Container from "react-bootstrap/Container"
 import Image from "react-bootstrap/Image"
 import ListGroup from "react-bootstrap/ListGroup"
+import {ListGroupItem} from "react-bootstrap";
 
 
 const SinglePeople = () => {
@@ -43,7 +44,7 @@ const SinglePeople = () => {
 	}
 	const searchReq = async (query: string) => {
 		setPage(1)
-		setSearchParams( {search: query, page: page.toString()})
+		setSearchParams({search: query, page: page.toString()})
 		navigate(`/people/?search=${query}&page=1`)
 	}
 
@@ -62,44 +63,59 @@ const SinglePeople = () => {
 			{personData && (
 				<div className='mb-4'>
 					<h1>{personData.name}</h1>
-					<h2 className='h3'>Home World: {personData.homeworld.name}</h2>
-
-					<p className="d-flex justify-content-between align-items-center">
-						<span className='h6 d-block'>Birth Year: {personData.birth_year}</span>
-						<span className='h6 d-block'>Eye color: {personData.eye_color}</span>
-						<span className='h6 d-block'>Hair color: {personData.hair_color}</span>
-						<span className='h6 d-block'>Height: {personData.height} cm</span>
-						<span className='h6 d-block'>Mass: {personData.mass}</span>
-						<span className='h6 d-block'>Skin color: {personData.skin_color}</span>
-					</p>
-
 					<Container>
-						<div>
+					<h2 className='h3'>Home World: {personData.homeworld.name}</h2>
+						<ListGroup className='mb-3 mx-auto'>
+							<ListGroupItem>
+								Birth Year: {personData.birth_year}
+							</ListGroupItem>
+							<ListGroupItem>
+								Eye color: {personData.eye_color}
+							</ListGroupItem>
+							<ListGroupItem>
+								Hair color: {personData.hair_color}
+							</ListGroupItem>
+							<ListGroupItem>
+								Height: {personData.height} GSH, <span className='small text-muted fst-italic'>Galactic Standard Height</span>
+							</ListGroupItem>
+							<ListGroupItem>
+								Mass: {personData.mass} GMU, <span className='small text-muted fst-italic'>Galactic Mass Unit</span>
+							</ListGroupItem>
+							<ListGroupItem>
+								Skin color: {personData.skin_color}
+							</ListGroupItem>
+						</ListGroup>
+
+						<div className='mb-4'>
 							<h3 className='mx-auto text-center'>Films</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Films films={personData.films}/>
 							</ListGroup>
 						</div>
-						{personData.species && (
-							<div>
+						{personData.species.length > 0 && (
+							<div className='mb-4'>
 								<h3 className='mx-auto text-center'>Species</h3>
 								<ListGroup className='mb-3 mx-auto'>
 									<C_Species species={personData.species}/>
 								</ListGroup>
 							</div>
 						)}
-						<div>
-							<h3 className='mx-auto text-center'>Starships</h3>
-							<ListGroup className='mb-3 mx-auto'>
-								<C_Starships starships={personData.starships}/>
-							</ListGroup>
-						</div>
-						<div>
-							<h3 className='mx-auto text-center'>Vehicles</h3>
-							<ListGroup className='mb-3 mx-auto'>
-								<C_Vehicles vehicles={personData.vehicles}/>
-							</ListGroup>
-						</div>
+						{personData.starships.length > 0 && (
+							<div className='mb-4'>
+								<h3 className='mx-auto text-center'>Starships</h3>
+								<ListGroup className='mb-3 mx-auto'>
+									<C_Starships starships={personData.starships}/>
+								</ListGroup>
+							</div>
+						)}
+						{personData.vehicles.length > 0 && (
+							<div className='mb-4'>
+								<h3 className='mx-auto text-center'>Vehicles</h3>
+								<ListGroup className='mb-3 mx-auto'>
+									<C_Vehicles vehicles={personData.vehicles}/>
+								</ListGroup>
+							</div>
+						)}
 					</Container>
 				</div>
 			)}

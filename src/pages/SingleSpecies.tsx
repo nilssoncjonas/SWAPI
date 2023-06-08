@@ -13,6 +13,7 @@ import spinner from "../../public/rebel.svg"
 import Image from "react-bootstrap/Image"
 import Container from "react-bootstrap/Container"
 import ListGroup from "react-bootstrap/ListGroup"
+import {ListGroupItem} from "react-bootstrap";
 
 
 const SingleSpecies = () => {
@@ -41,7 +42,7 @@ const SingleSpecies = () => {
 	}
 	const searchReq = async (query: string) => {
 		setPage(1)
-		setSearchParams( {search: query, page: page.toString()})
+		setSearchParams({search: query, page: page.toString()})
 		navigate(`/species/?search=${query}&page=1`)
 	}
 
@@ -60,28 +61,28 @@ const SingleSpecies = () => {
 			{speciesData && (
 				<div className='mb-4'>
 					<h1>{speciesData.name}</h1>
-					<h2 className='h3'>{speciesData.name}</h2>
-
-					<p className="d-flex justify-content-between align-items-center">
-						<span className='h6 d-block'>Classification {speciesData.classification}</span>
-						<span className='h6 d-block'>Designation {speciesData.designation}</span>
-						<span className='h6 d-block'>Average height {speciesData.average_height}</span>
-						<span className='h6 d-block'>Average lifespan: {speciesData.average_lifespan} cm</span>
-						<span className='h6 d-block'>Eye colors: {speciesData.eye_colors}</span>
-						<span className='h6 d-block'>Hair color: {speciesData.hair_colors}</span>
-						<span className='h6 d-block'>Skin color: {speciesData.skin_colors}</span>
-						<span className='h6 d-block'>Language: {speciesData.language}</span>
-					</p>
 
 					<Container>
-						<div>
-							<h3 className='mx-auto text-center'>People</h3>
+						<ListGroup className='mb-4 mx-auto'>
+							<ListGroupItem>Classification: {speciesData.classification}</ListGroupItem>
+							<ListGroupItem>Designation: {speciesData.designation}</ListGroupItem>
+							<ListGroupItem>Average height: {speciesData.average_height} cm</ListGroupItem>
+							<ListGroupItem>Average
+								lifespan: {speciesData.average_lifespan}{speciesData.average_lifespan === 'unknown' ? '' : ' years'}</ListGroupItem>
+							<ListGroupItem>Eye colors: {speciesData.eye_colors}</ListGroupItem>
+							<ListGroupItem>Hair color: {speciesData.hair_colors}</ListGroupItem>
+							<ListGroupItem>Skin color: {speciesData.skin_colors}</ListGroupItem>
+							<ListGroupItem>Language: {speciesData.language}</ListGroupItem>
+						</ListGroup>
+
+						<div className='mb-4'>
+							<h3 className='mx-auto text-center'>Characters</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Characters people={speciesData.people}/>
 							</ListGroup>
 						</div>
 
-						<div>
+						<div className='mb-4'>
 							<h3 className='mx-auto text-center'>Homeworld</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<ListGroup.Item
@@ -93,7 +94,7 @@ const SingleSpecies = () => {
 							</ListGroup>
 						</div>
 
-						<div>
+						<div className='mb-4'>
 							<h3 className='mx-auto text-center'>Films</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Films films={speciesData.films}/>

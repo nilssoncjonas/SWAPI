@@ -16,7 +16,7 @@ export type TSinglePeople = {
 		name: string
 	}
 	films: FilmsMeta[]
-	species: [] | null
+	species: []
 	starships: Meta[]
 	vehicles: Meta[]
 }

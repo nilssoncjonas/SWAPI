@@ -1,4 +1,4 @@
-import starWars from '../../public/star-wars-intro.svg'
+import starWars from '../assets/img/star-wars-intro.webp'
 import Container from "react-bootstrap/Container"
 import Image from "react-bootstrap/Image"
 

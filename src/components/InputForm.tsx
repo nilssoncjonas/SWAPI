@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
 
+
 interface IProp {
 	onSearch: (query: string) => void
 }
@@ -36,10 +37,9 @@ const InputForm:React.FC<IProp>= ({onSearch}) => {
 						onChange={e => setSearchInput(e.target.value)}
 						value={searchInput}
 					/>
-				</Form.Group>
-
-				<div className="d-flex justify-content-end">
-					<Button variant="success" type="submit" disabled={!searchInput.trim().length}>Search</Button>
+					</Form.Group>
+				<div className="d-flex justify-content-center">
+					<Button variant="warning" type="submit" disabled={!searchInput.trim().length}>Search</Button>
 				</div>
 			</Form>
 		</>

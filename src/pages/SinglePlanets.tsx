@@ -13,6 +13,7 @@ import spinner from "../../public/rebel.svg"
 import Image from "react-bootstrap/Image"
 import Container from "react-bootstrap/Container"
 import ListGroup from "react-bootstrap/ListGroup"
+import {ListGroupItem} from "react-bootstrap";
 
 
 const SinglePlanets = () => {
@@ -40,7 +41,7 @@ const SinglePlanets = () => {
 	}
 	const searchReq = async (query: string) => {
 		setPage(1)
-		setSearchParams( {search: query, page: page.toString()})
+		setSearchParams({search: query, page: page.toString()})
 		navigate(`/planets/?search=${query}&page=1`)
 	}
 
@@ -60,31 +61,37 @@ const SinglePlanets = () => {
 			{planetData && (
 				<div className='mb-4'>
 					<h1>{planetData.name}</h1>
-
-					<p className="d-flex justify-content-between align-items-center">
-						<span className='h6 d-block'>Rotation period: {planetData.rotation_period}</span>
-						<span className='h6 d-block'>Orbital period: {planetData.orbital_period}</span>
-						<span className='h6 d-block'>Diameter: {planetData.diameter}</span>
-						<span className='h6 d-block'>Climate: {planetData.climate}</span>
-						<span className='h6 d-block'>Gravity: {planetData.gravity}</span>
-						<span className='h6 d-block'>Terrain: {planetData.terrain}</span>
-						<span className='h6 d-block'>Surface water: {planetData.surface_water}</span>
-						<span className='h6 d-block'>Population: {planetData.population}</span>
-					</p>
-
 					<Container>
-						<div>
-							<h3 className='mx-auto text-center'>Residents</h3>
-							<ListGroup className='mb-3 mx-auto'>
-								<C_Characters people={planetData.residents}/>
-							</ListGroup>
-						</div>
-						<div>
-							<h3 className='mx-auto text-center'>Film</h3>
-							<ListGroup className='mb-3 mx-auto'>
-								<Films films={planetData.films}/>
-							</ListGroup>
-						</div>
+
+						<ListGroup className='mb-4 mx-auto'>
+							<ListGroupItem>Rotation period: {planetData.rotation_period}</ListGroupItem>
+							<ListGroupItem>Orbital period: {planetData.orbital_period}</ListGroupItem>
+							<ListGroupItem>Diameter: {planetData.diameter}</ListGroupItem>
+							<ListGroupItem>Climate: {planetData.climate}</ListGroupItem>
+							<ListGroupItem>Gravity: {planetData.gravity}</ListGroupItem>
+							<ListGroupItem>Terrain: {planetData.terrain}</ListGroupItem>
+							<ListGroupItem>Surface water: {planetData.surface_water}</ListGroupItem>
+							<ListGroupItem>Population: {planetData.population === 'unknown' ? 'unknown' : Number(planetData.population).toLocaleString()}</ListGroupItem>
+						</ListGroup>
+
+
+						{planetData.residents.length > 0 && (
+							<div className='mb-4'>
+
+								<h3 className='mx-auto text-center'>Residents</h3>
+								<ListGroup className='mb-3 mx-auto'>
+									<C_Characters people={planetData.residents}/>
+								</ListGroup>
+							</div>
+						)}
+						{planetData.films.length > 0 && (
+							<div className='mb-4'>
+								<h3 className='mx-auto text-center'>Films</h3>
+								<ListGroup className='mb-3 mx-auto'>
+									<Films films={planetData.films}/>
+								</ListGroup>
+							</div>
+						)}
 					</Container>
 				</div>
 			)}

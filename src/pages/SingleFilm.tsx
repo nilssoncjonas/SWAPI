@@ -62,40 +62,40 @@ const SingleFilm = () => {
 				<div className='mb-4'>
 					<h1>{filmData.title}</h1>
 					<h2 className='h3'>Episode {filmData.episode_id}</h2>
-					<p>
+					<p className='mb-5'>
 						{filmData.opening_crawl}
 					</p>
-					<p>
-						<span className='h6 d-block'>Released: {filmData.release_date}</span>
-						<span className='h6 d-block'>Directed by: {filmData.director}</span>
-						<span className='h6 d-block'>Produced by: {filmData.producer}</span>
+					<p className='d-flex justify-content-between mb-3'>
+						<span className='h6'>Released: {filmData.release_date}</span>
+						<span className='h6'>Directed by: {filmData.director}</span>
+						<span className='h6'>Produced by: {filmData.producer}</span>
 					</p>
 					<Container>
-						<div>
+						<div className='mb-4'>
 							<h3 className='mx-auto text-center'>Characters</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Characters people={filmData.characters}/>
 							</ListGroup>
 						</div>
-						<div>
+						<div className='mb-4'>
 							<h3 className='mx-auto text-center'>Planets</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Planets planets={filmData.planets}/>
 							</ListGroup>
 						</div>
-						<div>
+						<div className='mb-4'>
 							<h3 className='mx-auto text-center'>Starships</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Starships starships={filmData.starships}/>
 							</ListGroup>
 						</div>
-						<div>
+						<div className='mb-4'>
 							<h3 className='mx-auto text-center'>Vehicles</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Vehicles vehicles={filmData.vehicles}/>
 							</ListGroup>
 						</div>
-						<div>
+						<div className='mb-4'>
 							<h3 className='mx-auto text-center'>Species</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Species species={filmData.species}/>

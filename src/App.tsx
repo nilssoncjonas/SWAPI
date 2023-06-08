@@ -34,7 +34,7 @@ const App = () => {
 	return (
 		<>
 			<Navigation/>
-			<Container>
+			<Container className='mb-5'>
 
 				<Routes>
 					<Route path='/' element={<Index/>}/>

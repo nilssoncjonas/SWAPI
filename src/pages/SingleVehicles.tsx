@@ -13,6 +13,7 @@ import spinner from "../../public/rebel.svg";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
+import {ListGroupItem} from "react-bootstrap";
 
 const SingleVehicles = () => {
 	const [loading, setLoading] = useState(false)
@@ -40,7 +41,7 @@ const SingleVehicles = () => {
 	}
 	const searchReq = async (query: string) => {
 		setPage(1)
-		setSearchParams( {search: query, page: page.toString()})
+		setSearchParams({search: query, page: page.toString()})
 		navigate(`/vehicles/?search=${query}&page=1`)
 	}
 	useEffect(() => {
@@ -58,25 +59,29 @@ const SingleVehicles = () => {
 			{vehiclesData && (
 				<div className='mb-4'>
 					<h1>{vehiclesData.name}</h1>
-					<h2 className='h3'>{vehiclesData.manufacturer} {vehiclesData.model}</h2>
-					<p>
-						<span className='h6 d-block'>Vehicle class: {vehiclesData.vehicle_class}</span>
-						<span className='h6 d-block'>Cost in credits: {vehiclesData.cost_in_credits}</span>
-						<span className='h6 d-block'>Length: {vehiclesData.length}</span>
-						<span className='h6 d-block'>Crew: {vehiclesData.crew}</span>
-						<span className='h6 d-block'>Passengers: {vehiclesData.passengers}</span>
-						<span className='h6 d-block'>Max atmosphering speed: {vehiclesData.max_atmosphering_speed}</span>
-						<span className='h6 d-block'>Cargo capacity: {vehiclesData.cargo_capacity}</span>
-						<span className='h6 d-block'>Consumables: {vehiclesData.consumables}</span>
-					</p>
 					<Container>
-						<div>
-							<h3 className='mx-auto text-center'>Pilots</h3>
-							<ListGroup className='mb-3 mx-auto'>
-								<C_Characters people={vehiclesData.pilots}/>
-							</ListGroup>
-						</div>
-						<div>
+						<h2 className='h3'>{vehiclesData.manufacturer} {vehiclesData.model}</h2>
+						<ListGroup className='mb-4 mx-auto'>
+							<ListGroupItem>Vehicle class: {vehiclesData.vehicle_class}</ListGroupItem>
+							<ListGroupItem>Cost in credits: {vehiclesData.cost_in_credits}</ListGroupItem>
+							<ListGroupItem>Length: {vehiclesData.length}</ListGroupItem>
+							<ListGroupItem>Crew: {vehiclesData.crew}</ListGroupItem>
+							<ListGroupItem>Passengers: {vehiclesData.passengers}</ListGroupItem>
+							<ListGroupItem>Max atmosphering speed: {vehiclesData.max_atmosphering_speed}</ListGroupItem>
+							<ListGroupItem>Cargo capacity: {vehiclesData.cargo_capacity}</ListGroupItem>
+							<ListGroupItem>Consumables: {vehiclesData.consumables}</ListGroupItem>
+						</ListGroup>
+
+						{vehiclesData.pilots.length > 0 && (
+							<div className='mb-4'>
+								<h3 className='mx-auto text-center'>Pilots</h3>
+								<ListGroup className='mb-3 mx-auto'>
+									<C_Characters people={vehiclesData.pilots}/>
+								</ListGroup>
+							</div>
+						)}
+
+						<div className='mb-4'>
 							<h3 className='mx-auto text-center'>Films</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Films films={vehiclesData.films}/>

@@ -16,7 +16,6 @@ const C_FilmsList:React.FC<IProp> = ({ data }) => {
 				key={index}>
 				<h2 className='h5 mb-3'>Episode: {data.episode_id} - {data.title}</h2>
 				<p className="text-muted small mb-0 d-flex justify-content-between align-items-center">
-					<span>Released: {data.release_date} </span>
 					<span>Characters: {data.characters_count} </span>
 					<span>Planets: {data.planets_count} </span>
 					<span>Starships: {data.starships_count} </span>

@@ -13,6 +13,7 @@ import spinner from "../../public/rebel.svg";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
+import {ListGroupItem} from "react-bootstrap";
 
 const SingleStarships = () => {
 	const [loading, setLoading] = useState(false)
@@ -39,7 +40,7 @@ const SingleStarships = () => {
 	}
 	const searchReq = async (query: string) => {
 		setPage(1)
-		setSearchParams( {search: query, page: page.toString()})
+		setSearchParams({search: query, page: page.toString()})
 		navigate(`/starships/?search=${query}&page=1`)
 	}
 	useEffect(() => {
@@ -57,27 +58,33 @@ const SingleStarships = () => {
 			{starshipsData && (
 				<div className='mb-4'>
 					<h1>{starshipsData.name}</h1>
-					<h2 className='h3'>{starshipsData.manufacturer} {starshipsData.model}</h2>
-					<p>
-						<span className='h6 d-block'>Starship class: {starshipsData.starship_class}</span>
-						<span className='h6 d-block'>Cost in credits: {starshipsData.cost_in_credits}</span>
-						<span className='h6 d-block'>Length: {starshipsData.length}</span>
-						<span className='h6 d-block'>Crew: {starshipsData.crew}</span>
-						<span className='h6 d-block'>Passengers: {starshipsData.passengers}</span>
-						<span className='h6 d-block'>Max atmosphering speed: {starshipsData.max_atmosphering_speed}</span>
-						<span className='h6 d-block'>Hyperdrive rating: {starshipsData.hyperdrive_rating}</span>
-						<span className='h6 d-block'>MGLT: {starshipsData.MGLT}</span>
-						<span className='h6 d-block'>Cargo capacity: {starshipsData.cargo_capacity}</span>
-						<span className='h6 d-block'>Consumables: {starshipsData.consumables}</span>
-					</p>
 					<Container>
-						<div>
-							<h3 className='mx-auto text-center'>Pilots</h3>
-							<ListGroup className='mb-3 mx-auto'>
-								<C_Characters people={starshipsData.pilots}/>
-							</ListGroup>
-						</div>
-						<div>
+						<h2 className='h3'>{starshipsData.manufacturer} {starshipsData.model}</h2>
+						<ListGroup className='mb-4 mx-auto'>
+							<ListGroupItem>Starship class: {starshipsData.starship_class}</ListGroupItem>
+							<ListGroupItem>Cost in credits: {Number(starshipsData.cost_in_credits).toLocaleString()} GCS, <span
+								className='small text-muted fst-italic'>Galactic Credit Standard</span></ListGroupItem>
+							<ListGroupItem>Length: {starshipsData.length} GM, , <span className='small text-muted fst-italic'>Galactic Meters</span></ListGroupItem>
+							<ListGroupItem>Crew: {starshipsData.crew}</ListGroupItem>
+							<ListGroupItem>Passengers: {starshipsData.passengers}</ListGroupItem>
+							<ListGroupItem>Max atmosphering speed: {starshipsData.max_atmosphering_speed}</ListGroupItem>
+							<ListGroupItem>Hyperdrive rating: {starshipsData.hyperdrive_rating}</ListGroupItem>
+							<ListGroupItem>MGLT: {starshipsData.MGLT}</ListGroupItem>
+							<ListGroupItem>Cargo capacity: {Number(starshipsData.cargo_capacity).toLocaleString()} GT, <span
+								className='small text-muted fst-italic'>Galactic Tonnes</span></ListGroupItem>
+							<ListGroupItem>Consumables: {starshipsData.consumables}</ListGroupItem>
+						</ListGroup>
+
+						{starshipsData.pilots.length > 0 && (
+							<div className='mb-4'>
+								<h3 className='mx-auto text-center'>Pilots</h3>
+								<ListGroup className='mb-3 mx-auto'>
+									<C_Characters people={starshipsData.pilots}/>
+								</ListGroup>
+							</div>
+						)}
+
+						<div className='mb-4'>
 							<h3 className='mx-auto text-center'>Films</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Films films={starshipsData.films}/>
