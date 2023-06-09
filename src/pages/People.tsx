@@ -66,7 +66,7 @@ const People = () => {
 
 			{resData && peopleData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of total {resData.total} results from the People Resource</p>
+					<p>Showing {resData.from} to {resData.to} of total {resData.total} results for <span className='fst-italic fw-bold'>{!query ? 'People' : `${query}`}</span></p>
 
 					<ListGroup className='mb-3'>
 						<C_PeopleList data={peopleData}/>

@@ -65,7 +65,7 @@ const Vehicles = () => {
 
 			{resData && vehiclesData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of total {resData.total} results from the Vehicles Resource</p>
+					<p>Showing {resData.from} to {resData.to} of total {resData.total} results for <span className='fst-italic fw-bold'>{!query ? 'Vehicles' : `${query}`}</span></p>
 
 					<ListGroup className='mb-3'>
 						<C_VehiclesList data={vehiclesData}/>

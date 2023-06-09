@@ -66,7 +66,7 @@ const Species = () => {
 
 			{resData && speciesData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of {resData.total} from the Species Resource</p>
+					<p>Showing {resData.from} to {resData.to} of {resData.total} results for <span className='fst-italic fw-bold'>{!query ? 'Species' : `${query}`}</span></p>
 
 					<ListGroup className='mb-3'>
 						<C_SpeciesList data={speciesData}/>

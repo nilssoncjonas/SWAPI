@@ -66,7 +66,7 @@ const Planets = () => {
 
 			{resData && planetsData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of total {resData.total} results from the Planets Resource</p>
+					<p>Showing {resData.from} to {resData.to} of total {resData.total} results for <span className='fst-italic fw-bold'>{!query ? 'Planets' : `${query}`}</span></p>
 
 					<ListGroup className='mb-3'>
 						<C_PlanetsList data={planetsData}/>

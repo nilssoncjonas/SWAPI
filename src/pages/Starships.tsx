@@ -65,7 +65,7 @@ const Starships = () => {
 
 			{resData && starshipData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of total {resData.total} results from the Starships Resource</p>
+					<p>Showing {resData.from} to {resData.to} of total {resData.total} results for <span className='fst-italic fw-bold'>{!query ? 'Starships' : `${query}`}</span></p>
 
 					<ListGroup className='mb-3'>
 						<C_StarshipsList data={starshipData}/>

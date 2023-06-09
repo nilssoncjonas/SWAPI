@@ -69,7 +69,7 @@ const Films = () => {
 
 			{resData && filmData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of total {resData.total} results from the Films resource</p>
+					<p>Showing {resData.from} to {resData.to} of total {resData.total} results for <span className='fst-italic fw-bold'>{!query ? 'Films' : `${query}`}</span></p>
 
 					<ListGroup className='mb-3'>
 						<C_FilmsList data={filmData}/>
