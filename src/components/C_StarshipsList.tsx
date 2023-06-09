@@ -9,15 +9,15 @@ data: StarshipsData
 const C_StarshipsList:React.FC<IProp> = ({ data }) => {
 	return (
 		<>
-			{data.map((data, index) => (
+			{data.map((s, index) => (
 				<ListGroup.Item
 					action
-					href={`/starships/${data.id}`}
+					href={`/starships/${s.id}`}
 					key={index}>
-					<h2 className='h5 mb-3'> {data.name} by {data.manufacturer}</h2>
+					<h2 className='h5 mb-3'> {s.name} by {s.manufacturer}</h2>
 					<p className="text-muted small mb-0 d-flex justify-content-around align-items-center">
-						<span>Pilots: {data.pilots_count} </span>
-						<span>Films: {data.films_count} </span>
+						<span>Pilots: {s.pilots_count} </span>
+						<span>Films: {s.films_count} </span>
 					</p>
 				</ListGroup.Item>
 			))}

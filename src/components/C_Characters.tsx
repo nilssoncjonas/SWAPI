@@ -12,7 +12,7 @@ const C_Characters: React.FC<IProp> = ({people}) => {
 			{people.map((p, index) => (
 				<ListGroup.Item
 					action
-					href={''}
+					href={`/people/${p.id}`}
 					key={index}>
 					{p.name}
 				</ListGroup.Item>

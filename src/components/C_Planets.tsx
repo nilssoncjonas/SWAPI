@@ -12,7 +12,7 @@ const C_Planets: React.FC<IProp> = ({planets}) => {
 			{planets.map((p, index) => (
 				<ListGroup.Item
 					action
-					href={''}
+					href={`/planets/${p.id}`}
 					key={index}>
 					{p.name}
 				</ListGroup.Item>
