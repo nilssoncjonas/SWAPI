@@ -27,7 +27,7 @@ const Species = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: SpeciesPaginationData = await SWAPI.getSpecies(page)
+			const res = await SWAPI.get<SpeciesPaginationData>(`species/?pages=${page}`)
 			const data: SpeciesData = res.data
 			setResData(res)
 			setSpeciesData(data)
@@ -40,7 +40,7 @@ const Species = () => {
 		}
 	}
 	const searchReq = async (query: string) => {
-		const res = await SWAPI.searchSpecies(query)
+		const res = await SWAPI.get<SpeciesPaginationData>(`species/?pages=1&search=${query}`)
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setSpeciesData(res.data)

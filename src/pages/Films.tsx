@@ -12,7 +12,6 @@ import Pagination from "../components/Pagination.tsx"
 // Style
 import ListGroup from "react-bootstrap/ListGroup"
 
-
 const Films = () => {
 
 	const [loading, setLoading] = useState(false)
@@ -24,11 +23,12 @@ const Films = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const query = searchParams.get('search')
 	const page = searchParams.get('page')
+
 	const get = async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: FilmPaginationData = await SWAPI.getFilms(page)
+			const res = await SWAPI.get<FilmPaginationData>(`films/?page=${page}`)
 			const data: FilmsData = res.data
 			setResData(res)
 			setFilmData(data)
@@ -42,12 +42,12 @@ const Films = () => {
 	}
 
 	const searchReq = async (query: string) => {
-
-		const res = await SWAPI.searchFilms(query)
+		const res = await SWAPI.get<FilmPaginationData>(`films/?page=1&search=${query}`)
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setFilmData(res.data)
 	}
+
 
 	useEffect(() => {
 		if (query) {

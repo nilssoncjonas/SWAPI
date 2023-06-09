@@ -28,7 +28,7 @@ const SingleStarships = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: TSingleStarships = await SWAPI.getSingleStarships(id)
+			const res = await SWAPI.get<TSingleStarships>(`starships/${id}`)
 			setStarshipsData(res)
 		} catch (err: any) {
 			console.error(err)

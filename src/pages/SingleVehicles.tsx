@@ -29,7 +29,7 @@ const SingleVehicles = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: TSingleVehicles = await SWAPI.getSingleVehicles(id)
+			const res  = await SWAPI.get<TSingleVehicles>(`vehicles/${id}`)
 			setVehiclesData(res)
 		} catch (err: any) {
 			console.error(err)

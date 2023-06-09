@@ -26,7 +26,7 @@ const Starships = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: StarshipsPaginationData = await SWAPI.getStarships(page)
+			const res = await SWAPI.get<StarshipsPaginationData>(`starships/?pages=${page}`)
 			const data: StarshipsData = res.data
 			setResData(res)
 			setStarshipData(data)
@@ -40,7 +40,7 @@ const Starships = () => {
 	}
 
 	const searchReq = async (query: string) => {
-		const res = await SWAPI.searchStarships(query)
+		const res = await SWAPI.get<StarshipsPaginationData>(`starships/?pages=1&search=${query}`)
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setStarshipData(res.data)

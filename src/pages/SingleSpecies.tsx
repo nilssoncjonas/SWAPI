@@ -25,12 +25,12 @@ const SingleSpecies = () => {
 
 	const navigate = useNavigate()
 	const [page, setPage] = useState(1)
-	const [searchParams, setSearchParams] = useSearchParams();
+	const [searchParms, setSearchParams] = useSearchParams();
 	const get = async (id: number) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: TSingleSpecies = await SWAPI.getSingleSpecies(id)
+			const res = await SWAPI.get<TSingleSpecies>(`species/${id}`)
 			setSpeciesData(res)
 		} catch (err: any) {
 			console.error(err)

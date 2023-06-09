@@ -29,7 +29,7 @@ const SinglePlanets = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: TSinglePlanet = await SWAPI.getSinglePlanets(id)
+			const res = await SWAPI.get<TSinglePlanet>(`planets/${id}`)
 			setPlanetData(res)
 		} catch (err: any) {
 			console.error(err)

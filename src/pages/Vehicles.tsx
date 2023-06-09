@@ -26,7 +26,7 @@ const Vehicles = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: VehiclePaginationData = await SWAPI.getVehicles(page)
+			const res = await SWAPI.get<VehiclePaginationData>(`vehicles/?pages=${page}`)
 			const data: VehiclesData = res.data
 			setResData(res)
 			setVehiclesData(data)
@@ -39,7 +39,7 @@ const Vehicles = () => {
 		}
 	}
 	const searchReq = async (query: string) => {
-		const res = await SWAPI.searchVehicles(query)
+		const res = await SWAPI.get<VehiclePaginationData>(`vehicles/?pages=1&search=${query}`)
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setVehiclesData(res.data)

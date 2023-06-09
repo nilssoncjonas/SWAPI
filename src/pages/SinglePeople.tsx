@@ -32,7 +32,7 @@ const SinglePeople = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: TSinglePeople = await SWAPI.getSinglePeople(id)
+			const res: TSinglePeople = await SWAPI.get<TSinglePeople>(`people/${id}`)
 			setPersonData(res)
 		} catch (err: any) {
 			console.error(err)
@@ -44,7 +44,7 @@ const SinglePeople = () => {
 	const searchReq = async (query: string) => {
 		setPage(1)
 		setSearchParams({search: query, page: page.toString()})
-		navigate(`/people/?search=${query}&page=1`)
+		navigate(`/people/?search=${query}&page=${page}`)
 	}
 
 	useEffect(() => {

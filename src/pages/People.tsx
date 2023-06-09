@@ -26,7 +26,7 @@ const People = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: PeoplePaginationData = await SWAPI.getPeople(page)
+			const res = await SWAPI.get<PeoplePaginationData>(`people/?page=${page}`)
 			const data: PeoplesData = res.data
 			setResData(res)
 			setPeopleData(data)
@@ -40,7 +40,7 @@ const People = () => {
 	}
 
 	const searchReq = async (query: string) => {
-		const res = await SWAPI.searchPeople(query)
+		const res = await SWAPI.get<PeoplePaginationData>(`people/?page=1&search=${query}`)
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setPeopleData(res.data)

@@ -25,12 +25,12 @@ const SingleFilm = () => {
 
 	const navigate = useNavigate()
 	const [page, setPage] = useState(1)
-	const [searchParams, setSearchParams] = useSearchParams();
+	const [,setSearchParams] = useSearchParams();
 	const get = async (id: number) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: TSingleFilm = await SWAPI.getSingleFilm(id)
+			const res = await SWAPI.get<TSingleFilm>(`films/${id}`)
 			setFilmData(res)
 		} catch (err: any) {
 			console.error(err)
@@ -42,7 +42,7 @@ const SingleFilm = () => {
 	const searchReq = async (query: string) => {
 		setPage(1)
 		setSearchParams( {search: query, page: page.toString()})
-		navigate(`/films/?search=${query}&page=1`)
+		navigate(`/films/?page=1&search=${query}`)
 	}
 
 	useEffect(() => {

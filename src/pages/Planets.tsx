@@ -27,7 +27,7 @@ const Planets = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res: PlanetsPaginationData = await SWAPI.getPlanets(page)
+			const res = await SWAPI.get<PlanetsPaginationData>(`planets/?pages=${page}`)
 			const data: PlanetsData = res.data
 			setResData(res)
 			setPlanetsData(data)
@@ -40,7 +40,7 @@ const Planets = () => {
 		}
 	}
 	const searchReq = async (query: string) => {
-		const res = await SWAPI.searchPlanets(query)
+		const res = await SWAPI.get<PlanetsPaginationData>(`planets/?page=1&search=${query}`)
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setPlanetsData(res.data)
