@@ -1,7 +1,9 @@
 import {useEffect, useRef, useState} from "react";
+import { useLocation, useNavigate} from "react-router-dom";
 // Style
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+
 
 
 
@@ -13,6 +15,8 @@ const InputForm:React.FC<IProp>= ({onSearch}) => {
 
 	const [searchInput, setSearchInput] = useState('')
 	const searchInputRef = useRef<HTMLInputElement>(null)
+	const {pathname} = useLocation()
+	const navigate = useNavigate()
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
 		if (!searchInput.trim().length) {
@@ -20,6 +24,16 @@ const InputForm:React.FC<IProp>= ({onSearch}) => {
 			return console.error('WHY YOU DO THAT!?')
 		}
 		onSearch(searchInput)
+	}
+	const restore = () => {
+		if (pathname.split('/').length - 1 === 2) {
+			const path = pathname.split('/')
+			path.splice(2)
+			const url = path.join('/')
+			navigate(url)
+		} else {
+			navigate(pathname)
+		}
 	}
 	useEffect(() => {
 		searchInputRef.current?.focus()
@@ -40,6 +54,7 @@ const InputForm:React.FC<IProp>= ({onSearch}) => {
 					</Form.Group>
 				<div className="d-flex justify-content-center">
 					<Button variant="warning" type="submit" disabled={!searchInput.trim().length}>Search</Button>
+					<Button variant="danger" type="button" className='mx-3' onClick={() => restore()} >Restore</Button>
 				</div>
 			</Form>
 		</>
