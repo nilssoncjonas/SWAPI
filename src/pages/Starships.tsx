@@ -6,6 +6,7 @@ import {StarshipsPaginationData, StarshipsData,} from "../types";
 // components
 import AutoAlert from "../components/AutoAlert.tsx";
 import C_Loading from "../components/C_Loading.tsx";
+import C_SearchResultData from "../components/C_SearchResultData.tsx";
 import C_StarshipsList from "../components/C_StarshipsList.tsx";
 import InputForm from "../components/InputForm.tsx";
 import Pagination from "../components/Pagination.tsx";
@@ -65,8 +66,13 @@ const Starships = () => {
 
 			{resData && starshipData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of total {resData.total} results for <span className='fst-italic fw-bold'>{!query ? 'Starships' : `${query}`}</span></p>
-
+					{starshipData.length === 0 && (
+						<p>Didin't find anything for <span className='fst-italic fw-bold'>{query}</span>, I sense a disturbance in
+							your typing!</p>
+					)}
+					{starshipData.length > 0 && (
+						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total} resource={'Starships'}/>
+					)}
 					<ListGroup className='mb-3'>
 						<C_StarshipsList data={starshipData}/>
 					</ListGroup>

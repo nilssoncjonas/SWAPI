@@ -7,10 +7,12 @@ import {PlanetsPaginationData, PlanetsData} from "../types"
 import AutoAlert from "../components/AutoAlert.tsx"
 import C_Loading from "../components/C_Loading.tsx";
 import C_PlanetsList from "../components/C_PlanetsList.tsx"
+import C_SearchResultData from "../components/C_SearchResultData.tsx";
 import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
 // style
 import ListGroup from "react-bootstrap/ListGroup"
+
 
 
 const Planets = () => {
@@ -44,6 +46,7 @@ const Planets = () => {
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setPlanetsData(res.data)
+		console.log(planetsData)
 	}
 
 	useEffect(() => {
@@ -66,7 +69,13 @@ const Planets = () => {
 
 			{resData && planetsData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of total {resData.total} results for <span className='fst-italic fw-bold'>{!query ? 'Planets' : `${query}`}</span></p>
+					{planetsData.length === 0 && (
+						<p>Didin't find anything for <span className='fst-italic fw-bold'>{query}</span>, I sense a disturbance in
+							your typing!</p>
+					)}
+					{planetsData.length > 0 && (
+						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total} resource={'Planets'}/>
+					)}
 
 					<ListGroup className='mb-3'>
 						<C_PlanetsList data={planetsData}/>

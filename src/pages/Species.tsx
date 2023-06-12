@@ -6,6 +6,7 @@ import {SpeciesData, SpeciesPaginationData} from "../types/"
 // components
 import AutoAlert from "../components/AutoAlert.tsx"
 import C_Loading from "../components/C_Loading.tsx";
+import C_SearchResultData from "../components/C_SearchResultData.tsx";
 import C_SpeciesList from "../components/C_SpeciesList.tsx"
 import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
@@ -44,6 +45,7 @@ const Species = () => {
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setSpeciesData(res.data)
+		console.log(res.data)
 	}
 
 	useEffect(() => {
@@ -66,8 +68,13 @@ const Species = () => {
 
 			{resData && speciesData && (
 				<>
-					<p>Showing {resData.from} to {resData.to} of {resData.total} results for <span className='fst-italic fw-bold'>{!query ? 'Species' : `${query}`}</span></p>
-
+					{speciesData.length === 0 && (
+						<p>Didin't find anything for <span className='fst-italic fw-bold'>{query}</span>, I sense a disturbance in
+							your typing!</p>
+					)}
+					{speciesData.length > 0 && (
+						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total} resource={'Species'}/>
+					)}
 					<ListGroup className='mb-3'>
 						<C_SpeciesList data={speciesData}/>
 					</ListGroup>
