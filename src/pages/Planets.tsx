@@ -25,11 +25,12 @@ const Planets = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const query = searchParams.get('search')
 	const page = searchParams.get('page')
+
 	const get = useCallback( async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res = await SWAPI.get<PlanetsPaginationData>(`planets/?pages=${page}`)
+			const res = await SWAPI.get<PlanetsPaginationData>(`planets/?page=${page}`)
 			const data: PlanetsData = res.data
 			setResData(res)
 			setPlanetsData(data)
@@ -41,6 +42,7 @@ const Planets = () => {
 			setLoading(false)
 		}
 	}, [setSearchParams])
+
 	const searchReq = useCallback( async (query: string) => {
 		const res = await SWAPI.get<PlanetsPaginationData>(`planets/?page=1&search=${query}`)
 		setSearchParams({search: query, page: '1'})
@@ -54,8 +56,9 @@ const Planets = () => {
 			searchReq(query)
 		} else if (page) {
 			get(Number(page))
-		} else
+		} else {
 			get()
+		}
 	}, [query, page, get, searchReq])
 
 
@@ -81,7 +84,7 @@ const Planets = () => {
 						<C_PlanetsList data={planetsData}/>
 					</ListGroup>
 
-					<Pagination resData={resData}/>
+					{resData.first_page_url && <Pagination resData={resData}/>}
 				</>
 			)}
 		</>

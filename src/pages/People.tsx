@@ -23,6 +23,7 @@ const People = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const query = searchParams.get('search')
 	const page = searchParams.get('page')
+
 	const get = useCallback( async (page = 1) => {
 		setLoading(true)
 		setError(null)
@@ -52,8 +53,9 @@ const People = () => {
 			searchReq(query)
 		} else if (page) {
 			get(Number(page))
-		} else
+		} else {
 			get()
+		}
 	}, [query, page, get, searchReq])
 
 	return (
@@ -78,7 +80,7 @@ const People = () => {
 						<C_PeopleList data={peopleData}/>
 					</ListGroup>
 
-					<Pagination resData={resData}/>
+					{resData.first_page_url && <Pagination resData={resData}/>}
 				</>
 			)}
 		</>

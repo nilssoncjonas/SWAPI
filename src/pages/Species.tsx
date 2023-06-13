@@ -24,11 +24,12 @@ const Species = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const query = searchParams.get('search')
 	const page = searchParams.get('page')
+
 	const get = useCallback( async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res = await SWAPI.get<SpeciesPaginationData>(`species/?pages=${page}`)
+			const res = await SWAPI.get<SpeciesPaginationData>(`species/?page=${page}`)
 			const data: SpeciesData = res.data
 			setResData(res)
 			setSpeciesData(data)
@@ -40,8 +41,9 @@ const Species = () => {
 			setLoading(false)
 		}
 	}, [setSearchParams])
+
 	const searchReq = useCallback( async (query: string) => {
-		const res = await SWAPI.get<SpeciesPaginationData>(`species/?pages=1&search=${query}`)
+		const res = await SWAPI.get<SpeciesPaginationData>(`species/?page=1&search=${query}`)
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setSpeciesData(res.data)
@@ -53,10 +55,10 @@ const Species = () => {
 			searchReq(query)
 		} else if (page) {
 			get(Number(page))
-		} else
+		} else {
 			get()
+		}
 	}, [query, page, get, searchReq])
-
 
 	return (
 		<>
@@ -79,7 +81,7 @@ const Species = () => {
 						<C_SpeciesList data={speciesData}/>
 					</ListGroup>
 
-					<Pagination resData={resData}/>
+					{resData.first_page_url && <Pagination resData={resData}/>}
 				</>
 			)}
 		</>

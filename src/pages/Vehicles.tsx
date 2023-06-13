@@ -24,11 +24,11 @@ const Vehicles = () => {
 	const query = searchParams.get('search')
 	const page = searchParams.get('page')
 
-	const get = useCallback( async (page = 1) => {
+	const get = useCallback(async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res = await SWAPI.get<VehiclePaginationData>(`vehicles/?pages=${page}`)
+			const res = await SWAPI.get<VehiclePaginationData>(`vehicles/?page=${page}`)
 			const data: VehiclesData = res.data
 			setResData(res)
 			setVehiclesData(data)
@@ -40,8 +40,9 @@ const Vehicles = () => {
 			setLoading(false)
 		}
 	}, [setSearchParams])
-	const searchReq = useCallback( async (query: string) => {
-		const res = await SWAPI.get<VehiclePaginationData>(`vehicles/?pages=1&search=${query}`)
+
+	const searchReq = useCallback(async (query: string) => {
+		const res = await SWAPI.get<VehiclePaginationData>(`vehicles/?page=1&search=${query}`)
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setVehiclesData(res.data)
@@ -52,8 +53,9 @@ const Vehicles = () => {
 			searchReq(query)
 		} else if (page) {
 			get(Number(page))
-		} else
+		} else {
 			get()
+		}
 	}, [query, page, get, searchReq])
 
 	return (
@@ -72,13 +74,14 @@ const Vehicles = () => {
 							your typing!</p>
 					)}
 					{vehiclesData.length > 0 && (
-						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total} resource={'Vehicles'}/>
+						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total}
+																resource={'Vehicles'}/>
 					)}
 					<ListGroup className='mb-3'>
 						<C_VehiclesList data={vehiclesData}/>
 					</ListGroup>
 
-					<Pagination resData={resData}/>
+					{resData.first_page_url && <Pagination resData={resData}/>}
 				</>
 			)}
 		</>

@@ -23,11 +23,12 @@ const Starships = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const query = searchParams.get('search')
 	const page = searchParams.get('page')
+
 	const get = useCallback( async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res = await SWAPI.get<StarshipsPaginationData>(`starships/?pages=${page}`)
+			const res = await SWAPI.get<StarshipsPaginationData>(`starships/?page=${page}`)
 			const data: StarshipsData = res.data
 			setResData(res)
 			setStarshipData(data)
@@ -41,18 +42,20 @@ const Starships = () => {
 	}, [setSearchParams])
 
 	const searchReq = useCallback( async (query: string) => {
-		const res = await SWAPI.get<StarshipsPaginationData>(`starships/?pages=1&search=${query}`)
+		const res = await SWAPI.get<StarshipsPaginationData>(`starships/?page=1&search=${query}`)
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setStarshipData(res.data)
 	}, [setSearchParams])
+
 	useEffect(() => {
 		if (query) {
 			searchReq(query)
 		} else if (page) {
 			get(Number(page))
-		} else
+		} else {
 			get()
+		}
 	}, [query, page, get, searchReq])
 
 	return (
@@ -77,7 +80,7 @@ const Starships = () => {
 						<C_StarshipsList data={starshipData}/>
 					</ListGroup>
 
-					<Pagination resData={resData}/>
+					{resData.first_page_url && <Pagination resData={resData}/>}
 				</>
 			)}
 		</>

@@ -41,6 +41,7 @@ const Films = () => {
 			setLoading(false)
 		}
 	}, [setSearchParams])
+
 	const searchReq = useCallback( async (query: string) => {
 		const res = await SWAPI.get<FilmPaginationData>(`films/?page=1&search=${query}`)
 		setSearchParams({search: query, page: '1'})
@@ -48,14 +49,14 @@ const Films = () => {
 		setFilmData(res.data)
 	}, [setSearchParams])
 
-
 	useEffect(() => {
 		if (query) {
 			searchReq(query)
 		} else if (page) {
 			get(Number(page))
-		} else
+		} else {
 			get()
+		}
 	}, [query, page, get, searchReq])
 
 	return (
@@ -80,7 +81,7 @@ const Films = () => {
 						<C_FilmsList data={filmData}/>
 					</ListGroup>
 
-					<Pagination resData={resData}/>
+					{resData.first_page_url && <Pagination resData={resData}/> }
 				</>
 			)}
 
