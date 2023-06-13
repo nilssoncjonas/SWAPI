@@ -39,23 +39,35 @@ const App = () => {
 				<Routes>
 					<Route path='/' element={<Index/>}/>
 
-					<Route path='/films' element={<Films/>}/>
-					<Route path='/films/:id' element={<SingleFilm/>}/>
+					<Route path='/films'>
+						<Route path='' element={<Films/>}/>
+						<Route path=':id' element={<SingleFilm/>}/>
+					</Route>
 
-					<Route path='/people' element={<People/>}/>
-					<Route path='/people/:id' element={<SinglePeople/>}/>
+					<Route path='/people'>
+						<Route path='' element={<People/>}/>
+						<Route path=':id' element={<SinglePeople/>}/>
+					</Route>
 
-					<Route path='/planets' element={<Planets/>}/>
-					<Route path='/planets/:id' element={<SinglePlanets/>}/>
+					<Route path='/planets'>
+						<Route path='' element={<Planets/>}/>
+						<Route path=':id' element={<SinglePlanets/>}/>
+					</Route>
 
-					<Route path='/species' element={<Species/>}/>
-					<Route path='/species/:id' element={<SingleSpecies/>}/>
+					<Route path='/species'>
+						<Route path='' element={<Species/>}/>
+						<Route path=':id' element={<SingleSpecies/>}/>
+					</Route>
 
-					<Route path='/starships' element={<Starships/>}/>
-					<Route path='/starships/:id' element={<SingleStarships/>}/>
+					<Route path='/starships'>
+						<Route path='' element={<Starships/>}/>
+						<Route path=':id' element={<SingleStarships/>}/>
+					</Route>
 
-					<Route path='/vehicles' element={<Vehicles/>}/>
-					<Route path='/vehicles/:id' element={<SingleVehicles/>}/>
+					<Route path='/vehicles'>
+						<Route path='' element={<Vehicles/>}/>
+						<Route path=':id' element={<SingleVehicles/>}/>
+					</Route>
 
 					<Route path='/search' element={<Search/>}/>
 
