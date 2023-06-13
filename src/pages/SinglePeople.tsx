@@ -26,7 +26,7 @@ const SinglePeople = () => {
 
 	const navigate = useNavigate()
 	const [page, setPage] = useState(1)
-	const [searchParams, setSearchParams] = useSearchParams();
+	const [, setSearchParams] = useSearchParams();
 
 	const get = async (id: number) => {
 		setLoading(true)

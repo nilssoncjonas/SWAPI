@@ -25,7 +25,7 @@ const SingleSpecies = () => {
 
 	const navigate = useNavigate()
 	const [page, setPage] = useState(1)
-	const [searchParms, setSearchParams] = useSearchParams();
+	const [, setSearchParams] = useSearchParams();
 	const get = async (id: number) => {
 		setLoading(true)
 		setError(null)
