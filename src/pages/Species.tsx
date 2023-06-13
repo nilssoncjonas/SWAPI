@@ -35,6 +35,7 @@ const Species = () => {
 			setResData(res)
 			setSpeciesData(data)
 			setSearchParams({page: page.toString()})
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)
@@ -51,6 +52,7 @@ const Species = () => {
 			setSearchParams({search: query, page: page.toString()})
 			setResData(res)
 			setSpeciesData(res.data)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)

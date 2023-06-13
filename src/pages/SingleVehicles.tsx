@@ -31,6 +31,7 @@ const SingleVehicles = () => {
 		try {
 			const res  = await SWAPI.get<TSingleVehicles>(`vehicles/${id}`)
 			setVehiclesData(res)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)

@@ -30,6 +30,7 @@ const SingleStarships = () => {
 		try {
 			const res = await SWAPI.get<TSingleStarships>(`starships/${id}`)
 			setStarshipsData(res)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)

@@ -34,6 +34,7 @@ const SinglePeople = () => {
 		try {
 			const res: TSinglePeople = await SWAPI.get<TSinglePeople>(`people/${id}`)
 			setPersonData(res)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)

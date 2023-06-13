@@ -35,6 +35,7 @@ const Planets = () => {
 			setResData(res)
 			setPlanetsData(data)
 			setSearchParams({page: page.toString()})
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)
@@ -51,6 +52,7 @@ const Planets = () => {
 			setSearchParams({search: query, page: page.toString()})
 			setResData(res)
 			setPlanetsData(res.data)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)

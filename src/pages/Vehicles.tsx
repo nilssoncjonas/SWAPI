@@ -34,6 +34,7 @@ const Vehicles = () => {
 			setResData(res)
 			setVehiclesData(data)
 			setSearchParams({page: page.toString()})
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)
@@ -50,6 +51,7 @@ const Vehicles = () => {
 			setSearchParams({search: query, page: page.toString()})
 			setResData(res)
 			setVehiclesData(res.data)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
 			setError(err.message)
