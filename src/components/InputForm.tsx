@@ -26,6 +26,7 @@ const InputForm:React.FC<IProp>= ({onSearch}) => {
 		onSearch(searchInput)
 	}
 	const restore = () => {
+		setSearchInput('')
 		if (pathname.split('/').length - 1 === 2) {
 			const path = pathname.split('/')
 			path.splice(2)
