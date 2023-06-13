@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
 interface IProp {
-	onSearch: (query: string) => void
+	onSearch: (query: string, page?: number) => void
 }
 
 const InputForm:React.FC<IProp>= ({onSearch}) => {

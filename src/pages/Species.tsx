@@ -8,11 +8,11 @@ import AutoAlert from "../components/AutoAlert.tsx"
 import C_Loading from "../components/C_Loading.tsx";
 import C_SearchResultData from "../components/C_SearchResultData.tsx";
 import C_SpeciesList from "../components/C_SpeciesList.tsx"
+import C_zeroResults from "../components/C_zeroResults.tsx";
 import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
 // style
 import ListGroup from "react-bootstrap/ListGroup"
-import C_zeroResults from "../components/C_zeroResults.tsx";
 
 const Species = () => {
 
@@ -26,7 +26,7 @@ const Species = () => {
 	const query = searchParams.get('search')
 	const page = searchParams.get('page')
 
-	const get = useCallback( async (page = 1) => {
+	const get = useCallback(async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
@@ -43,20 +43,28 @@ const Species = () => {
 		}
 	}, [setSearchParams])
 
-	const searchReq = useCallback( async (query: string) => {
-		const res = await SWAPI.get<SpeciesPaginationData>(`species/?page=1&search=${query}`)
-		setSearchParams({search: query, page: '1'})
-		setResData(res)
-		setSpeciesData(res.data)
+	const searchReq = useCallback(async (query: string, page = 1) => {
+		setLoading(true)
+		setError(null)
+		try {
+			const res = await SWAPI.get<SpeciesPaginationData>(`species/?page=${page}&search=${query}`)
+			setSearchParams({search: query, page: page.toString()})
+			setResData(res)
+			setSpeciesData(res.data)
+		} catch (err: any) {
+			console.error(err)
+			setError(err.message)
+		} finally {
+			setLoading(false)
+		}
+
 	}, [setSearchParams])
 
 	useEffect(() => {
-		if (query) {
-			searchReq(query)
-		} else if (page) {
-			get(Number(page))
+		if (query && page) {
+			searchReq(query, Number(page))
 		} else {
-			get()
+			get(Number(page))
 		}
 	}, [query, page, get, searchReq])
 
@@ -72,7 +80,8 @@ const Species = () => {
 				<>
 					{speciesData.length === 0 && <C_zeroResults query={query}/>}
 					{speciesData.length > 0 && (
-						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total} resource={'Species'}/>
+						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total}
+																resource={'Species'}/>
 					)}
 					<ListGroup className='mb-3'>
 						<C_SpeciesList data={speciesData}/>
