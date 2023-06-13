@@ -73,7 +73,7 @@ const SingleVehicles = () => {
 
 						{vehiclesData.pilots.length > 0 && (
 							<div className='mb-4'>
-								<h3 className='mx-auto text-center'>Pilots</h3>
+								<h3 className='mx-auto text-center'>{vehiclesData.pilots.length}  {vehiclesData.pilots.length > 1 ? 'Pilots' : 'Pilot'}</h3>
 								<ListGroup className='mb-3 mx-auto'>
 									<C_Characters people={vehiclesData.pilots}/>
 								</ListGroup>
@@ -81,7 +81,7 @@ const SingleVehicles = () => {
 						)}
 
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>Films</h3>
+							<h3 className='mx-auto text-center'>{vehiclesData.films.length} {vehiclesData.films.length > 1 ? 'Films' : 'Film'}</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Films films={vehiclesData.films}/>
 							</ListGroup>

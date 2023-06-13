@@ -76,7 +76,7 @@ const SingleStarships = () => {
 
 						{starshipsData.pilots.length > 0 && (
 							<div className='mb-4'>
-								<h3 className='mx-auto text-center'>Pilots</h3>
+								<h3 className='mx-auto text-center'>{starshipsData.pilots.length} {starshipsData.pilots.length > 1 ? 'Pilots' : 'Pilot'}</h3>
 								<ListGroup className='mb-3 mx-auto'>
 									<C_Characters people={starshipsData.pilots}/>
 								</ListGroup>
@@ -84,7 +84,7 @@ const SingleStarships = () => {
 						)}
 
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>Films</h3>
+							<h3 className='mx-auto text-center'>{starshipsData.films.length} {starshipsData.films.length > 1 ? 'Films' : 'Film'}</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Films films={starshipsData.films}/>
 							</ListGroup>

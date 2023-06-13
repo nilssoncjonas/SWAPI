@@ -71,31 +71,31 @@ const SingleFilm = () => {
 					</p>
 					<Container>
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>Characters</h3>
+							<h3 className='mx-auto text-center'>{filmData.characters.length} Characters</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Characters people={filmData.characters}/>
 							</ListGroup>
 						</div>
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>Planets</h3>
+							<h3 className='mx-auto text-center'>{filmData.planets.length} Planets</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Planets planets={filmData.planets}/>
 							</ListGroup>
 						</div>
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>Starships</h3>
+							<h3 className='mx-auto text-center'>{filmData.starships.length} Starships</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Starships starships={filmData.starships}/>
 							</ListGroup>
 						</div>
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>Vehicles</h3>
+							<h3 className='mx-auto text-center'>{filmData.vehicles.length} Vehicles</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Vehicles vehicles={filmData.vehicles}/>
 							</ListGroup>
 						</div>
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>Species</h3>
+							<h3 className='mx-auto text-center'>{filmData.starships.length} Species</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Species species={filmData.species}/>
 							</ListGroup>

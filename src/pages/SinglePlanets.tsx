@@ -77,7 +77,7 @@ const SinglePlanets = () => {
 						{planetData.residents.length > 0 && (
 							<div className='mb-4'>
 
-								<h3 className='mx-auto text-center'>Residents</h3>
+								<h3 className='mx-auto text-center'>{planetData.residents.length} {planetData.residents.length > 1 ? 'Residents' : 'Resident'}</h3>
 								<ListGroup className='mb-3 mx-auto'>
 									<C_Characters people={planetData.residents}/>
 								</ListGroup>
@@ -85,7 +85,7 @@ const SinglePlanets = () => {
 						)}
 						{planetData.films.length > 0 && (
 							<div className='mb-4'>
-								<h3 className='mx-auto text-center'>Films</h3>
+								<h3 className='mx-auto text-center'>{planetData.films.length} {planetData.films.length > 1 ? 'Films' : 'Film'}</h3>
 								<ListGroup className='mb-3 mx-auto'>
 									<Films films={planetData.films}/>
 								</ListGroup>

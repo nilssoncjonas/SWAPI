@@ -75,26 +75,27 @@ const SingleSpecies = () => {
 						</ListGroup>
 
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>Characters</h3>
+							<h3
+								className='mx-auto text-center'>{speciesData.people.length} {speciesData.people.length > 1 ? 'Characters' : 'Character'}</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Characters people={speciesData.people}/>
 							</ListGroup>
 						</div>
 
-						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>Homeworld</h3>
-							<ListGroup className='mb-3 mx-auto'>
-								<ListGroup.Item
-									action
-									href={''}
-									key={speciesData.homeworld?.id}>
-									{speciesData.homeworld?.name}
-								</ListGroup.Item>
-							</ListGroup>
-						</div>
+							<div className='mb-4'>
+								<h3 className='mx-auto text-center'>Homeworld</h3>
+								<ListGroup className='mb-3 mx-auto'>
+									<ListGroup.Item
+										action
+										href={''}
+										key={speciesData.homeworld?.id}>
+										{!speciesData.homeworld?.name ? 'n/a' : `${speciesData.homeworld?.name}`}
+									</ListGroup.Item>
+								</ListGroup>
+							</div>
 
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>Films</h3>
+							<h3 className='mx-auto text-center'>{speciesData.films.length} Films</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Films films={speciesData.films}/>
 							</ListGroup>

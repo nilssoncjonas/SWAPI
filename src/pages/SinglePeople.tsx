@@ -86,14 +86,14 @@ const SinglePeople = () => {
 						</ListGroup>
 
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>Films</h3>
+							<h3 className='mx-auto text-center'>{personData.films.length} {personData.films.length > 1 ? 'Films' : 'Film'}</h3>
 							<ListGroup className='mb-3 mx-auto'>
 								<C_Films films={personData.films}/>
 							</ListGroup>
 						</div>
 						{personData.species.length > 0 && (
 							<div className='mb-4'>
-								<h3 className='mx-auto text-center'>Species</h3>
+								<h3 className='mx-auto text-center'>{personData.species.length} Species</h3>
 								<ListGroup className='mb-3 mx-auto'>
 									<C_Species species={personData.species}/>
 								</ListGroup>
@@ -101,7 +101,7 @@ const SinglePeople = () => {
 						)}
 						{personData.starships.length > 0 && (
 							<div className='mb-4'>
-								<h3 className='mx-auto text-center'>Starships</h3>
+								<h3 className='mx-auto text-center'>{personData.starships.length} {personData.starships.length > 1 ? 'Starships': 'Starship'}</h3>
 								<ListGroup className='mb-3 mx-auto'>
 									<C_Starships starships={personData.starships}/>
 								</ListGroup>
@@ -109,7 +109,7 @@ const SinglePeople = () => {
 						)}
 						{personData.vehicles.length > 0 && (
 							<div className='mb-4'>
-								<h3 className='mx-auto text-center'>Vehicles</h3>
+								<h3 className='mx-auto text-center'>{personData.vehicles.length} {personData.vehicles.length > 1 ? 'Vehicles' : 'Vehicle'}</h3>
 								<ListGroup className='mb-3 mx-auto'>
 									<C_Vehicles vehicles={personData.vehicles}/>
 								</ListGroup>
