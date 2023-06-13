@@ -12,6 +12,7 @@ import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
 // style
 import ListGroup from "react-bootstrap/ListGroup"
+import C_zeroResults from "../components/C_zeroResults.tsx";
 
 const Species = () => {
 
@@ -47,7 +48,6 @@ const Species = () => {
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setSpeciesData(res.data)
-		console.log(res.data)
 	}, [setSearchParams])
 
 	useEffect(() => {
@@ -70,10 +70,7 @@ const Species = () => {
 
 			{resData && speciesData && (
 				<>
-					{speciesData.length === 0 && (
-						<p>Didin't find anything for <span className='fst-italic fw-bold'>{query}</span>, I sense a disturbance in
-							your typing!</p>
-					)}
+					{speciesData.length === 0 && <C_zeroResults query={query}/>}
 					{speciesData.length > 0 && (
 						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total} resource={'Species'}/>
 					)}

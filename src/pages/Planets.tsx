@@ -12,6 +12,7 @@ import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
 // style
 import ListGroup from "react-bootstrap/ListGroup"
+import C_zeroResults from "../components/C_zeroResults.tsx";
 
 
 
@@ -48,7 +49,6 @@ const Planets = () => {
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setPlanetsData(res.data)
-		console.log(planetsData)
 	}, [setSearchParams])
 
 	useEffect(() => {
@@ -72,10 +72,7 @@ const Planets = () => {
 
 			{resData && planetsData && (
 				<>
-					{planetsData.length === 0 && (
-						<p>Didin't find anything for <span className='fst-italic fw-bold'>{query}</span>, I sense a disturbance in
-							your typing!</p>
-					)}
+					{planetsData.length === 0 && <C_zeroResults query={query}/>}
 					{planetsData.length > 0 && (
 						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total} resource={'Planets'}/>
 					)}

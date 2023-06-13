@@ -12,6 +12,7 @@ import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
 // Style
 import ListGroup from "react-bootstrap/ListGroup"
+import C_zeroResults from "../components/C_zeroResults.tsx";
 
 const Films = () => {
 
@@ -70,10 +71,7 @@ const Films = () => {
 
 			{resData && filmData && (
 				<>
-					{filmData.length === 0 && (
-						<p>Didin't find anything for <span className='fst-italic fw-bold'>{query}</span>, I sense a disturbance in
-							your typing!</p>
-					)}
+					{filmData.length === 0 && <C_zeroResults query={query}/>}
 					{filmData.length > 0 && (
 						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total} resource={'Films'}/>
 					)}

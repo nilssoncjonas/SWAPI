@@ -12,6 +12,7 @@ import InputForm from "../components/InputForm.tsx"
 import Pagination from "../components/Pagination.tsx"
 // style
 import ListGroup from "react-bootstrap/ListGroup"
+import C_zeroResults from "../components/C_zeroResults.tsx";
 
 const People = () => {
 	const [loading, setLoading] = useState(false)
@@ -69,10 +70,7 @@ const People = () => {
 
 			{resData && peopleData && (
 				<>
-					{peopleData.length === 0 && (
-						<p>Didin't find anything for <span className='fst-italic fw-bold'>{query}</span>, I sense a disturbance in
-							your typing!</p>
-					)}
+					{peopleData.length === 0 && <C_zeroResults query={query}/>}
 					{peopleData.length > 0 && (
 						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total} resource={'People'}/>
 					)}

@@ -4,9 +4,6 @@ import { useLocation, useNavigate} from "react-router-dom";
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
-
-
-
 interface IProp {
 	onSearch: (query: string) => void
 }
