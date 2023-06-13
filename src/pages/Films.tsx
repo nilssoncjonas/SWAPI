@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react"
+import {useCallback, useEffect, useState} from "react"
 import {useSearchParams} from "react-router-dom"
 import * as SWAPI from "../services/SWAPI-client.ts"
 // Types
@@ -25,7 +25,7 @@ const Films = () => {
 	const query = searchParams.get('search')
 	const page = searchParams.get('page')
 
-	const get = async (page = 1) => {
+	const get = useCallback( async (page = 1) => {
 		setLoading(true)
 		setError(null)
 		try {
@@ -40,14 +40,13 @@ const Films = () => {
 		} finally {
 			setLoading(false)
 		}
-	}
-
-	const searchReq = async (query: string) => {
+	}, [setSearchParams])
+	const searchReq = useCallback( async (query: string) => {
 		const res = await SWAPI.get<FilmPaginationData>(`films/?page=1&search=${query}`)
 		setSearchParams({search: query, page: '1'})
 		setResData(res)
 		setFilmData(res.data)
-	}
+	}, [setSearchParams])
 
 
 	useEffect(() => {
@@ -57,7 +56,7 @@ const Films = () => {
 			get(Number(page))
 		} else
 			get()
-	}, [query, page])
+	}, [query, page, get, searchReq])
 
 	return (
 		<>
