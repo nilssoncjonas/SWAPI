@@ -43,7 +43,7 @@ const SingleSpecies = () => {
 	const searchReq = async (query: string) => {
 		setPage(1)
 		setSearchParams({search: query, page: page.toString()})
-		navigate(`/species/?search=${query}&page=1`)
+		navigate(`/species/?search=${query}&page=${page}`)
 	}
 
 	useEffect(() => {

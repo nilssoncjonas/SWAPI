@@ -33,7 +33,7 @@ const Starships = () => {
 			const data: StarshipsData = res.data
 			setResData(res)
 			setStarshipData(data)
-			setSearchParams({page: page.toString()})
+			setSearchParams({page: res.current_page.toString()})
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
@@ -47,8 +47,8 @@ const Starships = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res = await SWAPI.get<StarshipsPaginationData>(`starships/?page=${page}&search=${query}`)
-			setSearchParams({search: query, page: page.toString()})
+			const res = await SWAPI.get<StarshipsPaginationData>(`starships/?search=${query}&page=${page}`)
+			setSearchParams({search: query, page: res.current_page.toString()})
 			setResData(res)
 			setStarshipData(res.data)
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,7 +79,7 @@ const Starships = () => {
 
 			{resData && starshipData && (
 				<>
-					{starshipData.length === 0 && <C_zeroResults query={query}/>}
+					{resData.to === null && starshipData.length === 0 && <C_zeroResults query={query}/>}
 					{starshipData.length > 0 && (
 						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total}
 																resource={'Starships'}/>

@@ -34,7 +34,7 @@ const Films = () => {
 			const data: FilmsData = res.data
 			setResData(res)
 			setFilmData(data)
-			setSearchParams({page: page.toString()})
+			setSearchParams({page: res.current_page.toString()})
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
@@ -48,8 +48,8 @@ const Films = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res = await SWAPI.get<FilmPaginationData>(`films/?page=${page}&search=${query}`)
-			setSearchParams({search: query, page: page.toString()})
+			const res = await SWAPI.get<FilmPaginationData>(`films/?search=${query}&page=${page}`)
+			setSearchParams({search: query, page: res.current_page.toString()})
 			setResData(res)
 			setFilmData(res.data)
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -81,7 +81,7 @@ const Films = () => {
 
 			{resData && filmData && (
 				<>
-					{filmData.length === 0 && <C_zeroResults query={query}/>}
+					{resData.to === null && filmData.length === 0 && <C_zeroResults query={query}/>}
 					{filmData.length > 0 && (
 						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total}
 																resource={'Films'}/>

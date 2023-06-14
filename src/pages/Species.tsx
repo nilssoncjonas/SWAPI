@@ -34,7 +34,7 @@ const Species = () => {
 			const data: SpeciesData = res.data
 			setResData(res)
 			setSpeciesData(data)
-			setSearchParams({page: page.toString()})
+			setSearchParams({page: res.current_page.toString()})
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
@@ -48,8 +48,8 @@ const Species = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res = await SWAPI.get<SpeciesPaginationData>(`species/?page=${page}&search=${query}`)
-			setSearchParams({search: query, page: page.toString()})
+			const res = await SWAPI.get<SpeciesPaginationData>(`species/?search=${query}&page=${page}`)
+			setSearchParams({search: query, page: res.current_page.toString()})
 			setResData(res)
 			setSpeciesData(res.data)
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -80,7 +80,7 @@ const Species = () => {
 
 			{resData && speciesData && (
 				<>
-					{speciesData.length === 0 && <C_zeroResults query={query}/>}
+					{resData.to === null && speciesData.length === 0 && <C_zeroResults query={query}/>}
 					{speciesData.length > 0 && (
 						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total}
 																resource={'Species'}/>

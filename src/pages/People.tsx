@@ -33,7 +33,7 @@ const People = () => {
 			const data: PeoplesData = res.data
 			setResData(res)
 			setPeopleData(data)
-			setSearchParams({page: page.toString()})
+			setSearchParams({page: res.current_page.toString()})
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.error(err)
@@ -47,8 +47,8 @@ const People = () => {
 		setLoading(true)
 		setError(null)
 		try {
-			const res = await SWAPI.get<PeoplePaginationData>(`people/?page=${page}&search=${query}`)
-			setSearchParams({search: query, page: page.toString()})
+			const res = await SWAPI.get<PeoplePaginationData>(`people/?search=${query}&page=${page}`)
+			setSearchParams({search: query, page: res.current_page.toString()})
 			setResData(res)
 			setPeopleData(res.data)
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,7 +79,7 @@ const People = () => {
 
 			{resData && peopleData && (
 				<>
-					{peopleData.length === 0 && <C_zeroResults query={query}/>}
+					{resData.to === null && peopleData.length === 0 && <C_zeroResults query={query}/>}
 					{peopleData.length > 0 && (
 						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total}
 																resource={'People'}/>

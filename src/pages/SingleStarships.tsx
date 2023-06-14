@@ -41,7 +41,7 @@ const SingleStarships = () => {
 	const searchReq = async (query: string) => {
 		setPage(1)
 		setSearchParams({search: query, page: page.toString()})
-		navigate(`/starships/?search=${query}&page=1`)
+		navigate(`/starships/?search=${query}&page=${page}`)
 	}
 	useEffect(() => {
 		get(starshipId)

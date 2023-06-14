@@ -10,7 +10,7 @@ const Search = () => {
 		setSelectedOption(e.currentTarget.value);
 	}
 	const onSearch = async (query: string) => {
-		navigate(`/${selectedOption}/?page=1&search=${query}`)
+		navigate(`/${selectedOption}/?search=${query}&page=1`)
 	}
 
 	return (
@@ -18,7 +18,7 @@ const Search = () => {
 			<h1 className='my-3 text-center'>Search your feelings, you know it to be true!</h1>
 			<div className='my-5'>
 				<select value={selectedOption} onChange={handleOptionChange} className='d-block mx-auto'>
-					<option value="">An option, select you must, a wise decision it would be</option>
+					<option value="">Select you must, a wise decision it would be</option>
 					<option value="films">Films 🎬</option>
 					<option value="people">People 🧑🏼‍🦱</option>
 					<option value="planets">Planets 🌒</option>

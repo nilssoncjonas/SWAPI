@@ -42,7 +42,7 @@ const SingleVehicles = () => {
 	const searchReq = async (query: string) => {
 		setPage(1)
 		setSearchParams({search: query, page: page.toString()})
-		navigate(`/vehicles/?search=${query}&page=1`)
+		navigate(`/vehicles/?search=${query}&page=${page}`)
 	}
 	useEffect(() => {
 		get(vehiclesId)

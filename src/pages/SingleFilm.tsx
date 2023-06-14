@@ -43,7 +43,7 @@ const SingleFilm = () => {
 	const searchReq = async (query: string) => {
 		setPage(1)
 		setSearchParams( {search: query, page: page.toString()})
-		navigate(`/films/?page=1&search=${query}`)
+		navigate(`/films/?search=${query}&page=${page}`)
 	}
 
 	useEffect(() => {
