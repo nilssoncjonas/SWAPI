@@ -1,7 +1,8 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/pvuM8Ryj)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/6c8b37f4-e683-4d0a-a05a-c470b3e5f092/deploy-status?branch=main)](https://app.netlify.com/sites/star-wars-ncj/deploys)
-# The Superior SWAPI
+## Site is Live! 
+### [ star-wars-ncj.netlify.app](https://star-wars-ncj.netlify.app/)
+
 BB-8 har gett dig i uppdrag att göra en StarWars-encyklopedi för att han ska slippa vara ett rullande uppslagsverk och kunna fokusera på viktigare saker, som att rulla omkring och inte svara på dumma frågor hela tiden.
 Han vill att hans gäng ska lätt kunna hitta information om allt i Star Wars-universumet. Ditt viktiga uppdrag är att skapa denna encyklopedi och därmed hjälpa bringa fred till galaxen!
 
