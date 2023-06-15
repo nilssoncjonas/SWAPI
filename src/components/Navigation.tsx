@@ -20,7 +20,7 @@ const Navigation = () => {
 						<Nav className="ms-auto">
 							<Nav.Link as={NavLink} to="/films?page=1">Films</Nav.Link>
 							<Nav.Link as={NavLink} to="/people?page=1">People</Nav.Link>
-							<Nav.Link as={NavLink} to="/planets">Planets</Nav.Link>
+							<Nav.Link as={NavLink} to="/planets?page=1">Planets</Nav.Link>
 							<Nav.Link as={NavLink} to="/species">Species</Nav.Link>
 							<Nav.Link as={NavLink} to="/starships">Starships</Nav.Link>
 							<Nav.Link as={NavLink} to="/vehicles">Vehicles</Nav.Link>

@@ -1,8 +1,9 @@
-import {useCallback, useEffect, useState} from "react"
+import { useEffect} from "react"
 import {useSearchParams} from "react-router-dom";
-import * as SWAPI from "../services/SWAPI-client.ts"
+// Hooks
+import useGetData from "../hooks/useGetData.ts";
 // types
-import {PlanetsPaginationData, PlanetsData} from "../types"
+import {PlanetsPaginationData} from "../types"
 // components
 import AutoAlert from "../components/AutoAlert.tsx"
 import C_Loading from "../components/C_Loading.tsx";
@@ -16,81 +17,56 @@ import ListGroup from "react-bootstrap/ListGroup"
 
 
 const Planets = () => {
-	const [loading, setLoading] = useState(false)
-	const [error, setError] = useState<string | null>(null)
-
-	const [resData, setResData] = useState<PlanetsPaginationData>({} as PlanetsPaginationData)
-	const [planetsData, setPlanetsData] = useState<PlanetsData>([])
-
-	const [searchParams, setSearchParams] = useSearchParams();
-	const query = searchParams.get('search')
+	const [searchParams, setSearchParams] = useSearchParams()
+	const search = searchParams.get('search')
 	const page = searchParams.get('page')
 
-	const get = useCallback(async (page = 1) => {
-		setLoading(true)
-		setError(null)
-		try {
-			const res = await SWAPI.get<PlanetsPaginationData>(`planets/?page=${page}`)
-			const data: PlanetsData = res.data
-			setResData(res)
-			setPlanetsData(data)
-			setSearchParams({page: res.current_page.toString()})
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		} catch (err: any) {
-			console.error(err)
-			setError(err.message)
-		} finally {
-			setLoading(false)
-		}
-	}, [setSearchParams])
+	const {
+		resData,
+		error,
+		isError,
+		isLoading,
+		execute,
+		setUrl,
+	} = useGetData<PlanetsPaginationData>('planets')
 
-	const searchReq = useCallback(async (query: string, page = 1) => {
-		setLoading(true)
-		setError(null)
-		try {
-			const res = await SWAPI.get<PlanetsPaginationData>(`planets/?search=${query}&page=${page}`)
-			setSearchParams({search: query, page: res.current_page.toString()})
-			setResData(res)
-			setPlanetsData(res.data)
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		} catch (err: any) {
-			console.error(err)
-			setError(err.message)
-		} finally {
-			setLoading(false)
-		}
-	}, [setSearchParams])
+	const onChangeUrl = (url: string) => {
+		setUrl(`planets?${url}`)
+		setSearchParams(`${url}`)
+	}
 
 	useEffect(() => {
-		if (query && page) {
-			searchReq(query, Number(page))
-		} else {
-			get(Number(page))
+		if (page && search) {
+			setUrl(`planets?page=${page}&search=${search}`)
+		} else if (search) {
+			setUrl(`planets?search=${search}`)
+		} else if (page) {
+			setUrl(`planets?page=${page}`)
 		}
-	}, [query, page, get, searchReq])
-
+		execute
+	}, [execute, setUrl, page, search])
 
 	return (
 		<>
 			<h1>Planets</h1>
-			<InputForm onSearch={searchReq}/>
-			{loading && <C_Loading/>}
+			<InputForm onSearch={onChangeUrl}/>
+			{isLoading && <C_Loading/>}
 
-			{error && <AutoAlert hideAfter={7} variant='danger' msg={error}/>}
+			{isError && <AutoAlert hideAfter={7} variant='danger' msg={error}/>}
 
-			{resData && planetsData && (
+			{resData && (
 				<>
-					{resData.to === null && planetsData.length === 0 && <C_zeroResults query={query}/>}
-					{planetsData.length > 0 && (
-						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total}
+					{resData.to === null && resData.data.length === 0 && <C_zeroResults query={search}/>}
+					{resData.data.length > 0 && (
+						<C_SearchResultData query={search} from={resData.from} to={resData.to} total={resData.total}
 																resource={'Planets'}/>
 					)}
 
 					<ListGroup className='mb-3'>
-						<C_PlanetsList data={planetsData}/>
+						<C_PlanetsList data={resData.data}/>
 					</ListGroup>
 
-					{resData.first_page_url && <Pagination resData={resData}/>}
+					{resData.first_page_url && <Pagination resData={resData} onChangeUrl={onChangeUrl}/>}
 				</>
 			)}
 		</>
