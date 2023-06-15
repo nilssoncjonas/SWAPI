@@ -10,7 +10,7 @@ const Search = () => {
 		setSelectedOption(e.currentTarget.value);
 	}
 	const onSearch = async (query: string) => {
-		navigate(`/${selectedOption}/?search=${query}&page=1`)
+		navigate(`/${selectedOption}/?${query}&page=1`)
 	}
 
 	return (
