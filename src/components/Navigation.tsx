@@ -23,7 +23,7 @@ const Navigation = () => {
 							<Nav.Link as={NavLink} to="/planets?page=1">Planets</Nav.Link>
 							<Nav.Link as={NavLink} to="/species?page=1">Species</Nav.Link>
 							<Nav.Link as={NavLink} to="/starships?page=1">Starships</Nav.Link>
-							<Nav.Link as={NavLink} to="/vehicles">Vehicles</Nav.Link>
+							<Nav.Link as={NavLink} to="/vehicles?pages=1">Vehicles</Nav.Link>
 							<Nav.Link as={NavLink} to="/search">Search</Nav.Link>
 						</Nav>
 					</Navbar.Collapse>
