@@ -1,118 +1,104 @@
-import {useEffect, useState} from "react"
-import {useNavigate, useParams, useSearchParams} from "react-router-dom"
-import * as SWAPI from "../services/SWAPI-client.ts"
+import {useEffect} from "react"
+import {useNavigate, useParams} from "react-router-dom"
+// Hooks
+import useGetData from "../hooks/useGetData.ts"
 // types
 import {TSinglePeople} from "../types/"
 // components
 import AutoAlert from "../components/AutoAlert.tsx"
 import C_Films from "../components/C_Films.tsx"
-import C_Loading from "../components/C_Loading.tsx";
+import C_Loading from "../components/C_Loading.tsx"
 import C_Species from "../components/C_Species.tsx"
 import C_Starships from "../components/C_Starships.tsx"
 import C_Vehicles from "../components/C_Vehicles.tsx"
-import InputForm from "../components/InputForm.tsx"
 // style
 import Container from "react-bootstrap/Container"
 import ListGroup from "react-bootstrap/ListGroup"
-import {ListGroupItem} from "react-bootstrap";
+import ListGroupItem from "react-bootstrap/ListGroupItem"
+import Button from 'react-bootstrap/Button'
 
 
 const SinglePeople = () => {
-	const [loading, setLoading] = useState(false)
-	const [error, setError] = useState<string | null>(null)
-	const [personData, setPersonData] = useState<TSinglePeople | null>(null)
+const navigate = useNavigate()
 	const {id} = useParams()
 	const personId = Number(id)
 
-	const navigate = useNavigate()
-	const [page, setPage] = useState(1)
-	const [, setSearchParams] = useSearchParams();
-
-	const get = async (id: number) => {
-		setLoading(true)
-		setError(null)
-		try {
-			const res: TSinglePeople = await SWAPI.get<TSinglePeople>(`people/${id}`)
-			setPersonData(res)
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		} catch (err: any) {
-			console.error(err)
-			setError(err.message)
-		} finally {
-			setLoading(false)
-		}
-	}
-	const searchReq = async (query: string) => {
-		setPage(1)
-		setSearchParams({search: query, page: page.toString()})
-		navigate(`/people/?search=${query}&page=${page}`)
-	}
+	const {
+		resData,
+		error,
+		isError,
+		isLoading,
+		execute,
+	} = useGetData<TSinglePeople>(`people/${personId}`)
 
 	useEffect(() => {
-		get(personId)
-
-	}, [personId])
+		execute
+	}, [execute])
 	return (
 		<>
-			<InputForm onSearch={searchReq}/>
 
-			{loading && <C_Loading/>}
+			{isLoading && <C_Loading/>}
 
-			{error && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
+			{isError && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
 
-			{personData && (
+			{resData && (
 				<div className='mb-4'>
-					<h1>{personData.name}</h1>
+					<Button className='m-2' onClick={() => navigate(-1)}>Back</Button>
+					<h1 className='m-2'>{resData.name}</h1>
 					<Container>
-					<h2 className='h3'>Home World: {personData.homeworld.name}</h2>
+						<h2 className='h3'>Home World: {resData.homeworld.name}</h2>
 						<ListGroup className='mb-3 mx-auto'>
 							<ListGroupItem>
-								Birth Year: {personData.birth_year}
+								Birth Year: {resData.birth_year}
 							</ListGroupItem>
 							<ListGroupItem>
-								Eye color: {personData.eye_color}
+								Eye color: {resData.eye_color}
 							</ListGroupItem>
 							<ListGroupItem>
-								Hair color: {personData.hair_color}
+								Hair color: {resData.hair_color}
 							</ListGroupItem>
 							<ListGroupItem>
-								Height: {personData.height} GSH, <span className='small text-muted fst-italic'>Galactic Standard Height</span>
+								Height: {resData.height} GSH, <span
+								className='small text-muted fst-italic'>Galactic Standard Height</span>
 							</ListGroupItem>
 							<ListGroupItem>
-								Mass: {personData.mass} GMU, <span className='small text-muted fst-italic'>Galactic Mass Unit</span>
+								Mass: {resData.mass} GMU, <span className='small text-muted fst-italic'>Galactic Mass Unit</span>
 							</ListGroupItem>
 							<ListGroupItem>
-								Skin color: {personData.skin_color}
+								Skin color: {resData.skin_color}
 							</ListGroupItem>
 						</ListGroup>
 
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>{personData.films.length} {personData.films.length > 1 ? 'Films' : 'Film'}</h3>
+							<h3
+								className='mx-auto text-center'>{resData.films.length} {resData.films.length > 1 ? 'Films' : 'Film'}</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<C_Films films={personData.films}/>
+								<C_Films films={resData.films}/>
 							</ListGroup>
 						</div>
-						{personData.species.length > 0 && (
+						{resData.species.length > 0 && (
 							<div className='mb-4'>
-								<h3 className='mx-auto text-center'>{personData.species.length} Species</h3>
+								<h3 className='mx-auto text-center'>{resData.species.length} Species</h3>
 								<ListGroup className='mb-3 mx-auto'>
-									<C_Species species={personData.species}/>
+									<C_Species species={resData.species}/>
 								</ListGroup>
 							</div>
 						)}
-						{personData.starships.length > 0 && (
+						{resData.starships.length > 0 && (
 							<div className='mb-4'>
-								<h3 className='mx-auto text-center'>{personData.starships.length} {personData.starships.length > 1 ? 'Starships': 'Starship'}</h3>
+								<h3
+									className='mx-auto text-center'>{resData.starships.length} {resData.starships.length > 1 ? 'Starships' : 'Starship'}</h3>
 								<ListGroup className='mb-3 mx-auto'>
-									<C_Starships starships={personData.starships}/>
+									<C_Starships starships={resData.starships}/>
 								</ListGroup>
 							</div>
 						)}
-						{personData.vehicles.length > 0 && (
+						{resData.vehicles.length > 0 && (
 							<div className='mb-4'>
-								<h3 className='mx-auto text-center'>{personData.vehicles.length} {personData.vehicles.length > 1 ? 'Vehicles' : 'Vehicle'}</h3>
+								<h3
+									className='mx-auto text-center'>{resData.vehicles.length} {resData.vehicles.length > 1 ? 'Vehicles' : 'Vehicle'}</h3>
 								<ListGroup className='mb-3 mx-auto'>
-									<C_Vehicles vehicles={personData.vehicles}/>
+									<C_Vehicles vehicles={resData.vehicles}/>
 								</ListGroup>
 							</div>
 						)}

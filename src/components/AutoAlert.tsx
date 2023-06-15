@@ -3,7 +3,7 @@ import Alert from 'react-bootstrap/Alert'
 
 interface Props {
 	hideAfter: number
-	msg: string
+	msg: string | null
 	variant: string
 }
 
