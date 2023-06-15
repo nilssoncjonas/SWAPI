@@ -1,104 +1,88 @@
-import {useEffect, useState} from "react"
-import {useNavigate, useParams, useSearchParams} from "react-router-dom"
-import * as SWAPI from "../services/SWAPI-client.ts"
+import {useEffect} from "react"
+import {useNavigate, useParams} from "react-router-dom"
+// Hooks
+import useGetData from "../hooks/useGetData.ts"
 // types
-import {TSingleFilm} from "../types"
+import {TSingleFilm,} from "../types"
 // components
 import AutoAlert from "../components/AutoAlert.tsx"
 import C_Characters from "../components/C_Characters.tsx"
-import C_Loading from "../components/C_Loading.tsx";
+import C_Loading from "../components/C_Loading.tsx"
 import C_Planets from "../components/C_Planets.tsx"
 import C_Species from "../components/C_Species.tsx"
 import C_Starships from "../components/C_Starships.tsx"
 import C_Vehicles from "../components/C_Vehicles.tsx"
-import InputForm from "../components/InputForm.tsx"
+
 // style
 import ListGroup from "react-bootstrap/ListGroup"
 import Container from "react-bootstrap/Container"
+import Button from "react-bootstrap/Button";
 
 const SingleFilm = () => {
-	const [loading, setLoading] = useState(false)
-	const [error, setError] = useState<string | null>(null)
-	const [filmData, setFilmData] = useState<TSingleFilm | null>(null)
+	const navigate = useNavigate()
 	const {id} = useParams()
 	const filmId = Number(id)
 
-	const navigate = useNavigate()
-	const [page, setPage] = useState(1)
-	const [,setSearchParams] = useSearchParams();
-	const get = async (id: number) => {
-		setLoading(true)
-		setError(null)
-		try {
-			const res = await SWAPI.get<TSingleFilm>(`films/${id}`)
-			setFilmData(res)
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		} catch (err: any) {
-			console.error(err)
-			setError(err.message)
-		} finally {
-			setLoading(false)
-		}
-	}
-	const searchReq = async (query: string) => {
-		setPage(1)
-		setSearchParams( {search: query, page: page.toString()})
-		navigate(`/films/?search=${query}&page=${page}`)
-	}
+	const {
+		resData,
+		error,
+		isError,
+		isLoading,
+		execute,
+	} = useGetData<TSingleFilm>(`films/${filmId}`)
 
 	useEffect(() => {
-		get(filmId)
-
-	}, [filmId])
+		execute
+	}, [execute])
 	return (
 		<>
-			<InputForm onSearch={searchReq}/>
 
-			{loading && <C_Loading/>}
+			{isLoading && <C_Loading/>}
 
-			{error && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
+			{isError && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
 
-			{filmData && (
+			{resData && (
 				<div className='mb-4'>
-					<h1>{filmData.title}</h1>
-					<h2 className='h3'>Episode {filmData.episode_id}</h2>
+					<Button className='m-2' onClick={() => navigate(-1)}>Back</Button>
+					<h1 className='my-2'>{resData.title}</h1>
+					<h2 className='h3'>Episode {resData.episode_id}</h2>
 					<p className='mb-5'>
-						{filmData.opening_crawl}
+						{resData.opening_crawl}
 					</p>
 					<p className='d-flex justify-content-between mb-3'>
-						<span className='h6'>Released: {filmData.release_date}</span>
-						<span className='h6'>Directed by: {filmData.director}</span>
-						<span className='h6'>Produced by: {filmData.producer}</span>
+						<span className='h6'>Released: {resData.release_date}</span>
+						<span className='h6'>Directed by: {resData.director}</span>
+						<span className='h6'>Produced by: {resData.producer}</span>
 					</p>
 					<Container>
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>{filmData.characters.length} Characters</h3>
+							<h3 className='mx-auto text-center'>{resData.characters.length} Characters</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<C_Characters people={filmData.characters}/>
+								<C_Characters people={resData.characters}/>
 							</ListGroup>
 						</div>
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>{filmData.planets.length} Planets</h3>
+							<h3 className='mx-auto text-center'>{resData.planets.length} Planets</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<C_Planets planets={filmData.planets}/>
+								<C_Planets planets={resData.planets}/>
 							</ListGroup>
 						</div>
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>{filmData.starships.length} Starships</h3>
+							<h3 className='mx-auto text-center'>{resData.starships.length} Starships</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<C_Starships starships={filmData.starships}/>
+								<C_Starships starships={resData.starships}/>
 							</ListGroup>
 						</div>
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>{filmData.vehicles.length} Vehicles</h3>
+							<h3 className='mx-auto text-center'>{resData.vehicles.length} Vehicles</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<C_Vehicles vehicles={filmData.vehicles}/>
+								<C_Vehicles vehicles={resData.vehicles}/>
 							</ListGroup>
 						</div>
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>{filmData.starships.length} Species</h3>
+							<h3 className='mx-auto text-center'>{resData.starships.length} Species</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<C_Species species={filmData.species}/>
+								<C_Species species={resData.species}/>
 							</ListGroup>
 						</div>
 

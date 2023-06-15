@@ -44,7 +44,7 @@ const navigate = useNavigate()
 			{resData && (
 				<div className='mb-4'>
 					<Button className='m-2' onClick={() => navigate(-1)}>Back</Button>
-					<h1 className='m-2'>{resData.name}</h1>
+					<h1 className='my-2'>{resData.name}</h1>
 					<Container>
 						<h2 className='h3'>Home World: {resData.homeworld.name}</h2>
 						<ListGroup className='mb-3 mx-auto'>

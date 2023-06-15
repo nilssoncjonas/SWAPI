@@ -1,8 +1,9 @@
-import {useCallback, useEffect, useState} from "react"
+import {useEffect} from "react"
 import {useSearchParams} from "react-router-dom"
-import * as SWAPI from "../services/SWAPI-client.ts"
+// Hooks
+import useGetData from "../hooks/useGetData.ts";
 // Types
-import {FilmPaginationData, FilmsData} from "../types"
+import {FilmPaginationData} from "../types"
 // Components
 import AutoAlert from "../components/AutoAlert.tsx"
 import C_Loading from "../components/C_Loading.tsx";
@@ -16,84 +17,58 @@ import ListGroup from "react-bootstrap/ListGroup"
 
 const Films = () => {
 
-	const [loading, setLoading] = useState(false)
-	const [error, setError] = useState<string | null>(null)
-
-	const [resData, setResData] = useState<FilmPaginationData>({} as FilmPaginationData)
-	const [filmData, setFilmData] = useState<FilmsData>([])
-
 	const [searchParams, setSearchParams] = useSearchParams();
-	const query = searchParams.get('search')
+	const search = searchParams.get('search')
 	const page = searchParams.get('page')
 
-	const get = useCallback(async (page = 1) => {
-		setLoading(true)
-		setError(null)
-		try {
-			const res = await SWAPI.get<FilmPaginationData>(`films/?page=${page}`)
-			const data: FilmsData = res.data
-			setResData(res)
-			setFilmData(data)
-			setSearchParams({page: res.current_page.toString()})
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		} catch (err: any) {
-			console.error(err)
-			setError(err.message)
-		} finally {
-			setLoading(false)
-		}
-	}, [setSearchParams])
+	const {
+		resData,
+		error,
+		isError,
+		isLoading,
+		execute,
+		setUrl,
+	} = useGetData<FilmPaginationData>('films')
 
-	const searchReq = useCallback(async (query: string, page = 1) => {
-		setLoading(true)
-		setError(null)
-		try {
-			const res = await SWAPI.get<FilmPaginationData>(`films/?search=${query}&page=${page}`)
-			setSearchParams({search: query, page: res.current_page.toString()})
-			setResData(res)
-			setFilmData(res.data)
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		} catch (err: any) {
-			console.error(err)
-			setError(err.message)
-		} finally {
-			setLoading(false)
-		}
-
-	}, [setSearchParams])
+	const onChangeUrl = (url: string) => {
+		setUrl(`films?${url}`)
+		setSearchParams(`${url}`)
+	}
 
 	useEffect(() => {
-		if (query && page) {
-			searchReq(query, Number(page))
-		} else {
-			get(Number(page))
+		if (page && search) {
+			setUrl(`films?page=${page}&search=${search}`)
+		} else if (search) {
+			setUrl(`films?search=${search}`)
+		} else if (page) {
+			setUrl(`films?page=${page}`)
 		}
-	}, [query, page, get, searchReq])
+		execute
+	}, [execute, setUrl, page, search])
 
 	return (
 		<>
 			<h1>Films</h1>
-			<InputForm onSearch={searchReq}/>
+			<InputForm onSearch={onChangeUrl}/>
 
-			{loading && <C_Loading/>}
+			{isLoading && <C_Loading/>}
 
-			{error && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
+			{isError && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
 
-			{resData && filmData && (
+			{resData && (
 				<>
-					{resData.to === null && filmData.length === 0 && <C_zeroResults query={query}/>}
-					{filmData.length > 0 && (
-						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total}
+					{resData.to === null && resData.data.length === 0 && <C_zeroResults query={search}/>}
+					{resData.data.length > 0 && (
+						<C_SearchResultData query={search} from={resData.from} to={resData.to} total={resData.total}
 																resource={'Films'}/>
 					)}
 					<ListGroup className='mb-3'>
-						<C_FilmsList data={filmData}/>
+						<C_FilmsList data={resData.data}/>
 					</ListGroup>
 
-					{resData.first_page_url && <Pagination resData={resData}/>}
+					{resData.first_page_url && <Pagination resData={resData}  onChangeUrl={onChangeUrl}/>}
 				</>
 			)}
-
 		</>
 	)
 }
