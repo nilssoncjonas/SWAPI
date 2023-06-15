@@ -1,8 +1,9 @@
-import {useCallback, useEffect, useState} from "react"
-import {useSearchParams} from "react-router-dom";
-import * as SWAPI from "../services/SWAPI-client.ts"
+import { useEffect} from "react"
+import {useSearchParams} from "react-router-dom"
+// Hooks
+import useGetData from "../hooks/useGetData.ts"
 // types
-import {SpeciesData, SpeciesPaginationData} from "../types/"
+import {SpeciesPaginationData} from "../types/"
 // components
 import AutoAlert from "../components/AutoAlert.tsx"
 import C_Loading from "../components/C_Loading.tsx";
@@ -15,81 +16,55 @@ import Pagination from "../components/Pagination.tsx"
 import ListGroup from "react-bootstrap/ListGroup"
 
 const Species = () => {
-
-	const [loading, setLoading] = useState(false)
-	const [error, setError] = useState<string | null>(null)
-
-	const [resData, setResData] = useState<SpeciesPaginationData>({} as SpeciesPaginationData)
-	const [speciesData, setSpeciesData] = useState<SpeciesData>([])
-
-	const [searchParams, setSearchParams] = useSearchParams();
-	const query = searchParams.get('search')
+	const [searchParams, setSearchParams] = useSearchParams()
+	const search = searchParams.get('search')
 	const page = searchParams.get('page')
 
-	const get = useCallback(async (page = 1) => {
-		setLoading(true)
-		setError(null)
-		try {
-			const res = await SWAPI.get<SpeciesPaginationData>(`species/?page=${page}`)
-			const data: SpeciesData = res.data
-			setResData(res)
-			setSpeciesData(data)
-			setSearchParams({page: res.current_page.toString()})
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		} catch (err: any) {
-			console.error(err)
-			setError(err.message)
-		} finally {
-			setLoading(false)
-		}
-	}, [setSearchParams])
+	const {
+		resData,
+		error,
+		isError,
+		isLoading,
+		execute,
+		setUrl,
+	} = useGetData<SpeciesPaginationData>('species')
 
-	const searchReq = useCallback(async (query: string, page = 1) => {
-		setLoading(true)
-		setError(null)
-		try {
-			const res = await SWAPI.get<SpeciesPaginationData>(`species/?search=${query}&page=${page}`)
-			setSearchParams({search: query, page: res.current_page.toString()})
-			setResData(res)
-			setSpeciesData(res.data)
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		} catch (err: any) {
-			console.error(err)
-			setError(err.message)
-		} finally {
-			setLoading(false)
-		}
-
-	}, [setSearchParams])
+	const onChangeUrl = (url: string) => {
+		setUrl(`species?${url}`)
+		setSearchParams(`${url}`)
+	}
 
 	useEffect(() => {
-		if (query && page) {
-			searchReq(query, Number(page))
-		} else {
-			get(Number(page))
+		if (page && search) {
+			setUrl(`species?page=${page}&search=${search}`)
+		} else if (search) {
+			setUrl(`species?search=${search}`)
+		} else if (page) {
+			setUrl(`species?page=${page}`)
 		}
-	}, [query, page, get, searchReq])
+		execute
+	}, [execute, setUrl, page, search])
 
 	return (
 		<>
 			<h1>Species</h1>
-			<InputForm onSearch={searchReq}/>
-			{loading && <C_Loading/>}
+			<InputForm onSearch={onChangeUrl}/>search
+			{isLoading && <C_Loading/>}
 
-			{error && <AutoAlert hideAfter={7} variant='danger' msg={error}/>}
+			{isError && <AutoAlert hideAfter={7} variant='danger' msg={error}/>}
 
-			{resData && speciesData && (
+			{resData && (
 				<>
-					{resData.to === null && speciesData.length === 0 && <C_zeroResults query={query}/>}
-					{speciesData.length > 0 && (
-						<C_SearchResultData query={query} from={resData.from} to={resData.to} total={resData.total}
+					{resData.to === null && resData.data.length === 0 && <C_zeroResults query={search}/>}
+					{resData.data.length > 0 && (
+						<C_SearchResultData query={search} from={resData.from} to={resData.to} total={resData.total}
 																resource={'Species'}/>
 					)}
 					<ListGroup className='mb-3'>
-						<C_SpeciesList data={speciesData}/>
+						<C_SpeciesList data={resData.data}/>
 					</ListGroup>
 
-					{resData.first_page_url && <Pagination resData={resData}/>}
+					{resData.first_page_url && <Pagination resData={resData} onChangeUrl={onChangeUrl}/>}
 				</>
 			)}
 		</>

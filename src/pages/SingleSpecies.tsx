@@ -1,85 +1,67 @@
-import {useEffect, useState} from "react"
-import {useNavigate, useParams, useSearchParams} from "react-router-dom"
-import * as SWAPI from "../services/SWAPI-client.ts"
+import {useEffect} from "react"
+import {useNavigate, useParams} from "react-router-dom"
+//Hooks
+import useGetData from "../hooks/useGetData.ts";
 // types
-import {TSingleSpecies} from "../types/"
+import { TSingleSpecies} from "../types/"
 // components
 import AutoAlert from "../components/AutoAlert.tsx"
 import C_Characters from "../components/C_Characters.tsx"
 import C_Films from "../components/C_Films.tsx"
-import C_Loading from "../components/C_Loading.tsx";
-import InputForm from "../components/InputForm.tsx"
+import C_Loading from "../components/C_Loading.tsx"
 // style
 import Container from "react-bootstrap/Container"
 import ListGroup from "react-bootstrap/ListGroup"
-import {ListGroupItem} from "react-bootstrap";
+import ListGroupItem from "react-bootstrap/ListGroupItem"
+import Button from "react-bootstrap/Button"
 
 
 const SingleSpecies = () => {
-
-	const [loading, setLoading] = useState(false)
-	const [error, setError] = useState<string | null>(null)
-	const [speciesData, setSpeciesData] = useState<TSingleSpecies | null>(null)
-	const {id} = useParams()
-	const speciesId = Number(id)
-
 	const navigate = useNavigate()
-	const [page, setPage] = useState(1)
-	const [, setSearchParams] = useSearchParams();
-	const get = async (id: number) => {
-		setLoading(true)
-		setError(null)
-		try {
-			const res = await SWAPI.get<TSingleSpecies>(`species/${id}`)
-			setSpeciesData(res)
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		} catch (err: any) {
-			console.error(err)
-			setError(err.message)
-		} finally {
-			setLoading(false)
-		}
-	}
-	const searchReq = async (query: string) => {
-		setPage(1)
-		setSearchParams({search: query, page: page.toString()})
-		navigate(`/species/?search=${query}&page=${page}`)
-	}
+	const {id} = useParams()
+	const personId = Number(id)
+
+	const {
+		resData,
+		error,
+		isError,
+		isLoading,
+		execute,
+	} = useGetData<TSingleSpecies>(`species/${personId}`)
 
 	useEffect(() => {
-		get(speciesId)
-
-	}, [speciesId])
+		execute
+	}, [execute])
 	return (
 		<>
-			<InputForm onSearch={searchReq}/>
 
-			{loading && <C_Loading/>}
+			{isLoading && <C_Loading/>}
 
-			{error && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
+			{isError && <AutoAlert hideAfter={10} variant='danger' msg={error}/>}
 
-			{speciesData && (
+			{resData && (
 				<div className='mb-4'>
-					<h1>{speciesData.name}</h1>
+					<Button className='m-2' onClick={() => navigate(-1)}>Back</Button>
+					<h1 className='my-2'>{resData.name}</h1>
 
 					<Container>
 						<ListGroup className='mb-4 mx-auto'>
-							<ListGroupItem>Classification: {speciesData.classification}</ListGroupItem>
-							<ListGroupItem>Designation: {speciesData.designation}</ListGroupItem>
-							<ListGroupItem>Average height: {speciesData.average_height} cm</ListGroupItem>
+							<ListGroupItem>Classification: {resData.classification}</ListGroupItem>
+							<ListGroupItem>Designation: {resData.designation}</ListGroupItem>
+							<ListGroupItem>Average height: {resData.average_height} cm</ListGroupItem>
 							<ListGroupItem>Average
-								lifespan: {speciesData.average_lifespan}{speciesData.average_lifespan === 'unknown' ? '' : ' years'}</ListGroupItem>
-							<ListGroupItem>Eye colors: {speciesData.eye_colors}</ListGroupItem>
-							<ListGroupItem>Hair color: {speciesData.hair_colors}</ListGroupItem>
-							<ListGroupItem>Skin color: {speciesData.skin_colors}</ListGroupItem>
-							<ListGroupItem>Language: {speciesData.language}</ListGroupItem>
+								lifespan: {resData.average_lifespan}{resData.average_lifespan === 'unknown' ? '' : ' years'}</ListGroupItem>
+							<ListGroupItem>Eye colors: {resData.eye_colors}</ListGroupItem>
+							<ListGroupItem>Hair color: {resData.hair_colors}</ListGroupItem>
+							<ListGroupItem>Skin color: {resData.skin_colors}</ListGroupItem>
+							<ListGroupItem>Language: {resData.language}</ListGroupItem>
 						</ListGroup>
 
 						<div className='mb-4'>
 							<h3
-								className='mx-auto text-center'>{speciesData.people.length} {speciesData.people.length > 1 ? 'Characters' : 'Character'}</h3>
+								className='mx-auto text-center'>{resData.people.length} {resData.people.length > 1 ? 'Characters' : 'Character'}</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<C_Characters people={speciesData.people}/>
+								<C_Characters people={resData.people}/>
 							</ListGroup>
 						</div>
 
@@ -89,16 +71,16 @@ const SingleSpecies = () => {
 									<ListGroup.Item
 										action
 										href={''}
-										key={speciesData.homeworld?.id}>
-										{!speciesData.homeworld?.name ? 'n/a' : `${speciesData.homeworld?.name}`}
+										key={resData.homeworld?.id}>
+										{!resData.homeworld?.name ? 'n/a' : `${resData.homeworld?.name}`}
 									</ListGroup.Item>
 								</ListGroup>
 							</div>
 
 						<div className='mb-4'>
-							<h3 className='mx-auto text-center'>{speciesData.films.length} Films</h3>
+							<h3 className='mx-auto text-center'>{resData.films.length} Films</h3>
 							<ListGroup className='mb-3 mx-auto'>
-								<C_Films films={speciesData.films}/>
+								<C_Films films={resData.films}/>
 							</ListGroup>
 						</div>
 					</Container>
