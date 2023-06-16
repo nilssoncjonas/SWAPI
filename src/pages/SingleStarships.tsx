@@ -43,7 +43,7 @@ const SingleStarships = () => {
 
 			{resData && (
 				<div className='mb-4'>
-					<Button className='m-2' onClick={() => navigate(-1)}>Back</Button>
+					<Button className='m-2' onClick={() => navigate('/starships')}>Back</Button>
 					<h1 className='my-2'>{resData.name}</h1>
 					<Container>
 						<h2 className='h3'>{resData.manufacturer} {resData.model}</h2>
