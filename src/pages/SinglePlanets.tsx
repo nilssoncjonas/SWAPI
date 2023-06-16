@@ -40,7 +40,7 @@ const SinglePlanets = () => {
 
 			{resData && (
 				<div className='mb-4'>
-					<Button className='m-2' onClick={() => navigate('/planets?page=1')}>Back</Button>
+					<Button className='m-2' onClick={() => navigate(-1)}>Back</Button>
 					<h1 className='my-2'>{resData.name}</h1>
 					<Container>
 

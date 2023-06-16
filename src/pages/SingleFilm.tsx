@@ -43,7 +43,7 @@ const SingleFilm = () => {
 
 			{resData && (
 				<div className='mb-4'>
-					<Button className='m-2' onClick={() => navigate('/films?page=1')}>Back</Button>
+					<Button className='m-2' onClick={() => navigate(-1)}>Back</Button>
 					<h1 className='my-2'>{resData.title}</h1>
 					<h2 className='h3'>Episode {resData.episode_id}</h2>
 					<p className='mb-5'>
