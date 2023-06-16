@@ -39,7 +39,6 @@ const Pagination: React.FC<IProp> = ({resData, onChangeUrl}) => {
 			<div className="d-flex justify-content-between align-items-center mx-auto">
 					<Button onClick={() => onChangeUrl(`${firstPageUrl[firstPageUrl.length -1]}`)}>First Page</Button>
 					<Button onClick={() => onChangeUrl(`${lastPageUrl[lastPageUrl.length -1]}`)}>Last Page</Button>
-
 			</div>
 		</>
 	)
